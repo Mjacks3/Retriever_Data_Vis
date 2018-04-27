@@ -33,18 +33,21 @@ function initMap() {
 function cmx() {
 	console.log("Entered CMX Function");
     var xhttp = new XMLHttpRequest();
-    var restURL= "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
-        "areas=118%2C185%2C304%2C488%2C587%"+
-        "2C629%2C664%2C1025%2C1193%2C1206%2C1210%2C1260%2C1357"+
-        "%2C1421%2C1875%2C1880%2C1564%2C1932%2C2354%2C2376%2C2398%2C2477"+
-        "%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
-        "timeRange=00%3A00-11%3A59&"+
-        "period=today&"+
-        "durationCategories=0-240&"+
-        "includeStationary=false&"+
-        "connectionState=all&"+
-        "type=deviceCount&"+
-        "_=1520953855762"
+    var restURL= "https://cmx.noc.umbc.edu/api/analytics/v1/path?timeRange=00%3A00-23%3A59&period=2018-04-07%3B2018-04-08&allArea=118%2C185%2C211%2C239%2C246%2C304%2C488%2C527%2C587%2C614%2C629%2C657%2C664%2C1025%2C1118%2C1193%2C1195%2C1198%2C1206%2C1210%2C1260%2C1357%2C1365%2C1389%2C1421%2C1428%2C1875%2C1880%2C1903%2C1564%2C1912%2C1932%2C1960%2C2354%2C2376%2C2401%2C2398%2C2404%2C2410%2C2438%2C2477%2C2485%2C2489%2C2491%2C2498%2C2501%2C2509%2C2511%2C2690%2C2713%2C2715%2C2708%2C2743%2C2814%2C2915%2C2920%2C66%2C72%2C76&targetArea=2930&granularity=tag&durationCategories=5-480&_=1524772221927"
+
+
+    //"https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
+    //    "areas=118%2C185%2C304%2C488%2C587%"+
+     //   "2C629%2C664%2C1025%2C1193%2C1206%2C1210%2C1260%2C1357"+
+       // "%2C1421%2C1875%2C1880%2C1564%2C1932%2C2354%2C2376%2C2398%2C2477"+
+     //   "%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
+     //   "timeRange=00%3A00-11%3A59&"+
+     //   "period=today&"+
+     //   "durationCategories=0-240&"+
+     //   "includeStationary=false&"+
+     //   "connectionState=all&"+
+     //   "type=deviceCount&"+
+     //   "_=1520953855762"
         
     console.log("Opening request");
     xhttp.open("GET",restURL, false,"admin","HiddenFortress1958");
