@@ -33,38 +33,74 @@ function initMap() {
 function cmx() {
 	console.log("Entered CMX Function");
     var xhttp = new XMLHttpRequest();
-    var restURL= "https://cmx.noc.umbc.edu/api/analytics/v1/path?timeRange=00%3A00-23%3A59&period=2018-04-07%3B2018-04-08&allArea=118%2C185%2C211%2C239%2C246%2C304%2C488%2C527%2C587%2C614%2C629%2C657%2C664%2C1025%2C1118%2C1193%2C1195%2C1198%2C1206%2C1210%2C1260%2C1357%2C1365%2C1389%2C1421%2C1428%2C1875%2C1880%2C1903%2C1564%2C1912%2C1932%2C1960%2C2354%2C2376%2C2401%2C2398%2C2404%2C2410%2C2438%2C2477%2C2485%2C2489%2C2491%2C2498%2C2501%2C2509%2C2511%2C2690%2C2713%2C2715%2C2708%2C2743%2C2814%2C2915%2C2920%2C66%2C72%2C76&targetArea=2930&granularity=tag&durationCategories=5-480&_=1524772221927"
-
-
-    //"https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
-    //    "areas=118%2C185%2C304%2C488%2C587%"+
-     //   "2C629%2C664%2C1025%2C1193%2C1206%2C1210%2C1260%2C1357"+
-       // "%2C1421%2C1875%2C1880%2C1564%2C1932%2C2354%2C2376%2C2398%2C2477"+
-     //   "%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
-     //   "timeRange=00%3A00-11%3A59&"+
-     //   "period=today&"+
-     //   "durationCategories=0-240&"+
-     //   "includeStationary=false&"+
-     //   "connectionState=all&"+
-     //   "type=deviceCount&"+
-     //   "_=1520953855762"
+    var restURL= "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
+        "areas=118%2C185%2C304%2C488%2C587%"+
+        "2C629%2C664%2C1025%2C1193%2C1206%2C1210%2C1260%2C1357"+
+        "%2C1421%2C1875%2C1880%2C1564%2C1932%2C2354%2C2376%2C2398%2C2477"+
+        "%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
+        "timeRange=00%3A00-11%3A59&"+
+        "period=today&"+
+		"granularity=hourly&"+
+        "durationCategories=0-1440&"+
+        "includeStationary=false&"+
+        "connectionState=all&"+
+        "type=deviceCount&"+
+        "_=1520953855762"
         
-    console.log("Opening request");
     xhttp.open("GET",restURL, false,"admin","HiddenFortress1958");
-	console.log("Setting Header");
     xhttp.setRequestHeader("Content-type", "application/json");
-	console.log("Sending");
     xhttp.send();
-	console.log("Waiting for response");
-	console.log(xhttp.status);
-	
     // Get the raw header string
-    var headers = xhttp.getAllResponseHeaders();
-	console.log(headers);
     var response = JSON.parse(xhttp.responseText);
-	console.log("Parsing responseText");
-	console.log(response);
+	console.log("Output");
+	
+	var builds; 
+	builds = {};
+	var ix;
+	for (ix = 0; ix < response["results"].length ;ix++)
+	{
+		var captures;
+		captures = [];
+		
+		var ind;
+		for (ind = 0; ind < response["results"][ix]["data"].length ;ind++)
+		{
+			captures.push(response["results"][ix]["data"][ind]["value"]);
+		}
+		builds[response["results"][ix]["area"]] = [captures];
+
+	}
+	
+	builds['Chesapeake'].push((39.2567085,-76.7086843));
+	builds['Public Policy'].push((39.255092,-76.7094311));
+	builds['Administration'].push((39.2533135,-76.7136622));
+	builds['Library'].push((39.25623,-76.7118938));
+	builds['Biology'].push((39.2548479,-76.7122021));
+	builds['Erickson Hall'].push((39.2570091,-76.7096952));
+	builds['Chemistry'].push((39.2548812,-76.7128226));
+	
+	builds['Math_Psyc'].push((39.2540944,-76.7125407));
+	builds['Academic IV'].push((39.2536036,-76.7134087));
+	builds['PAHB'].push((39.2552382,-76.7153259));
+	builds['Commons'].push((39.2549006,-76.7109555));
+	builds['Dining Hall'].push((39.255887,-76.7078899));
+	builds['Hillside'].push((39.2578306,-76.7094585));
+	builds['Susquehanna'].push((39.25553,-76.7089886));
+	
+	builds['Patapsco'].push((39.2550174,-76.7064426));
+	builds['Patapsco Addition'].push((39.2552908,-76.707214));
+	builds['Engineering'].push((39.2546022,-76.7140627));
+	builds['Fine Arts'].push((39.2549059,-76.7137036));
+	builds['Sondheim'].push((39.2534773,-76.7128474));
+	builds['Potomac Hall'].push((39.2560987,-76.707022));
+	builds['Chesapeake'].push((39.2587439,-76.7150462));
+	builds['Chesapeake'].push((39.2572848,-76.7084016));
+	//Finish mappings and then move on
+	
+	console.log(builds);
 	console.log("Exiting CMX");
+	
+	return builds;
 }
 
 function toggleHeatmap() {
