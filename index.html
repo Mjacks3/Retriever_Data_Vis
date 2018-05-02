@@ -32,26 +32,7 @@
  
 
 <script type="text/javascript">
-//var markers = [];         
-//var map;
 
-/*function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 11,
-    center: {lat: 39.2557, lng: -76.6122}
-  });
-}
-function initMap() {}
-
-$(() => {
- console.log("Entered InitMap Function");
- map = new google.maps.Map(document.getElementById('map'), {
-   zoom: 17,
-   center: {lat: 37.775, lng: -122.434},
-   mapTypeId: 'satellite'
- });
-})
-*/
 var map, heatmap;
 console.log("File Linked!");
 
@@ -60,17 +41,23 @@ initMap()
 function initMap() {
   console.log("Entered InitMap Function");
   map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 17,
-    center: {lat: 37.775, lng: -122.434},
+    zoom: 16.5,
+    center: {lat: 39.2558715, lng: -76.7118267},
     mapTypeId: 'satellite'
   });
    
-   cmx();
-   heatmap = new google.maps.visualization.HeatmapLayer({
-    data: getPoints(),
-    map: map   
+   builds = cmx();
+   block = dataGeneration(builds,hour = 0);
+   pts  = getPoints(block),
+   
+   
+	heatmap = new google.maps.visualization.HeatmapLayer({
+    data: getPoints(block),
+    map: map  
 	
  })
+ changeRadius();
+ changeOpacity();
  console.log("Exiting InitMap Function");
 }
 
@@ -115,31 +102,39 @@ function cmx() {
 
 	}
 	
-	builds['Chesapeake'].push((39.2567085,-76.7086843));
-	builds['Public Policy'].push((39.255092,-76.7094311));
-	builds['Administration'].push((39.2533135,-76.7136622));
-	builds['Library'].push((39.25623,-76.7118938));
-	builds['Biology'].push((39.2548479,-76.7122021));
-	builds['Erickson Hall'].push((39.2570091,-76.7096952));
-	builds['Chemistry'].push((39.2548812,-76.7128226));
+	builds['Chesapeake'].push([39.2567085,-76.7086843]);
+	builds['Public Policy'].push([39.255092,-76.7094311]);
+	builds['Administration'].push([39.2533135,-76.7136622]);
+	builds['Library'].push([39.25623,-76.7118938]);
+	builds['Biology'].push([39.2548479,-76.7122021]);
+	builds['Erickson Hall'].push([39.2570091,-76.7096952]);
+	builds['Chemistry'].push([39.2548812,-76.7128226]);
 	
-	builds['Math_Psyc'].push((39.2540944,-76.7125407));
-	builds['Academic IV'].push((39.2536036,-76.7134087));
-	builds['PAHB'].push((39.2552382,-76.7153259));
-	builds['Commons'].push((39.2549006,-76.7109555));
-	builds['Dining Hall'].push((39.255887,-76.7078899));
-	builds['Hillside'].push((39.2578306,-76.7094585));
-	builds['Susquehanna'].push((39.25553,-76.7089886));
+	builds['Math_Psyc'].push([39.2540944,-76.7125407]);
+	builds['Academic IV'].push([39.2536036,-76.7134087]);
+	builds['PAHB'].push([39.2552382,-76.7153259]);
+	builds['Commons'].push([39.2549006,-76.7109555]);
+	builds['Dining Hall'].push([39.255887,-76.7078899]);
+	builds['Hillside'].push([39.2578306,-76.7094585]);
+	builds['Susquehanna'].push([39.25553,-76.7089886]);
 	
-	builds['Patapsco'].push((39.2550174,-76.7064426));
-	builds['Patapsco Addition'].push((39.2552908,-76.707214));
-	builds['Engineering'].push((39.2546022,-76.7140627));
-	builds['Fine Arts'].push((39.2549059,-76.7137036));
-	builds['Sondheim'].push((39.2534773,-76.7128474));
-	builds['Potomac Hall'].push((39.2560987,-76.707022));
-	builds['Chesapeake'].push((39.2587439,-76.7150462));
-	builds['Chesapeake'].push((39.2572848,-76.7084016));
-	//Finish mappings and then move on
+	builds['Patapsco'].push([39.2550174,-76.7064426]);
+	builds['Patapsco Addition'].push([39.2552908,-76.707214]);
+	builds['Engineering'].push([39.2546022,-76.7140627]);
+	builds['Fine Arts'].push([39.2549059,-76.7137036]);
+	
+	builds['Sondheim'].push([39.2534773,-76.7128474]);
+	builds['Potomac Hall'].push([39.2560987,-76.707022]);
+	
+	builds['Walker AVE South'].push([39.2587439,-76.7150462]);
+	builds['Harbor Hall'].push([39.2572848,-76.7084016]);
+	builds['Physics'].push([39.2543472,-76.7099418]);
+	builds['ITE'].push([39.2538416,-76.714377]);
+	builds['University Center'].push([39.2543276,-76.7133115]);
+	builds['Walker AVE North'].push([39.2592171,-76.713879]);
+	builds['Terrace'].push([39.2573399,-76.7112603]);
+	builds['RAC'].push([39.2529955,-76.7128026]);
+	builds['Westhills'].push([39.2583289,-76.71274]);
 	
 	console.log(builds);
 	console.log("Exiting CMX");
@@ -147,6 +142,20 @@ function cmx() {
 	return builds;
 }
 
+ function dataGeneration(builds,hour = 0) 
+{
+	block = [] 
+		for (const [key, value] of Object.entries(builds))
+		{
+			var ind2;
+			for (ind2 = 0; ind2 < value[0][hour]; ind2++)
+			{
+				block.push(value[1])
+			}
+		}
+		console.log(block);
+		return block;
+}
 function toggleHeatmap() {
   heatmap.setMap(heatmap.getMap() ? null : map);
 }
@@ -172,22 +181,24 @@ function changeGradient() {
 }
 
 function changeRadius() {
-  heatmap.set('radius', heatmap.get('radius') ? null : 20);
+  heatmap.set('radius', heatmap.get('radius') ? null : 57);
 }
 
 function changeOpacity() {
-  heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
+  heatmap.set('opacity', heatmap.get('opacity') ? null : 0.8);
 }
 
-// Heatmap data: 500 Points
-function getPoints() {
-  return [
-    new google.maps.LatLng(37.782551, -122.445368),
-    new google.maps.LatLng(37.782745, -122.444586),
-    new google.maps.LatLng(37.751266, -122.403355)
-  ];
+function getPoints(block) 
+{
+	pts = []
+	var ind; 
+	for (ind = 0;  ind < block.length ; ind++)
+	{
+		pts.push( new google.maps.LatLng(block[ind][0], block[ind][1]) ) ;
+	}
+	console.log(pts);
+	return pts;
 }
-
 </script>
 
 <body class="w3-light-grey">
