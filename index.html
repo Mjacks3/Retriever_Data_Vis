@@ -20,15 +20,6 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 
 
-
-<!-- Include Required Prerequisites -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script> 
-<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script> 
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" /> 
- 
-<!-- Include Date Range Picker -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script> 
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
  
 
 <script type="text/javascript">
@@ -197,6 +188,8 @@ function getPoints(block)
 	console.log(pts);
 	return pts;
 }
+
+
 </script>
 
 <body class="w3-light-grey">
@@ -339,6 +332,33 @@ function getPoints(block)
       </div>
       </div>
 <hr>
+
+<canvas id="bar-chart" width="600" height="350"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script type="text/javascript">
+  // Bar chart
+new Chart(document.getElementById("bar-chart"), {
+    type: 'bar',
+    data: {
+      labels: ["Dinning hall", "Commons", "university Center", "Erickson Hall", "Library"],
+      datasets: [
+        {
+          label: "Devices number",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: [2478,5267,734,784,433]
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'Total devices number in each building'
+      }
+    }
+});
+</script>
 
 
   <div class="w3-container">
