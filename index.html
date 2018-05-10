@@ -16,6 +16,7 @@
  <script type="text/javascript" src="fusioncharts/js/fusioncharts.js"></script>
  <script type="text/javascript" src="fusioncharts/js/themes/fusioncharts.theme.ocean.js"></script>  -->
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyBxevA7di7Avo5vGKAgPPSkJa8ud4gnI&callback=initMap&libraries=visualization"></script>
+ 
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 
@@ -24,10 +25,8 @@
 
 <script type="text/javascript">
 
-var map, heatmap;
-console.log("File Linked!");
-
-function initMap() {
+var glbBuilds; 
+function initMap(start=null, end=null, hour = 0) {
   console.log("Entered InitMap Function");
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 16.5,
@@ -35,9 +34,8 @@ function initMap() {
     mapTypeId: 'satellite'
   });
    
-   builds = cmx();
-   block = dataGeneration(builds,hour = 0);
-   pts  = getPoints(block),
+   builds = cmx(start, end);
+   block = dataGeneration(builds,hour);
    
    
 	heatmap = new google.maps.visualization.HeatmapLayer({
@@ -48,18 +46,31 @@ function initMap() {
  changeRadius();
  changeOpacity();
  console.log("Exiting InitMap Function");
+ glbBuilds = builds;
+
 }
 
-function cmx() {
+function cmx(start=null, end=null) {
 	console.log("Entered CMX Function");
+	var mid = "";
+	
+	if (start == null || end == null)
+	{
+		start = "to";
+		end = "day";
+	}
+	else
+	{
+		mid = "%3B" ;
+	}
     var xhttp = new XMLHttpRequest();
     var restURL= "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
         "areas=118%2C185%2C304%2C488%2C587%"+
         "2C629%2C664%2C1025%2C1193%2C1206%2C1210%2C1260%2C1357"+
         "%2C1421%2C1875%2C1880%2C1564%2C1932%2C2354%2C2376%2C2398%2C2477"+
         "%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
-        "timeRange=00%3A00-11%3A59&"+
-        "period=today&"+
+        "timeRange=00%3A00-23%3A59&"+
+        "period="+start +mid+ end+"&"+
 		"granularity=hourly&"+
         "durationCategories=0-1440&"+
         "includeStationary=false&"+
@@ -80,17 +91,21 @@ function cmx() {
 	for (ix = 0; ix < response["results"].length ;ix++)
 	{
 		var captures;
-		captures = [];
+		captures = new Array(24).fill(0);
 		
 		var ind;
 		for (ind = 0; ind < response["results"][ix]["data"].length ;ind++)
 		{
-			captures.push(response["results"][ix]["data"][ind]["value"]);
+			captures[ ind % 24] = captures[ ind % 24] + response["results"][ix]["data"][ind]["value"];
 		}
 		builds[response["results"][ix]["area"]] = [captures];
-
 	}
-	
+	/*
+	var jack;
+	jack = new Array(24).fill(0);
+	console.log(jack);
+	console.log( 1 % 24);
+	*/
 	builds['Chesapeake'].push([39.2567085,-76.7086843]);
 	builds['Public Policy'].push([39.255092,-76.7094311]);
 	builds['Administration'].push([39.2533135,-76.7136622]);
@@ -126,6 +141,7 @@ function cmx() {
 	builds['Westhills'].push([39.2583289,-76.71274]);
 	
 	console.log(builds);
+	console.log(Object.keys(builds));
 	console.log("Exiting CMX");
 	
 	return builds;
@@ -145,6 +161,7 @@ function cmx() {
 		console.log(block);
 		return block;
 }
+
 function toggleHeatmap() {
   heatmap.setMap(heatmap.getMap() ? null : map);
 }
@@ -217,24 +234,46 @@ function getPoints(block)
     <hr>
      
      <label class = container> Date Picker </label>
-    <div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start Date: &nbsp&nbsp <input type="date" id="startDate"" value="2018-03-22"></div>
-  <div> &nbsp&nbsp&nbsp End Date:  &nbsp&nbsp&nbsp&nbsp<input type="date" id="EndDate" " value="2018-03-23"></div>
+       <div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start Date: &nbsp&nbsp <input type="date" id="startDate"" value="2018-04-10"></div>
+  <div> &nbsp&nbsp&nbsp End Date:  &nbsp&nbsp&nbsp&nbsp<input type="date" id="EndDate" " value="2018-04-10"></div>
 
 
     
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript">
+     <script type="text/javascript">
       console.log(EndDate.value);
 		
     $( function() {
     
 		var spinner = $( "#spinner" ).spinner();
-		$( "#apply" ).on( "click", function() 
+		$( "#apply1" ).on( "click", function() 
 		{
 			console.log(spinner.spinner("value"));
-		});
+			initMap(start=startDate.value, end=EndDate.value);
+		}
+		);
+		
+		$( "#apply2" ).on( "click", function() 
+		{
+		if (spinner.spinner("value") != null){
+		
+			map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 16.5,
+				center: {lat: 39.2558715, lng: -76.7118267},
+				mapTypeId: 'satellite' });
+
+			heatmap = new google.maps.visualization.HeatmapLayer({
+				data: getPoints(dataGeneration(glbBuilds,hour = spinner.spinner("value") - 1)),
+				map: map})
+				 changeRadius();
+				changeOpacity();
+				
+				}
+		}
+		);
+		
     $('#spinner').spinner('option', 'max', 24);
     $('#spinner').spinner('option', 'min', 1);
 		
@@ -243,16 +282,17 @@ function getPoints(block)
 		});
 		
     </script>
-  
+
+<p>
+  <button id="apply1">Generate New Date Stats</button>
+</p>
+ 
   <p>
   <label for="spinner">Select an hour:</label>
   <input id="spinner" name="value">
 </p>
+  <button id="apply2">ViewNew Hour Stats</button>
 
-<p>
-  <button id="apply">Apply Date/Time</button>
-
- </p>
     <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
     <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Traffic</a>
     <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i>  Geo</a>
@@ -338,6 +378,8 @@ function getPoints(block)
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script type="text/javascript">
   // Bar chart
+  
+
 new Chart(document.getElementById("bar-chart"), {
     type: 'bar',
     data: {
@@ -358,6 +400,7 @@ new Chart(document.getElementById("bar-chart"), {
       }
     }
 });
+</script>
 </script>
 
 
