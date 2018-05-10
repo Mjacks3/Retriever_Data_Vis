@@ -26,7 +26,8 @@
 <script type="text/javascript">
 
 var glbBuilds; 
-function initMap(start=null, end=null, hour = 0) {
+var glbTotalnts;
+function initMap(start=null, end=null, startHour = 0, endHour = 1) {
   console.log("Entered InitMap Function");
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 16.5,
@@ -35,21 +36,29 @@ function initMap(start=null, end=null, hour = 0) {
   });
    
    builds = cmx(start, end);
-   block = dataGeneration(builds,hour);
+   data = dataGeneration(builds,startHour,endHour);
+   
+   block = data[0];
+   glbTotalnts = data[1];
    
    
 	heatmap = new google.maps.visualization.HeatmapLayer({
     data: getPoints(block),
     map: map  
 	
+	
  })
+	
  changeRadius();
  changeOpacity();
  console.log("Exiting InitMap Function");
  glbBuilds = builds;
 
 }
+function getValues(){
 
+return glbBuilds;
+}
 function cmx(start=null, end=null) {
 	console.log("Entered CMX Function");
 	var mid = "";
@@ -58,6 +67,7 @@ function cmx(start=null, end=null) {
 	{
 		start = "to";
 		end = "day";
+		
 	}
 	else
 	{
@@ -147,19 +157,61 @@ function cmx(start=null, end=null) {
 	return builds;
 }
 
- function dataGeneration(builds,hour = 0) 
+  function dataGeneration(builds, startHour = 0, endHour = 0) 
 {
-	block = [] 
+
+	startHour = new Number( startHour);
+	endHour = new Number(endHour);
+	
+	//return the added block for the chart later
+	
+	if  ( endHour == 0 ) 
+	{
+		endHour = 24;
+	}	
+
+	if ( startHour > endHour ) 
+	{
+		alert("Invalid Time fomat");
+		return[[],[]];
+	}
+
+
+	if (startHour == endHour) 
+	{
+	 startHour = 0;
+	 endHour = 24;
+	}
+	
+	
+
+	block = [] ;
+	totalCounts = [];
 		for (const [key, value] of Object.entries(builds))
 		{
-			var ind2;
-			for (ind2 = 0; ind2 < value[0][hour]; ind2++)
+			var totalBucket = 0;
+			var timeslot;
+			
+			for (timeslot = startHour; timeslot < endHour; timeslot++)
 			{
-				block.push(value[1])
+				totalBucket += value[0][timeslot];
 			}
+			
+			totalCounts.push(totalBucket);
+			
+			var counter; 
+			for (counter = 0; counter < totalBucket ; counter ++)
+			{
+				block.push(value[1]);
+			}
+			
+			
 		}
+		console.log("Here's what's in block");
 		console.log(block);
-		return block;
+		return [block,totalCounts] ;
+		
+
 }
 
 function toggleHeatmap() {
@@ -193,16 +245,14 @@ function changeRadius() {
 function changeOpacity() {
   heatmap.set('opacity', heatmap.get('opacity') ? null : 0.8);
 }
-
 function getPoints(block) 
 {
-	pts = []
+	pts = [];
 	var ind; 
 	for (ind = 0;  ind < block.length ; ind++)
 	{
 		pts.push( new google.maps.LatLng(block[ind][0], block[ind][1]) ) ;
 	}
-	console.log(pts);
 	return pts;
 }
 
@@ -224,33 +274,53 @@ function getPoints(block)
   
   <hr>
   <div class="w3-container">
-    <h5>Dashboard</h5>
+    <h3>Retriever Data Visualization</h3>
+	
   </div>
   <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
 
-    <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Overview</a>
-
+<hr>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
      <script type="text/javascript">
-      console.log(EndDate.value);
 		
     $( function() {
     
-		var spinner = $( "#spinner" ).spinner();
+	
 		$( "#apply1" ).on( "click", function() 
-		{
-			console.log(spinner.spinner("value"));
-			initMap(start=startDate.value, end=EndDate.value);
-		}
-		);
-
+		{initMap(start=startDate.value, end= EndDate.value);});
 
 		
 		$( "#apply2" ).on( "click", function() 
 		{
+			map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 16.5,
+				center: {lat: 39.2558715, lng: -76.7118267},
+				mapTypeId: 'satellite' });
+				
+			data = dataGeneration(builds,startHour= ((StartTime.value).split(":")[0] ) ,endHour= ( (EndTime.value).split(":")[0] )  );
+			
+			 block = data[0];
+			glbTotalnts = data[1];
+			
+			heatmap = new google.maps.visualization.HeatmapLayer({
+			data: getPoints(block),
+			map: map 
+				 })
+				 
+				changeRadius();
+				changeOpacity();
+		}
+		);
+		
+		
+		
+		var spinner = $( "#spinner" ).spinner();
+		$( "#apply3" ).on( "click", function() 
+		{
+		
 		if (spinner.spinner("value") != null){
 		
 			map = new google.maps.Map(document.getElementById('map'), {
@@ -258,29 +328,36 @@ function getPoints(block)
 				center: {lat: 39.2558715, lng: -76.7118267},
 				mapTypeId: 'satellite' });
 
+			data = dataGeneration(builds,spinner.spinner("value") - 1, spinner.spinner("value"));
+			
+			block = data[0];
+			glbTotalnts = data[1];
+			
 			heatmap = new google.maps.visualization.HeatmapLayer({
-				data: getPoints(dataGeneration(glbBuilds,hour = spinner.spinner("value") - 1)),
+				data: getPoints(block),
 				map: map})
-				 changeRadius();
-				changeOpacity();
+				
+			changeRadius();
+			changeOpacity();
 				
 				}
-		}
-		);
+		else
+		{alert("Invalid Time format");}
+		
+		});
 		
     $('#spinner').spinner('option', 'max', 24);
     $('#spinner').spinner('option', 'min', 1);
 		
-		$( "button" ).button()
-		
-		});
+	$( "button" ).button()});
 		
     </script>
+	
 
     <hr>
      
-     <label class = container> Date Picker </label>
-       <div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start Date: &nbsp&nbsp <input type="date" id="startDate"" value="2018-04-10"></div>
+     <p> <label class = container> <h3> Date Picker </h3> </label></p>
+     <div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start Date: &nbsp&nbsp <input type="date" id="startDate"" value="2018-04-10"></div>
   <div> &nbsp&nbsp&nbsp End Date:  &nbsp&nbsp&nbsp&nbsp<input type="date" id="EndDate" " value="2018-04-10"></div>
 
   <p>
@@ -291,20 +368,28 @@ function getPoints(block)
   <hr>
 
 	
-	<label class = container> Filter by time of day:</label>
+<p><h3>	<label class = container> Filter Time of Day:</label>  </h3></p>
+<p><b>
+Choose a time frame 
+</b></p>
+
 	<div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start time: &nbsp&nbsp <br> <input type="time" id="StartTime" value="00:00:00"></div>
 	<div> &nbsp&nbsp&nbsp End time:  &nbsp&nbsp&nbsp&nbsp&nbsp <br> <input type="time" id="EndTime" value="00:00:00"></div>
 	
 <p>
-  <button id="apply3">Generate New time Stats</button>
+  <button id="apply2">View New Time Stats</button>
 </p>
+  <p><b>
+  OR :
+</b></p>
  
- <hr>
+ 
   <p>
-  <label for="spinner">Select an hour:</label>
+ <b> <label for="spinner">Select an hour block:</label></b>
   <input id="spinner" name="value">
 </p>
-  <button id="apply2">View New Hour Stats</button>
+
+  <button id="apply3">View New Time Stats</button>
 
     <hr>
   </div>
@@ -384,17 +469,32 @@ function getPoints(block)
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script type="text/javascript">
   // Bar chart
-  
+ 
+ 
+ $( function() {
+ 
+ 
+  		$( "#apply4" ).on( "click", function() 
+		{
+		
+
+console.log(getValues());
+
+
 
 new Chart(document.getElementById("bar-chart"), {
     type: 'bar',
     data: {
-      labels: ["Dinning hall", "Commons", "university Center", "Erickson Hall", "Library"],
+      labels: Object.keys(glbBuilds),
       datasets: [
         {
           label: "Devices number",
-          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-          data: [2478,5267,734,784,433]
+          backgroundColor: ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+		  '#66994D', '#B366CC', '#4D8000', '#B33300'],
+          data: glbTotalnts
         }
       ]
     },
@@ -402,13 +502,20 @@ new Chart(document.getElementById("bar-chart"), {
       legend: { display: false },
       title: {
         display: true,
-        text: 'Total devices number in each building'
+        text: 'Devices per Building'
       }
     }
-});
+});});
+
+$( "button" ).button()});
 </script>
 </script>
 
+ <div class="w3-container">
+<p>
+  <button class="w3-bar-item w3-button w3-padding w3-blue" id="apply4" ><i  class="fa fa-refresh fa-fw"></i> Refresh Bar Chart </button>
+</p>
+  </div>
 
   <div class="w3-container">
     <h5>Countries</h5>
