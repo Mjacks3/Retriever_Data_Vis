@@ -231,24 +231,8 @@ function getPoints(block)
 
     <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Overview</a>
 
-    <hr>
-     
-     <label class = container> Date Picker </label>
-       <div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start Date: &nbsp&nbsp <input type="date" id="startDate"" value="2018-04-10"></div>
-  <div> &nbsp&nbsp&nbsp End Date:  &nbsp&nbsp&nbsp&nbsp<input type="date" id="EndDate" " value="2018-04-10"></div>
 
-  <hr>
-
-	
-	<label class = container> Filter by time of day:</label>
-	<div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start time: &nbsp&nbsp <br> <input type="time" id="StartTime" value="00:00:00"></div>
-	<div> &nbsp&nbsp&nbsp End time:  &nbsp&nbsp&nbsp&nbsp&nbsp <br> <input type="time" id="EndTime" format= "HH:00" value="00:00:00"></div>
-	<hr>
-
-
-    
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
      <script type="text/javascript">
       console.log(EndDate.value);
@@ -262,6 +246,8 @@ function getPoints(block)
 			initMap(start=startDate.value, end=EndDate.value);
 		}
 		);
+
+
 		
 		$( "#apply2" ).on( "click", function() 
 		{
@@ -291,24 +277,36 @@ function getPoints(block)
 		
     </script>
 
-<p>
+    <hr>
+     
+     <label class = container> Date Picker </label>
+       <div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start Date: &nbsp&nbsp <input type="date" id="startDate"" value="2018-04-10"></div>
+  <div> &nbsp&nbsp&nbsp End Date:  &nbsp&nbsp&nbsp&nbsp<input type="date" id="EndDate" " value="2018-04-10"></div>
+
+  <p>
   <button id="apply1">Generate New Date Stats</button>
 </p>
  
+
+  <hr>
+
+	
+	<label class = container> Filter by time of day:</label>
+	<div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start time: &nbsp&nbsp <br> <input type="time" id="StartTime" value="00:00:00"></div>
+	<div> &nbsp&nbsp&nbsp End time:  &nbsp&nbsp&nbsp&nbsp&nbsp <br> <input type="time" id="EndTime" value="00:00:00"></div>
+	
+<p>
+  <button id="apply3">Generate New time Stats</button>
+</p>
+ 
+ <hr>
   <p>
   <label for="spinner">Select an hour:</label>
   <input id="spinner" name="value">
 </p>
-  <button id="apply2">ViewNew Hour Stats</button>
+  <button id="apply2">View New Hour Stats</button>
 
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Traffic</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i>  Geo</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-diamond fa-fw"></i>  Orders</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bell fa-fw"></i>  News</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  General</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  History</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+    <hr>
   </div>
 </nav>
 
