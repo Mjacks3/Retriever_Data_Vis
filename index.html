@@ -8,6 +8,27 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
+<style>
+#loading {
+   width: 100%;
+   height: 100%;
+   top: 0;
+   left: 0;
+   position: fixed;
+   display: block;
+   opacity: 0.7;
+   background-color: #fff;
+   z-index: 99;
+   text-align: center;
+}
+
+#loading-image {
+  position: absolute;
+  top: 100px;
+  left: 240px;
+  z-index: 100;
+}
+</style>
 <!-- styles are here -->
 <!--<link href="styles/style2.css" rel="stylesheet" type="text/css"> No file included yet
 <link href="c3-0.5.3/c3.css" rel="stylesheet"> -->
@@ -260,6 +281,9 @@ function getPoints(block)
 </script>
 
 <body class="w3-light-grey">
+<div id="loading">
+  <img id="loading-image" src="images/ajax-loader.gif" alt="Loading..." />
+</div>
 
 <!-- Top container -->
 <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
@@ -290,7 +314,46 @@ function getPoints(block)
     
 	
 		$( "#apply1" ).on( "click", function() 
-		{initMap(start=startDate.value, end= EndDate.value);});
+		{initMap(start= startDate.value, end= EndDate.value);
+		var resetCanvas = function(){
+  $('bar-chart').remove(); // this is my <canvas> element
+  $('#graph-container').append('<canvas id="bar-chart"><canvas>');
+  canvas = document.getElementById("bar-chart");
+  ctx = canvas.getContext('2d');
+  ctx.canvas.width = $('#graph').width(); // resize to parent width
+  ctx.canvas.height = $('#graph').height(); // resize to parent height
+  var x = canvas.width/2;
+  var y = canvas.height/2;
+  ctx.font = '10pt Verdana';
+  ctx.textAlign = 'center';
+  ctx.fillText('This text is centered on the canvas', x, y);
+};
+            new Chart(document.getElementById("bar-chart"), {
+    type: 'bar',
+    data: {
+      labels: Object.keys(glbBuilds),
+      datasets: [
+        {
+          label: "Devices number",
+          backgroundColor: ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+      '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+      '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+      '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+      '#66994D', '#B366CC', '#4D8000', '#B33300', '#00b38d',
+      '#00b334', '#b30026', '#0080b3', '#80b300'],
+          data: glbTotalnts
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'Devices per Building'
+      }
+    }
+})
+    });
 
 		
 		$( "#apply2" ).on( "click", function() 
@@ -308,11 +371,43 @@ function getPoints(block)
 			heatmap = new google.maps.visualization.HeatmapLayer({
 			data: getPoints(block),
 			map: map 
+
+
+
 				 })
 				 
 				changeRadius();
 				changeOpacity();
-		}
+	
+	$('bar-chart').clear()
+			 //$('#graph-container').append('<canvas id="bar-chart"><canvas>');	
+    new Chart(document.getElementById("bar-chart"), {
+    type: 'bar',
+    data: {
+      labels: Object.keys(glbBuilds),
+      datasets: [
+        {
+          label: "Devices number",
+          backgroundColor: ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+      '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+      '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+      '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+      '#66994D', '#B366CC', '#4D8000', '#B33300', '#00b38d',
+      '#00b334', '#b30026', '#0080b3', '#80b300'],
+          data: glbTotalnts
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'Devices per Building'
+      }
+    }
+})
+    }
+
 		);
 		
 		
@@ -339,6 +434,34 @@ function getPoints(block)
 				
 			changeRadius();
 			changeOpacity();
+
+	$('bar-chart').clear();
+		//$('#graph-container').append('<canvas id="bar-chart"><canvas>');
+      new Chart(document.getElementById("bar-chart"), {
+    type: 'bar',
+    data: {
+      labels: Object.keys(glbBuilds),
+      datasets: [
+        {
+          label: "Devices number",
+          backgroundColor: ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+      '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+      '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+      '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+      '#66994D', '#B366CC', '#4D8000', '#B33300', '#00b38d',
+      '#00b334', '#b30026', '#0080b3', '#80b300'],
+          data: glbTotalnts
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'Devices per Building'
+      }
+    }
+})
 				
 				}
 		else
@@ -357,8 +480,8 @@ function getPoints(block)
     <hr>
      
      <p> <label class = container> <h3> Date Picker </h3> </label></p>
-     <div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start Date: &nbsp&nbsp <input type="date" id="startDate"" value="2018-04-10"></div>
-  <div> &nbsp&nbsp&nbsp End Date:  &nbsp&nbsp&nbsp&nbsp<input type="date" id="EndDate" " value="2018-04-10"></div>
+     <div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start Date: &nbsp&nbsp <input type="date" id="startDate" ></div>
+  <div> &nbsp&nbsp&nbsp End Date:  &nbsp&nbsp&nbsp&nbsp<input type="date" id="EndDate" ></div>
 
   <p>
   <button id="apply1">Generate New Date Stats</button>
@@ -374,7 +497,7 @@ Choose a time frame
 </b></p>
 
 	<div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start time: &nbsp&nbsp <br> <input type="time" id="StartTime" value="00:00:00"></div>
-	<div> &nbsp&nbsp&nbsp End time:  &nbsp&nbsp&nbsp&nbsp&nbsp <br> <input type="time" id="EndTime" value="00:00:00"></div>
+	<div> &nbsp&nbsp&nbsp End time:  &nbsp&nbsp&nbsp&nbsp&nbsp <br> <input type="time" id="EndTime" value="01:00:00"></div>
 	
 <p>
   <button id="apply2">View New Time Stats</button>
@@ -456,13 +579,14 @@ Choose a time frame
         <div class="w3-half">
           <h5>Map</h5>
          
-      <div id="map" class="container" style="width:1000px;height:800px" alt="Crime map of Baltimore"</div>
+      <div id="map" class="container" style="width:1000px;height:800px" alt="Crime map of Baltimore">
      <!-- <div id="map" class="fill" alt="Crime map of Baltimore"</div> -->
       </div>
       </div>
       </div>
       </div>
 <hr>
+
 
 <canvas id="bar-chart" width="600" height="350"></canvas>
 
@@ -490,10 +614,11 @@ new Chart(document.getElementById("bar-chart"), {
         {
           label: "Devices number",
           backgroundColor: ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
-		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
-		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
-		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
-		  '#66994D', '#B366CC', '#4D8000', '#B33300'],
+      '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+      '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+      '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+      '#66994D', '#B366CC', '#4D8000', '#B33300', '#00b38d',
+      '#00b334', '#b30026', '#0080b3', '#80b300'],
           data: glbTotalnts
         }
       ]
@@ -508,12 +633,11 @@ new Chart(document.getElementById("bar-chart"), {
 });});
 
 $( "button" ).button()});
-</script>
-</script>
+</script> </script>
 
  <div class="w3-container">
 <p>
-  <button class="w3-bar-item w3-button w3-padding w3-blue" id="apply4" ><i  class="fa fa-refresh fa-fw"></i> Refresh Bar Chart </button>
+  <button class="w3-button w3-dark-grey" id="apply4" ></i>Show Bar Chart </button>
 </p>
   </div>
 
@@ -601,6 +725,12 @@ function w3_close() {
     mySidebar.style.display = "none";
     overlayBg.style.display = "none";
 }
+</script>
+
+<script language="javascript" type="text/javascript">
+     $(window).load(function() {
+     $('#loading').hide();
+  });
 </script>
 
 </body>
