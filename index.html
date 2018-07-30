@@ -7,6 +7,12 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
+
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
 
 <style>
 #loading {
@@ -24,9 +30,9 @@
 
 #loading-image {
   position: absolute;
-  top: 100px;
-  left: 240px;
-  z-index: 100;
+  top: 180px;
+  left: 475px;
+  z-index: 400;
 }
 </style>
 <!-- styles are here -->
@@ -48,7 +54,10 @@
 
 var glbBuilds; 
 var glbTotalnts;
-function initMap(start=null, end=null, startHour = 0, endHour = 1) {
+var devisenum1;
+var dashtotal = 0;
+
+function initMap(start=null, end=null, startHour = 0, endHour = 0) {
   console.log("Entered InitMap Function");
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 16.5,
@@ -61,7 +70,7 @@ function initMap(start=null, end=null, startHour = 0, endHour = 1) {
    
    block = data[0];
    glbTotalnts = data[1];
-   
+   devisenum1 = glbTotalnts[0];
    
 	heatmap = new google.maps.visualization.HeatmapLayer({
     data: getPoints(block),
@@ -74,7 +83,8 @@ function initMap(start=null, end=null, startHour = 0, endHour = 1) {
  changeOpacity();
  console.log("Exiting InitMap Function");
  glbBuilds = builds;
-
+ getdashsum();
+getbarcharts();
 }
 function getValues(){
 
@@ -114,7 +124,7 @@ function cmx(start=null, end=null) {
     xhttp.send();
     // Get the raw header string
     var response = JSON.parse(xhttp.responseText);
-	console.log("Output");
+	console.log("Output"); 
 	
 	var builds; 
 	builds = {};
@@ -278,11 +288,519 @@ function getPoints(block)
 }
 
 
+function getbarcharts(){
+  Highcharts.chart('barcontainer', {
+  chart: {
+    type: 'column'
+  },
+  title: {
+    text: 'Devices Number by Areas on Campus'
+  },
+  subtitle: {
+    text: 'Click the columns to view versions. School Website: <a href="https://www.umbc.edu/" target="_blank">umbc.edu</a>'
+  },
+  xAxis: {
+    type: 'category'
+  },
+  yAxis: {
+    title: {
+      text: 'Total Number of Devices'
+    }
+
+  },
+  legend: {
+    enabled: false
+  },
+  plotOptions: {
+    series: {
+      borderWidth: 0,
+      dataLabels: {
+        enabled: true,
+        format: '{point.y:.1f}'
+      }
+    }
+  },
+
+  tooltip: {
+    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> Devices<br/>'
+  },
+
+  "series": [
+    {
+      "name": "UMBC Campus",
+      "colorByPoint": true,
+      "data": [
+        {
+          "name": "Residential Buildings",
+          "y": glbTotalnts[4]+glbTotalnts[8]+glbTotalnts[10]+glbTotalnts[11]+glbTotalnts[16]+glbTotalnts[17]+glbTotalnts[19]+glbTotalnts[23]+glbTotalnts[24]+glbTotalnts[26]+glbTotalnts[27]+glbTotalnts[28],
+          "drilldown": "Residential Buildings"
+        },
+      
+        {
+          "name": "Academic Buildings",
+          "y": glbTotalnts[0]+glbTotalnts[1]+glbTotalnts[2]+glbTotalnts[3]+glbTotalnts[7]+glbTotalnts[9]+glbTotalnts[12]+glbTotalnts[14]+glbTotalnts[15]+glbTotalnts[22]+glbTotalnts[18]+glbTotalnts[20],
+          "drilldown": "Academic Buildings"
+        },
+
+        {
+          "name": "Support Facilities",
+          "y": glbTotalnts[21]+glbTotalnts[13]+glbTotalnts[5]+glbTotalnts[25]+glbTotalnts[6],
+          "drilldown": "Support Facilities"
+        }
+
+      ]
+    }
+  ],
+  "drilldown": {
+    "series": [
+      {
+        "name": "Residential Buildings",
+        "id": "Residential Buildings",
+        "data": [
+          [
+            "Chesapeake",
+            glbTotalnts[4]
+          ],
+          [
+            "Erickson Hall",
+            glbTotalnts[8]
+          ],
+          [
+            "Harbor Hall",
+            glbTotalnts[10]
+          ],
+          [
+            "Hillside",
+            glbTotalnts[11]
+          ],
+          [
+            "Patapsco",
+            glbTotalnts[16]
+          ],
+     
+          [
+            "Patapsco Addition",
+            glbTotalnts[17]
+          ],
+          [
+            "Potomac",
+            glbTotalnts[19]
+          ],
+          [
+            "Susquehanna",
+            glbTotalnts[23]
+          ],
+          [
+            "Terrace",
+            glbTotalnts[24]
+          ],
+          [
+            "Walker AVE North",
+            glbTotalnts[26]
+          ],
+          [
+            "Walker AVE South",
+            glbTotalnts[27]
+          ],
+          [
+            "Westhills",
+            glbTotalnts[28]
+          ]
+        ]
+      },
+      
+      {
+        "name": "Academic Buildings",
+        "id": "Academic Buildings",
+        "data": [
+          [
+            "Academic IV",
+            glbTotalnts[0]
+          ],
+          [
+            "Administration Building",
+            glbTotalnts[1]
+          ],
+          [
+            "Biology",
+            glbTotalnts[2]
+          ],
+          [
+            "Chemistry",
+            glbTotalnts[3]
+          ],
+          [
+            "Engineering",
+            glbTotalnts[7]
+          ],
+          [
+            "Fine Arts",
+            glbTotalnts[9]
+          ],
+          [
+            "ITE",
+            glbTotalnts[12]
+          ],
+          [
+            "Math_Psyc",
+            glbTotalnts[14]
+          ],
+          [
+            "PAHB",
+            glbTotalnts[15]
+          ],
+          [
+            "Sondheim",
+            glbTotalnts[22]
+          ],
+          [
+            "Physics",
+            glbTotalnts[18]
+          ],
+          
+          [
+            "Public Policy",
+            glbTotalnts[20]
+          ]
+        ]
+      
+      },
+      {
+        "name": "Support Facilities",
+        "id": "Support Facilities",
+        "data": [
+          [
+            "RAC",
+            glbTotalnts[21]
+          ],
+          
+          [
+            "AOK Library",
+            glbTotalnts[13]
+          ],
+          [
+            "Commons",
+            glbTotalnts[5]
+          ],
+          [
+            "University Center",
+            glbTotalnts[25]
+          ],
+          [
+            "Dinning",
+            glbTotalnts[6]
+          ]
+        ]
+      }
+
+    ]
+  }
+});
+
+    /*Highcharts.chart('bar2container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Devices Count for Each Building'
+    },
+    subtitle: {
+        text: 'School Info: <a href="https://www.umbc.edu/">umbc.edu</a>'
+    },
+    xAxis: {
+        type: 'category',  
+        labels: {
+            rotation: -45,
+            style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+            }
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Devices Number by Building'
+        }
+    },
+    legend: {
+        enabled: false
+    },
+    tooltip: {
+        pointFormat: 'Devise count: <b>{point.y:.1f}</b>'
+    },
+    series: [{
+        name: 'Devise Number',
+        data: [
+            ['Academic IV', glbTotalnts[0]],
+            ['Administration', glbTotalnts[1]],
+            ['Biology', glbTotalnts[2]],
+            ['Chemistry', glbTotalnts[3]],
+            ['Chesapeake', glbTotalnts[4]],
+            ['Commons', glbTotalnts[5]],
+            ['Dining Hall', glbTotalnts[6]],
+            ['Engineering', glbTotalnts[7]],
+            ['Erickson Hall', glbTotalnts[8]],
+            ['Fine Arts', glbTotalnts[9]],
+            ['Harbor Hall', glbTotalnts[10]],
+            ['Hillside', glbTotalnts[11]],
+            ['ITE', glbTotalnts[12]],
+            ['Library', glbTotalnts[13]],
+            ['Math_Psyc', glbTotalnts[14]],
+            ['PAHB', glbTotalnts[15]],
+            ['Patapsco', glbTotalnts[16]],
+            ['Patapsco Addition', glbTotalnts[17]],
+            ['Physics', glbTotalnts[18]],
+            ['Potomac Hall', glbTotalnts[19]],
+            ['Public Policy',glbTotalnts[20]],
+            ['RAC', glbTotalnts[21]],
+            ['Sondheim', glbTotalnts[22]],
+            ['Susquehanna', glbTotalnts[23]],
+            ['Terrace',glbTotalnts[24]],
+            ['University Center', glbTotalnts[25]],
+            ['Walker AVE North', glbTotalnts[26]],
+            ['Walker AVE South', glbTotalnts[27]],
+            ['Westhills', glbTotalnts[28]]
+        ],
+        dataLabels: {
+            enabled: true,
+            rotation: -90,
+            color: '#FFFFFF',
+            align: 'right',
+            format: '{point.y:.1f}', // one decimal
+            y: 10, // 10 pixels down from the top
+            style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+            }
+        }
+    }]
+});*/
+
+
+var resareatotal = glbTotalnts[4]+glbTotalnts[8]+glbTotalnts[10]+glbTotalnts[11]+glbTotalnts[16]+glbTotalnts[17]+glbTotalnts[19]+glbTotalnts[23]+glbTotalnts[24]+glbTotalnts[26]+glbTotalnts[27]+glbTotalnts[28];
+var resareaper = Math.round(resareatotal/dashtotal*100*100)/100;
+var acdareatotal = glbTotalnts[0]+glbTotalnts[1]+glbTotalnts[2]+glbTotalnts[3]+glbTotalnts[7]+glbTotalnts[9]+glbTotalnts[12]+glbTotalnts[14]+glbTotalnts[15]+glbTotalnts[22]+glbTotalnts[18] + glbTotalnts[20];
+var acdareaper = Math.round(acdareatotal/dashtotal*10000)/100;
+var colors = Highcharts.getOptions().colors,
+  categories = [
+    "Residential <br /> Buildings",
+    "Academic <br /> Buildings",
+    "Support <br /> Facilities",
+  ],
+  data = [
+    {
+      "y": resareaper,
+      "color": colors[0],
+      "drilldown": {
+        "name": "Residential Buildings",
+        "categories": [
+          "Chesapeake",
+          "Erickson Hall",
+          "Harbor Hall",
+          "Hillside",
+          "Patapsco",
+          "Patapsco Addition",
+          "Potomac",
+          "Susquehanna",
+          "Terrace",
+          "Walker AVE North",
+          "Walker AVE South",
+          "Westhills"
+        ],
+        "data": [
+          Math.round(glbTotalnts[4]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[8]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[10]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[11]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[16]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[17]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[19]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[23]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[24]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[26]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[27]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[28]/dashtotal*10000)/100
+        ]
+      }
+    },
+    {
+      "y": acdareaper,
+      "color": colors[1],
+      "drilldown": {
+        "name": "Academic Buildings",
+        "categories": [
+          "Academic IV",
+          "Administration Building",
+          "Biology",
+          "Chemistry",
+          "Engineering",
+          "Fine Arts",
+          "ITE",
+          "Math_Psyc",
+          "PAHB",
+          "Sondheim",
+          "Physics",
+          "Public Policy"
+        ],
+        "data": [
+          Math.round(glbTotalnts[0]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[1]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[2]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[3]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[7]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[9]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[12]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[14]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[15]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[22]/dashtotal*10000)/100,
+         Math.round(glbTotalnts[18]/dashtotal*10000)/100,
+         Math.round(glbTotalnts[20]/dashtotal*10000)/100
+        ]
+      }
+    },
+    {
+      "y": Math.round((glbTotalnts[25]+glbTotalnts[21]+glbTotalnts[13]+glbTotalnts[5]+glbTotalnts[6])/dashtotal*10000)/100 ,
+      "color": colors[2],
+      "drilldown": {
+        "name": "Support Facilities",
+        "categories": [
+          "University Center",
+          "RAC",
+          "AOK Library",
+          "Commons",
+          "Dinning Hall"
+
+        ],
+        "data": [
+         Math.round(glbTotalnts[25]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[21]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[13]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[5]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[6]/dashtotal*10000)/100,
+        ]
+      }
+    },
+    
+    
+    
+  ],
+  browserData = [],
+  versionsData = [],
+  i,
+  j,
+  dataLen = data.length,
+  drillDataLen,
+  brightness;
+
+
+// Build the data arrays
+for (i = 0; i < dataLen; i += 1) {
+
+  // add browser data
+  browserData.push({
+    name: categories[i],
+    y: data[i].y,
+    color: data[i].color
+  });
+
+  // add version data
+  drillDataLen = data[i].drilldown.data.length;
+  for (j = 0; j < drillDataLen; j += 1) {
+    brightness = 0.2 - (j / drillDataLen) / 5;
+    versionsData.push({
+      name: data[i].drilldown.categories[j],
+      y: data[i].drilldown.data[j],
+      color: Highcharts.Color(data[i].color).brighten(brightness).get()
+    });
+  }
+}
+
+// Create the chart
+Highcharts.chart('piecontainer', {
+  chart: {
+    type: 'pie'
+  },
+  title: {
+    text: 'Devices Count Percentage Pie Chart'
+  },
+  subtitle: {
+    text: 'School Info: <a href="https://www.umbc.edu/" target="_blank">umbc.edu</a>'
+  },
+  yAxis: {
+    title: {
+      text: 'Total percent building/area share'
+    }
+  },
+  plotOptions: {
+    pie: {
+      shadow: false,
+      center: ['50%', '50%']
+    }
+  },
+  tooltip: {
+    valueSuffix: '%'
+  },
+  series: [{
+    name: 'Areas',
+    data: browserData,
+    size: '60%',
+    dataLabels: {
+      formatter: function () {
+        return this.y > 5 ? this.point.name : null;
+      },
+      color: '#ffffff',
+      distance: -30
+    }
+  }, {
+    name: 'Buildings',
+    data: versionsData,
+    size: '80%',
+    innerSize: '60%',
+    dataLabels: {
+      formatter: function () {
+        // display only if larger than 1
+        return this.y > 1 ? '<b>' + this.point.name + ':</b> ' +
+          this.y + '%' : null;
+      }
+    },
+    id: 'versions'
+  }],
+  responsive: {
+    rules: [{
+      condition: {
+        maxWidth: 400
+      },
+      chartOptions: {
+        series: [{
+          id: 'versions',
+          dataLabels: {
+            enabled: false
+          }
+        }]
+      }
+    }]
+  }
+});
+
+}
+
+function getdashsum(){
+  dashtotal = 0;
+  for (var i = 0; i < glbTotalnts.length; i++){
+    dashtotal += glbTotalnts[i];
+  }
+  document.getElementById("dashtotal").innerHTML = dashtotal;
+  console.log("here");
+  console.log(dashtotal);
+}
+
 </script>
 
 <body class="w3-light-grey">
 <div id="loading">
-  <img id="loading-image" src="images/ajax-loader.gif" alt="Loading..." />
+  <img id="loading-image" src="Loading_icon.gif" alt="Loading..." />
 </div>
 
 <!-- Top container -->
@@ -314,33 +832,11 @@ function getPoints(block)
     
 	
 		$( "#apply1" ).on( "click", function() 
-		{initMap(start= startDate.value, end= EndDate.value);
-
-          new Chart(document.getElementById("bar-chart"), {
-    type: 'bar',
-    data: {
-      labels: Object.keys(glbBuilds),
-      datasets: [
-        {
-          label: "Devices number",
-          backgroundColor: ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
-      '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
-      '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
-      '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
-      '#66994D', '#B366CC', '#4D8000', '#B33300', '#00b38d',
-      '#00b334', '#b30026', '#0080b3', '#80b300'],
-          data: glbTotalnts
-        }
-      ]
-    },
-    options: {
-      legend: { display: false },
-      title: {
-        display: true,
-        text: 'Devices per Building'
-      }
-    }
-})
+		{
+		initMap(start= startDate.value, end= EndDate.value, startHour= ((StartTime.value).split(":")[0] ) ,endHour= ( (EndTime.value).split(":")[0] ) );
+		//getdashsum();
+		//getbarcharts();
+    
     });
 
 		
@@ -366,32 +862,10 @@ function getPoints(block)
 				 
 				changeRadius();
 				changeOpacity();
-		
-    new Chart(document.getElementById("bar-chart"), {
-    type: 'bar',
-    data: {
-      labels: Object.keys(glbBuilds),
-      datasets: [
-        {
-          label: "Devices number",
-          backgroundColor: ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
-      '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
-      '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
-      '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
-      '#66994D', '#B366CC', '#4D8000', '#B33300', '#00b38d',
-      '#00b334', '#b30026', '#0080b3', '#80b300'],
-          data: glbTotalnts
-        }
-      ]
-    },
-    options: {
-      legend: { display: false },
-      title: {
-        display: true,
-        text: 'Devices per Building'
-      }
-    }
-})
+		  getdashsum();
+       getbarcharts();
+       
+    
     }
 
 		);
@@ -420,32 +894,8 @@ function getPoints(block)
 				
 			changeRadius();
 			changeOpacity();
-
-      new Chart(document.getElementById("bar-chart"), {
-    type: 'bar',
-    data: {
-      labels: Object.keys(glbBuilds),
-      datasets: [
-        {
-          label: "Devices number",
-          backgroundColor: ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
-      '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
-      '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
-      '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
-      '#66994D', '#B366CC', '#4D8000', '#B33300', '#00b38d',
-      '#00b334', '#b30026', '#0080b3', '#80b300'],
-          data: glbTotalnts
-        }
-      ]
-    },
-    options: {
-      legend: { display: false },
-      title: {
-        display: true,
-        text: 'Devices per Building'
-      }
-    }
-})
+      getdashsum();
+      getbarcharts();
 				
 				}
 		else
@@ -459,18 +909,23 @@ function getPoints(block)
 	$( "button" ).button()});
 		
     </script>
-	
+    <script type="text/javascript">
+    	let today = new Date().toISOString().substr(0, 10);
+document.querySelector("#StartDate").value = today;
+</script>
+
 
     <hr>
      
      <p> <label class = container> <h3> Date Picker </h3> </label></p>
-     <div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start Date: &nbsp&nbsp <input type="date" id="startDate" ></div>
+     <div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start Date: &nbsp&nbsp <input id="startDate" type="date"  ></div>
   <div> &nbsp&nbsp&nbsp End Date:  &nbsp&nbsp&nbsp&nbsp<input type="date" id="EndDate" ></div>
 
   <p>
   <button id="apply1">Generate New Date Stats</button>
 </p>
  
+
 
   <hr>
 
@@ -481,7 +936,7 @@ Choose a time frame
 </b></p>
 
 	<div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start time: &nbsp&nbsp <br> <input type="time" id="StartTime" value="00:00:00"></div>
-	<div> &nbsp&nbsp&nbsp End time:  &nbsp&nbsp&nbsp&nbsp&nbsp <br> <input type="time" id="EndTime" value="01:00:00"></div>
+	<div> &nbsp&nbsp&nbsp End time:  &nbsp&nbsp&nbsp&nbsp&nbsp <br> <input type="time" id="EndTime" value="00:00:00"></div>
 	
 <p>
   <button id="apply2">View New Time Stats</button>
@@ -517,15 +972,17 @@ Choose a time frame
   <div class="w3-row-padding w3-margin-bottom">
     <div class="w3-quarter">
       <div class="w3-container w3-red w3-padding-16">
-        <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
+        <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
         <div class="w3-right">
-          <h3>52</h3>
+          <h3><span id="dashtotal"></span></p></h3>
         </div>
         <div class="w3-clear"></div>
-        <h4>Messages</h4>
+        <h4>Total Devices Number</h4>
       </div>
     </div>
-    <div class="w3-quarter">
+  </div>
+
+    <!---<div class="w3-quarter">
       <div class="w3-container w3-blue w3-padding-16">
         <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
         <div class="w3-right">
@@ -555,7 +1012,7 @@ Choose a time frame
         <h4>Users</h4>
       </div>
     </div>
-  </div>
+  </div>--->
 
   
     <div class="w3-panel" id="mapPanel">
@@ -563,6 +1020,7 @@ Choose a time frame
         <div class="w3-half">
           <h5>Map</h5>
          
+
       <div id="map" class="container" style="width:1000px;height:800px" alt="Crime map of Baltimore">
      <!-- <div id="map" class="fill" alt="Crime map of Baltimore"</div> -->
       </div>
@@ -572,13 +1030,12 @@ Choose a time frame
 <hr>
 
 
-<canvas id="bar-chart" width="600" height="350"></canvas>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<script type="text/javascript">
+
+<!--<script type="text/javascript">
   // Bar chart
  
- 
+  
  $( function() {
  
  
@@ -588,102 +1045,43 @@ Choose a time frame
 
 console.log(getValues());
 
+ getdashsum(); 
+getbarcharts();
+                                                                                                                                               
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 
 
-new Chart(document.getElementById("bar-chart"), {
-    type: 'bar',
-    data: {
-      labels: Object.keys(glbBuilds),
-      datasets: [
-        {
-          label: "Devices number",
-          backgroundColor: ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
-      '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
-      '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
-      '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
-      '#66994D', '#B366CC', '#4D8000', '#B33300', '#00b38d',
-      '#00b334', '#b30026', '#0080b3', '#80b300'],
-          data: glbTotalnts
-        }
-      ]
-    },
-    options: {
-      legend: { display: false },
-      title: {
-        display: true,
-        text: 'Devices per Building'
-      }
-    }
-});});
+
 
 $( "button" ).button()});
 </script> </script>
 
  <div class="w3-container">
 <p>
-  <button class="w3-button w3-dark-grey" id="apply4" ></i>Show Bar Chart </button>
+  <button class="w3-button w3-dark-grey" id="apply4" ></i>Show More </button>
 </p>
-  </div>
+  </div>-->
 
-  <div class="w3-container">
-    <h5>Countries</h5>
-    <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
-      <tr>
-        <td>United States</td>
-        <td>65%</td>
-      </tr>
-      <tr>
-        <td>UK</td>
-        <td>15.7%</td>
-      </tr>
-      <tr>
-        <td>Russia</td>
-        <td>5.6%</td>
-      </tr>
-      <tr>
-        <td>Spain</td>
-        <td>2.1%</td>
-      </tr>
-      <tr>
-        <td>India</td>
-        <td>1.9%</td>
-      </tr>
-      <tr>
-        <td>France</td>
-        <td>1.5%</td>
-      </tr>
-    </table><br>
-    <button class="w3-button w3-dark-grey">More Countries  <i class="fa fa-arrow-right"></i></button>
-  </div>
-  <hr>
-  <div class="w3-container">
-    <h5>Recent Users</h5>
-    <ul class="w3-ul w3-card-4 w3-white">
-      <li class="w3-padding-16">
-        <!--<img src="/w3images/avatar2.png" class="w3-left w3-circle w3-margin-right" style="width:35px"> No link to file -->
-        <span class="w3-xlarge">Mike</span><br>
-      </li>
-      <li class="w3-padding-16">
-        <!--<img src="/w3images/avatar5.png" class="w3-left w3-circle w3-margin-right" style="width:35px"> No link to file -->
-        <span class="w3-xlarge">Jill</span><br>
-      </li>
-      <li class="w3-padding-16">
-       <!--  <img src="/w3images/avatar6.png" class="w3-left w3-circle w3-margin-right" style="width:35px"> No link to file -->
-        <span class="w3-xlarge">Jane</span><br>
-      </li>
-    </ul>
-  </div>
-  <hr>
+  <h5>&nbsp Charts</h5>
+
+<div id="barcontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
+
+
+<!--<div id="bar2container" style="min-width: 300px; height: 400px; margin: 0 auto"></div>-->
+
+<div id="piecontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
+
+
 
   
+  
 
-  <!-- Footer -->
+  <!-- Footer 
   <footer class="w3-container w3-padding-16 w3-light-grey">
-    <h4>FOOTER</h4>
     <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
   </footer>
 
-  <!-- End page content -->
+End page content -->
 </div>
 
 <script>
@@ -711,11 +1109,15 @@ function w3_close() {
 }
 </script>
 
+
+
 <script language="javascript" type="text/javascript">
      $(window).load(function() {
      $('#loading').hide();
   });
 </script>
+
+
 
 </body>
 </html>
