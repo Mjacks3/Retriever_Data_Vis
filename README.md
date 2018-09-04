@@ -1,1 +1,12 @@
-# Retriever_Data_Vis
+#Retriever Data Visualization Project
+
+
+##Background
+
+
+
+##Usage 
+
+###Requirements
+
+###Startup
