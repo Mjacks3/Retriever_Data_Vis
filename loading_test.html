@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 /* Center the loader */
 #loader {
@@ -56,26 +55,34 @@
 }
 </style>
 </head>
-<body onload="myFunction()" style="margin:0;">
 
+<body>
+
+<p>Count numbers: <output id="result"></output></p>
+<button onclick="showloader()">Start Worker</button> 
+<button onclick="showPage()">Stop Worker</button>
+
+<p><strong>Note:</strong> Internet Explorer 9 and earlier versions do not support Web Workers.</p>
 <div id="loader"></div>
 
 <div style="display:none;" id="myDiv" class="animate-bottom">
   <h2>Tada!</h2>
   <p>Some text in my newly loaded page..</p>
 </div>
-
 <script>
-var myVar;
 
-function myFunction() {
-    myVar = setTimeout(showPage, 3000);
+function showloader() {
+  document.getElementById("loader").style.display = "inline";
+  document.getElementById("myDiv").style.display = "none";
 }
+
 
 function showPage() {
   document.getElementById("loader").style.display = "none";
   document.getElementById("myDiv").style.display = "block";
 }
+
+
 </script>
 
 </body>

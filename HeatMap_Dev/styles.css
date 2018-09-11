@@ -31,6 +31,7 @@ html, body {
   top: 10px;
   z-index: 5;
 }
+
 #loader {
   position: absolute;
   left: 50%;
@@ -46,6 +47,7 @@ html, body {
   height: 120px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
+  display: none;
 }
 
 @-webkit-keyframes spin {
@@ -78,6 +80,6 @@ html, body {
 }
 
 #myDiv {
-  display: none;
+  display: block;
   text-align: center;
 }

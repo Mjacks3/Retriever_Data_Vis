@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- <link href="HeatMap_Dev/styles.css" rel="stylesheet" type="text/css"> --->
+<link href="HeatMap_Dev/styles.css" rel="stylesheet" type="text/css"> 
 
 
 <!-- Linked Javascript  -->
@@ -769,21 +769,34 @@ function getdashsum(){
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
      <script type="text/javascript">
-		
+				function showloader() {
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("myDiv").style.display = "none";
+}
+
+
+function showPage() {
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("myDiv").style.display = "block";
+}
+
     $( function() {
     
 	
 		$( "#apply1" ).on( "click", function() 
 		{
+		showloader();
 		initMap(start= startDate.value, end= EndDate.value, startHour= ((StartTime.value).split(":")[0] ) ,endHour= ( (EndTime.value).split(":")[0] ) );
 		//getdashsum();
 		//getbarcharts();
+		showPage();
     
     });
 
 		
 		$( "#apply2" ).on( "click", function() 
 		{
+		   showloader();
 			map = new google.maps.Map(document.getElementById('map'), {
 				zoom: 16.5,
 				center: {lat: 39.2558715, lng: -76.7118267},
@@ -806,7 +819,7 @@ function getdashsum(){
 				changeOpacity();
 		  getdashsum();
        getbarcharts();
-       
+       showPage();
     
     }
 
@@ -817,7 +830,7 @@ function getdashsum(){
 		var spinner = $( "#spinner" ).spinner();
 		$( "#apply3" ).on( "click", function() 
 		{
-		
+		showloader();
 		if (spinner.spinner("value") != null){
 		
 			map = new google.maps.Map(document.getElementById('map'), {
@@ -838,6 +851,7 @@ function getdashsum(){
 			changeOpacity();
       getdashsum();
       getbarcharts();
+      showPage();
 				
 				}
 		else
@@ -850,6 +864,7 @@ function getdashsum(){
 		
 	$( "button" ).button()});
 		
+
     </script>
     <script type="text/javascript">
     	let today = new Date().toISOString().substr(0, 10);
@@ -893,7 +908,7 @@ Choose a time frame
   <input id="spinner" name="value">
 </p>
 
-  <button id="apply3">View New Time Stats</button>
+  <button  id="apply3">View New Time Stats</button>
 
     <hr>
   </div>
@@ -904,7 +919,8 @@ Choose a time frame
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+<div id="loader"></div>
+<div id="myDiv" class="w3-main" style="margin-left:300px;margin-top:43px;">
 
   <!-- Header -->
   <header class="w3-container" style="padding-top:22px">
