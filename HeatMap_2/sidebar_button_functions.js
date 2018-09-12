@@ -1,20 +1,20 @@
 function datePickerButton() 
 {
-    showloader();
+    //showloader();
     initMap(start= startDate.value,end= EndDate.value, 
     startHour = ((StartTime.value).split(":")[0] ),
     endHour = ( (EndTime.value).split(":")[0] ) );
     
     //getdashsum();
     //getbarcharts();
-    showPage();
+    //showPage();
     };
     
     
 
 function time1Picker() 
 {    
-    showloader();
+    //showloader();
 	 map = new google.maps.Map(document.getElementById('map'),
 	 {
         zoom: 16.5,
@@ -38,13 +38,14 @@ function time1Picker()
 	changeOpacity();
 	getdashsum();
    getbarcharts();
-   showPage();
+   //showPage();
 }
 
-var spinner = $( "#spinner" ).spinner();
+
+
 function time2Picker()
 {
-    showloader();
+    //showloader();
     
     if (spinner.spinner("value") != null)
     {	
@@ -68,7 +69,7 @@ function time2Picker()
         changeOpacity();
         getdashsum();
         getbarcharts();
-        showPage();
+        //showPage();
     }
     else
     {
@@ -84,5 +85,3 @@ function requestBarChart()
 }                                                                                                                                          
 
 
-let today = new Date().toISOString().substr(0, 10);
-document.querySelector("#StartDate").value = today;
