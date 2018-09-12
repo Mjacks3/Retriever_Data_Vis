@@ -6,6 +6,6 @@ function showloader()
 
 function showPage() 
 {
-    document.getElementById("loader").style.display = "block";
+    document.getElementById("loader").style.display = "none";
     document.getElementById("myDiv").style.display = "block";
 }

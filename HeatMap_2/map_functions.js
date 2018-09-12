@@ -10,7 +10,7 @@ function getValues()
 
 function initMap(start=null, end=null, startHour = 0, endHour = 0)
 {
-    
+    setTimeout(function(){
     map = new google.maps.Map(document.getElementById('map'), 
         {
             zoom: 16.5,
@@ -35,6 +35,9 @@ function initMap(start=null, end=null, startHour = 0, endHour = 0)
     glbBuilds = builds;
     getdashsum();
     getbarcharts();
+    
+     showPage();}, 500)
+    showloader();
 }
 	
 

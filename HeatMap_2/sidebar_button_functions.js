@@ -1,20 +1,15 @@
 function datePickerButton() 
 {
-    //showloader();
     initMap(start= startDate.value,end= EndDate.value, 
     startHour = ((StartTime.value).split(":")[0] ),
     endHour = ( (EndTime.value).split(":")[0] ) );
-    
-    //getdashsum();
-    //getbarcharts();
-    //showPage();
-    };
+};
     
     
 
 function time1Picker() 
 {    
-    //showloader();
+    setTimeout(function(){
 	 map = new google.maps.Map(document.getElementById('map'),
 	 {
         zoom: 16.5,
@@ -22,9 +17,10 @@ function time1Picker()
         mapTypeId: 'satellite' 
 	 });
 				
-	 data = dataGeneration(builds,
+	 data = timeframeOrganization(builds,
 	 startHour = ((StartTime.value).split(":")[0]),
 	 endHour = ((EndTime.value).split(":")[0] ));
+	 
 	 block = data[0];
 	 glbTotalnts = data[1];
 			
@@ -38,14 +34,16 @@ function time1Picker()
 	changeOpacity();
 	getdashsum();
    getbarcharts();
-   //showPage();
+   
+   showPage();}, 500)
+   showloader(); 
 }
 
 
 
 function time2Picker()
 {
-    //showloader();
+    setTimeout(function(){
     
     if (spinner.spinner("value") != null)
     {	
@@ -55,7 +53,7 @@ function time2Picker()
     				center: {lat: 39.2558715, lng: -76.7118267},
     				mapTypeId: 'satellite'  
             });
-        data = dataGeneration(builds,spinner.spinner("value") - 1,
+        data = timeframeOrganization(builds,spinner.spinner("value") - 1,
         spinner.spinner("value"));
 			
         block = data[0];
@@ -75,6 +73,9 @@ function time2Picker()
     {
         alert("Invalid Time format");
     }
+    
+    showPage();}, 500)
+    showloader(); 
 }
 
 function requestBarChart()
