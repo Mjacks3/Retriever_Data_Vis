@@ -3,53 +3,23 @@
 <title>CMX AP Related UMBC Student Analysis</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Linked Styles -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="HeatMap_Dev/styles.css" rel="stylesheet" type="text/css"> 
 
+
+<!-- Linked Javascript  -->
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/data.js"></script>
 <script src="https://code.highcharts.com/modules/drilldown.js"></script>
-
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
-
-<style>
-#loading {
-   width: 100%;
-   height: 100%;
-   top: 0;
-   left: 0;
-   position: fixed;
-   display: block;
-   opacity: 0.7;
-   background-color: #fff;
-   z-index: 99;
-   text-align: center;
-}
-
-#loading-image {
-  position: absolute;
-  top: 180px;
-  left: 475px;
-  z-index: 400;
-}
-</style>
-<!-- styles are here -->
-<!--<link href="styles/style2.css" rel="stylesheet" type="text/css"> No file included yet
-<link href="c3-0.5.3/c3.css" rel="stylesheet"> -->
-
-<!-- javascript functions goes here
- <script type="text/javascript" src="fusioncharts/js/fusioncharts.js"></script>
- <script type="text/javascript" src="fusioncharts/js/themes/fusioncharts.theme.ocean.js"></script>  -->
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyBxevA7di7Avo5vGKAgPPSkJa8ud4gnI&callback=initMap&libraries=visualization"></script>
- 
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
-
-
- 
-
 <script type="text/javascript">
 
 var glbBuilds; 
@@ -57,41 +27,36 @@ var glbTotalnts;
 var devisenum1;
 var dashtotal = 0;
 
-function initMap(start=null, end=null, startHour = 0, endHour = 0) {
-  console.log("Entered InitMap Function");
-  map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 16.5,
-    center: {lat: 39.2558715, lng: -76.7118267},
-    mapTypeId: 'satellite'
-  });
+function initMap(start=null, end=null, startHour = 0, endHour = 0)
+    {
+    map = new google.maps.Map(document.getElementById('map'), 
+      {
+        zoom: 16.5,
+        center: {lat: 39.2558715, lng: -76.7118267},
+        mapTypeId: 'satellite'
+      });
    
-   builds = cmx(start, end);
-   data = dataGeneration(builds,startHour,endHour);
-   
-   block = data[0];
-   glbTotalnts = data[1];
-   devisenum1 = glbTotalnts[0];
-   
-	heatmap = new google.maps.visualization.HeatmapLayer({
-    data: getPoints(block),
-    map: map  
+    builds = cmx(start, end);
+    data = dataGeneration(builds,startHour,endHour);
+    block = data[0];
+    glbTotalnts = data[1];
+    devisenum1 = glbTotalnts[0];
+    heatmap = new google.maps.visualization.HeatmapLayer
+    ({
+        data: getPoints(block),
+        map: map  
+    })
 	
-	
- })
-	
- changeRadius();
- changeOpacity();
- console.log("Exiting InitMap Function");
- glbBuilds = builds;
- getdashsum();
-getbarcharts();
-}
-function getValues(){
+    changeRadius();
+    changeOpacity();
+    glbBuilds = builds;
+    getdashsum();
+    getbarcharts();
+    }
 
-return glbBuilds;
-}
+function getValues(){return glbBuilds;}
+
 function cmx(start=null, end=null) {
-	console.log("Entered CMX Function");
 	var mid = "";
 	
 	if (start == null || end == null)
@@ -100,10 +65,12 @@ function cmx(start=null, end=null) {
 		end = "day";
 		
 	}
+	
 	else
 	{
 		mid = "%3B" ;
 	}
+	
     var xhttp = new XMLHttpRequest();
     var restURL= "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
         "areas=118%2C185%2C304%2C488%2C587%"+
@@ -122,10 +89,8 @@ function cmx(start=null, end=null) {
     xhttp.open("GET",restURL, false,"admin","HiddenFortress1958");
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
-    // Get the raw header string
     var response = JSON.parse(xhttp.responseText);
-	console.log("Output"); 
-	
+
 	var builds; 
 	builds = {};
 	var ix;
@@ -133,7 +98,6 @@ function cmx(start=null, end=null) {
 	{
 		var captures;
 		captures = new Array(24).fill(0);
-		
 		var ind;
 		for (ind = 0; ind < response["results"][ix]["data"].length ;ind++)
 		{
@@ -141,12 +105,7 @@ function cmx(start=null, end=null) {
 		}
 		builds[response["results"][ix]["area"]] = [captures];
 	}
-	/*
-	var jack;
-	jack = new Array(24).fill(0);
-	console.log(jack);
-	console.log( 1 % 24);
-	*/
+
 	builds['Chesapeake'].push([39.2567085,-76.7086843]);
 	builds['Public Policy'].push([39.255092,-76.7094311]);
 	builds['Administration'].push([39.2533135,-76.7136622]);
@@ -182,31 +141,21 @@ function cmx(start=null, end=null) {
 	builds['Westhills'].push([39.2583289,-76.71274]);
 	
 	console.log(builds);
-	console.log(Object.keys(builds));
-	console.log("Exiting CMX");
-	
+	console.log(Object.keys(builds));	
 	return builds;
 }
 
+
   function dataGeneration(builds, startHour = 0, endHour = 0) 
 {
-
 	startHour = new Number( startHour);
 	endHour = new Number(endHour);
-	
-	//return the added block for the chart later
-	
-	if  ( endHour == 0 ) 
-	{
-		endHour = 24;
-	}	
-
+	if ( endHour == 0 ) {endHour = 24;}	
 	if ( startHour > endHour ) 
 	{
 		alert("Invalid Time fomat");
 		return[[],[]];
 	}
-
 
 	if (startHour == endHour) 
 	{
@@ -215,7 +164,6 @@ function cmx(start=null, end=null) {
 	}
 	
 	
-
 	block = [] ;
 	totalCounts = [];
 		for (const [key, value] of Object.entries(builds))
@@ -232,14 +180,8 @@ function cmx(start=null, end=null) {
 			
 			var counter; 
 			for (counter = 0; counter < totalBucket ; counter ++)
-			{
-				block.push(value[1]);
-			}
-			
-			
+			{	block.push(value[1]);}	
 		}
-		console.log("Here's what's in block");
-		console.log(block);
 		return [block,totalCounts] ;
 		
 
@@ -827,21 +769,34 @@ function getdashsum(){
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
      <script type="text/javascript">
-		
+				function showloader() {
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("myDiv").style.display = "none";
+}
+
+
+function showPage() {
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("myDiv").style.display = "block";
+}
+
     $( function() {
     
 	
 		$( "#apply1" ).on( "click", function() 
 		{
+		showloader();
 		initMap(start= startDate.value, end= EndDate.value, startHour= ((StartTime.value).split(":")[0] ) ,endHour= ( (EndTime.value).split(":")[0] ) );
 		//getdashsum();
 		//getbarcharts();
+		showPage();
     
     });
 
 		
 		$( "#apply2" ).on( "click", function() 
 		{
+		   showloader();
 			map = new google.maps.Map(document.getElementById('map'), {
 				zoom: 16.5,
 				center: {lat: 39.2558715, lng: -76.7118267},
@@ -864,7 +819,7 @@ function getdashsum(){
 				changeOpacity();
 		  getdashsum();
        getbarcharts();
-       
+       showPage();
     
     }
 
@@ -875,7 +830,7 @@ function getdashsum(){
 		var spinner = $( "#spinner" ).spinner();
 		$( "#apply3" ).on( "click", function() 
 		{
-		
+		showloader();
 		if (spinner.spinner("value") != null){
 		
 			map = new google.maps.Map(document.getElementById('map'), {
@@ -896,6 +851,7 @@ function getdashsum(){
 			changeOpacity();
       getdashsum();
       getbarcharts();
+      showPage();
 				
 				}
 		else
@@ -908,6 +864,7 @@ function getdashsum(){
 		
 	$( "button" ).button()});
 		
+
     </script>
     <script type="text/javascript">
     	let today = new Date().toISOString().substr(0, 10);
@@ -951,7 +908,7 @@ Choose a time frame
   <input id="spinner" name="value">
 </p>
 
-  <button id="apply3">View New Time Stats</button>
+  <button  id="apply3">View New Time Stats</button>
 
     <hr>
   </div>
@@ -962,7 +919,8 @@ Choose a time frame
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+<div id="loader"></div>
+<div id="myDiv" class="w3-main" style="margin-left:300px;margin-top:43px;">
 
   <!-- Header -->
   <header class="w3-container" style="padding-top:22px">
