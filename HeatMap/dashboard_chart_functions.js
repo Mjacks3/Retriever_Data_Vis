@@ -423,6 +423,11 @@ function getdashsum(){
     dashtotal += glbTotalnts[i];
   }
   document.getElementById("dashtotal").innerHTML = dashtotal;
-  console.log("here");
-  console.log(dashtotal);
 }
+
+function requestBarChart()
+{
+    getdashsum(); 
+    getbarcharts();     
+}                                                                                                                                          
+
