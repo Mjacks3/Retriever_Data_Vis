@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="styles.css" rel="stylesheet" type="text/css"> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 
 <!-- Linked Javascript  -->
@@ -24,71 +25,82 @@
 <script type="text/javascript" src="content_loading_functions.js"></script>
 <script type="text/javascript" src="dashboard_chart_functions.js"></script>
 <script type="text/javascript" src="map_functions.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- Link ur files <script type="text/javascript"> -->
 
 
 <body class="w3-light-grey">
 
-<!-- Top container -->
-<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+<!--------------------------- Top container  --------------------------------->
+<div class="w3-bar w3-top w3-black w3-large"   style="z-index:4">
 <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
 <span class="w3-bar-item w3-right">DoitVis</span>
 </div>
+<!--------------------------- End/ Top container  ---------------------------->
 
-<!-- Sidebar/menu -->
+<!--------------------------- Sidebar/menu  ---------------------------------->
 <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+
 <div class="w3-container w3-row">
-<hr>
 <div class="w3-container">
-<h3>Retriever Data Visualization</h3>
+<h3>Retriever Data Visualization_TEST</h3>
 </div>
 
+<hr>
+
+<!--------------------------- Date Selector  --------------------------------->
 <div class="w3-bar-block">
-<a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-<hr>
+<h3> Date Selector </h3>
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<hr>
-<p> <label class = container> <h3> Date Picker </h3> </label></p>
-<div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start Date: &nbsp&nbsp <input id="startDate" type="date"  ></div>
-<div> &nbsp&nbsp&nbsp End Date:  &nbsp&nbsp&nbsp&nbsp<input type="date" id="EndDate" ></div>
 <p>
-<button id="apply1" onclick="datePickerButton();">Generate New Date Stats</button>
+<div>Start Date: &nbsp&nbsp 
+<input type="date" id="startDate" ></div>
+</p>
+
+<p>
+<div>End Date:  &nbsp&nbsp
+ <input type="date" id="endDate" ></div>
+</p>
+
+<p>
+<button id="apply1" onclick="datePickerButton();">Generate Report</button>
 </p>
 <hr>
 
+
+<!--------------------------- Time Views  ------------------------------------>	
+<h3> Time Views </h3>
+
+<p>
+<b>Total Time View </b>
+<button id="apply2" onclick="time0Picker();"> Generate Total View </button>
+</p> 
+<hr>
 	
-<p><h3>	<label class = container> Filter Time of Day:</label>  </h3></p>
-<p><b>
-Choose a time frame 
-</b></p>
-<div style = "margin-bottom: 5px"> &nbsp&nbsp&nbsp Start time: &nbsp&nbsp <br> <input type="time" id="StartTime" value="00:00:00"></div>
-<div> &nbsp&nbsp&nbsp End time:  &nbsp&nbsp&nbsp&nbsp&nbsp <br> <input type="time" id="EndTime" value="00:00:00"></div>
-	
+<!---------------------------             ------------------------------------>	
 <p>
-<button id="apply2" onclick="time1Picker();">View New Statistics</button>
-</p>
-<p><b>
-  OR :
-</b></p>
- 
- 
-<p>
-<b> <label for="spinner">Select a probing point in time  :</label></b>
-<input id="spinner" max="24" min="1" name="value">
-</p>
+<b>Preset Views (Coming Soon)</b>
 
-<button  id="apply3"  onclick="time2Picker();">View New Statistics</button>
-
+<p>	
+<button id="apply2" onclick="time1Picker();">Generate Preset View</button>
+</p>
 <hr>
+
+<!------------------------                ------------------------------------>
+
+<p>
+<b>Top of Hour View</b>
+
+<input id="spinner" max="23" min="0" name="value">
+</p>
+
+<button  id="apply3"  onclick="time2Picker();">Top of Hour View</button>
 </div>
 </nav>
 
-
+<!--------------------------- End Sidebar/menu  ------------------------------>
 <!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+<div class="w3-overlay w3-hide-large w3-animate-opacity"  style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! loader myDiv-->
 
@@ -99,7 +111,7 @@ Choose a time frame
 
   <!-- Header -->
   <header class="w3-container" style="padding-top:22px">
-<h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+
   </header>
 
   <div class="w3-row-padding w3-margin-bottom">
@@ -117,9 +129,9 @@ Choose a time frame
 <div class="w3-panel" id="mapPanel">
   <div class="w3-row-padding" style="margin:0 -16px">
 <div class="w3-half">
-  <h5>Map</h5>
+  <h5>Map</h5> 
  
-  <div id="map" class="container" style="min-width:1050px ;height:600px; margin: 0 auto" alt="Wifi Usage"></div>
+  <div id="map" class="container" style="min-width:1050px ;height:600px; margin: 0 auto  " alt="Wifi Usage"></div>
   </div>
   </div>
   </div>
