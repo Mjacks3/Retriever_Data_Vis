@@ -1,53 +1,69 @@
-function datePickerButton() 
+function time0Picker() 
 {
-    initMap(start= startDate.value,end= EndDate.value, 
-    startHour = ((StartTime.value).split(":")[0] ),
-    endHour = ( (EndTime.value).split(":")[0] ) );
-};
-    
-
-function time2Picker()
-{
-    setTimeout(function(){
-    
-    if (spinner.spinner("value") != null)
-    {	
-        map = new google.maps.Map(document.getElementById('map'),
-            {
-    				zoom: 16.5,
-    				center: {lat: 39.2558715, lng: -76.7118267},
-    				mapTypeId: 'satellite'  
-            });
-        data = timeframeOrganization(builds,spinner.spinner("value") - 1,
-        spinner.spinner("value"));
-			
-        block = data[0];
-        glbTotalnts = data[1];
-			
-        heatmap = new google.maps.visualization.HeatmapLayer({
-        data: getPoints(block),
-        map: map})
-				
-        changeRadius();
-        changeOpacity();
-        getdashsum();
-        getbarcharts();
-        //showPage();
+    if (startDate.value == "" || endDate.value =="" )
+    {
+    console.log("Enetered today day time0");
+    initMap();
+    console.log("Finished today day time0");
     }
+    
     else
     {
-        alert("Invalid Time format");
+    console.log("Enetered selected day time0");
+    initMap(start = startDate.value, end = endDate.value )
+    console.log("Finished selected day time0");
+    }
+};
+     
+    
+function time1Picker() 
+{    
+    if (startDate.value == "" || endDate.value =="" )
+    {
+    console.log("Enetered today day time1");
+    initMap( start = null, end = null,
+    startHour = (StartTime.value).split(":")[0], 
+    endHour = ((EndTime.value).split(":")[0]));
+    console.log("Finished today day time1")
     }
     
-    showPage();}, 500)
-    showloader(); 
+    else
+    {
+    console.log("Enetered selected day time1");
+    initMap(
+    start = startDate.value, 
+    end = endDate.value,
+    startHour = (StartTime.value).split(":")[0], 
+    endHour = ((EndTime.value).split(":")[0]))
+    console.log("Finished selected day time1");
+    }
 }
 
-function requestBarChart()
-{
-    console.log(getValues());
-    getdashsum(); 
-    getbarcharts();     
-}                                                                                                                                          
 
-
+function time2Picker()
+{       
+    if (spinner.spinner("value") != null)
+    {
+        if (startDate.value == "" || endDate.value =="" )
+        {
+        console.log("Enetered today day time2");
+        initMap(start = null, end = null,
+        time_idx = spinner.spinner("value"), 
+        granularity = "hourly"
+        )
+         console.log("Finished today day time2");
+        }
+        
+        else
+        {
+        console.log("Enetered selected day time2");
+        initMap(
+        start = startDate.value, 
+        end = endDate.value,
+        time_idx = spinner.spinner("value"), 
+        granularity = "hourly")
+        console.log("Finished selected day time2");
+        }
+    
+    }
+}

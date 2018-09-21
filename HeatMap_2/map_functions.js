@@ -10,7 +10,7 @@ function getValues()
 }
 
 
-function initMap(start=null, end=null, startHour = 0, endHour = 0)
+function initMap(start=null, end=null, time_idx = 0 , granularity="Building")
 {
     setTimeout(function(){
     map = new google.maps.Map(document.getElementById('map'), 
@@ -19,9 +19,13 @@ function initMap(start=null, end=null, startHour = 0, endHour = 0)
             center: {lat: 39.2558715, lng: -76.7118267},
             mapTypeId: 'satellite'
         });
-   
-    builds = cmxDataRequest(start, end);
-    data = timeframeOrganization(builds,startHour,endHour);
+    
+    builds = cmxDataRequest(start,end,time_idx,granularity);
+    
+    console.log(builds)
+    data = timeframeOrganization(builds, time_idx);
+    console.log(data);
+    
     block = data[0];
     glbTotalnts = data[1];
     devisenum1 = glbTotalnts[0];
@@ -66,9 +70,6 @@ function initMap(start=null, end=null, startHour = 0, endHour = 0)
 
   infoWindow = new google.maps.InfoWindow;
 
-
-	
-	
     changeRadius();
     changeOpacity();
     glbBuilds = builds;
@@ -93,53 +94,48 @@ function showArrays(event) {
 
   infoWindow.open(map);
 }
-function cmxDataRequest(start=null, end=null)
+
+function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Building" )
 {
     var mid = "";	
+    
     
     if (start == null || end == null)
 	 {
         start = "to";
         end = "day";	
     }
-    else
-    {
-		mid = "%3B" ;
-    }
-	
+    else {mid = "%3B";}
+
+	 
     var xhttp = new XMLHttpRequest();
     var restURL= "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
         "areas=118%2C185%2C304%2C488%2C587%"+
-        "2C629%2C664%2C1025%2C1193%2C1206%2C1210%2C1260%2C1357"+
+        "2C629%2C664%2C1025%2C1118%2C1193%2C1206%2C1210%2C1260%2C1357"+
         "%2C1421%2C1875%2C1880%2C1564%2C1932%2C2354%2C2376%2C2398%2C2477"+
         "%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
         "timeRange=00%3A00-23%3A59&"+
         "period="+start +mid+ end+"&"+
-		  "granularity=hourly&"+
+        "granularity="+ granularity + "&"+
         "durationCategories=0-1440&"+
         "includeStationary=false&"+
-        "connectionState=all&"+
+        "connectionState=connected&"+
         "type=deviceCount&"+
         "_=1520953855762"
         
+       
     xhttp.open("GET",restURL, false,"admin","HiddenFortress1958");
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
     var response = JSON.parse(xhttp.responseText);
-
+    console.log(response);
     var builds; 
     builds = {};
     var ix;
     for (ix = 0; ix < response["results"].length ;ix++)
     {
-		var captures;
-		captures = new Array(24).fill(0);
-		var ind;
-		for (ind = 0; ind < response["results"][ix]["data"].length ;ind++)
-		{
-			captures[ ind % 24] = captures[ ind % 24] + response["results"][ix]["data"][ind]["value"];
-		}
-		builds[response["results"][ix]["area"]] = [captures];
+		builds[response["results"][ix]["area"]] = 
+    	[response["results"][ix]["data"][time_idx]["value"]];
     }
 
 	 builds['Chesapeake'].push([39.2567085,-76.7086843]);
@@ -148,6 +144,8 @@ function cmxDataRequest(start=null, end=null)
 	 builds['Library'].push([39.25623,-76.7118938]);
 	 builds['Biology'].push([39.2548479,-76.7122021]);
 	 builds['Erickson Hall'].push([39.2570091,-76.7096952]);
+	 builds['Event Center'].push([39.252432,-76.707563]);
+	 
 	 builds['Chemistry'].push([39.2548812,-76.7128226]);
 	
 	 builds['Math_Psyc'].push([39.2540944,-76.7125407]);
@@ -175,14 +173,31 @@ function cmxDataRequest(start=null, end=null)
 	 builds['Terrace'].push([39.2573399,-76.7112603]);
 	 builds['RAC'].push([39.2529955,-76.7128026]);
 	 builds['Westhills'].push([39.2583289,-76.71274]);
-	
-	 console.log(builds);
-	 console.log(Object.keys(builds));	
 	 return builds;
 }
 
 
-function timeframeOrganization(builds, startHour = 0, endHour = 0) 
+function timeframeOrganization(builds) 
+{
+	 lat_longs_block = [] ;
+	 totalCounts = [];
+	 
+	 for (const [key, value] of Object.entries(builds))
+	 {	  
+		  totalCounts.push(value[0]);
+	  
+		  var counter; 
+		  for (counter = 0; counter < value[0] ; counter ++)
+		  {	
+    		  lat_longs_block.push(value[1]);
+		  }	
+	  
+	 }
+    return [lat_longs_block, totalCounts] ;
+}
+
+
+function tOLDimeframeOrganization(builds, startHour = 0, endHour = 0) 
 {
 	 startHour = new Number( startHour);
 	 endHour = new Number(endHour);
@@ -218,6 +233,9 @@ function timeframeOrganization(builds, startHour = 0, endHour = 0)
 	 }
     return [block,totalCounts] ;
 }
+
+
+
 
 
 function toggleHeatmap() 
