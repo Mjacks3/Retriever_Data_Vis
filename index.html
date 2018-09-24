@@ -43,9 +43,9 @@
 
 <div class="w3-container w3-row">
 <div class="w3-container">
-<h3>Retriever Data Visualization_TEST</h3>
+<h2>RAVVS</h2>
+<h3>Retriever Analytics Visualization View</h3>
 </div>
-
 <hr>
 
 <!--------------------------- Date Selector  --------------------------------->
@@ -63,7 +63,6 @@
 </p>
 
 <p>
-<button id="apply1" onclick="datePickerButton();">Generate Report</button>
 </p>
 <hr>
 
@@ -78,22 +77,15 @@
 <hr>
 	
 <!---------------------------             ------------------------------------>	
-<p>
-<b>Custom Time View</b>
+<p> <b>Preset Views</b> </p>
 
-<p>
-<div>Start time: &nbsp&nbsp <br>
-<input type="time" id="StartTime" value="00:00:00"></div>
-</p>
+<form>
+<input type="radio" name="time" value="1" id="morning">Morning(5:00am-8:59am)<br>
+<input type="radio" name="time" value="2" id="busniess">Business Hours(9am-4:59pm)<br>
+<input type="radio" name="time" value="3" id="evening">Evening(5pm-8:59pm)<br>
+</form>
+<button id="apply2" onclick="time1Picker();">Generate Preset View</button>
 
-<p>
-<div>End time: &nbsp&nbsp <br>
-<input type="time" id="EndTime" value="00:00:00"></div>
-</p>
-
-<p>	
-<button id="apply2" onclick="time1Picker();">Generate Custom View</button>
-</p>
 <hr>
 
 <!------------------------                ------------------------------------>
@@ -101,7 +93,7 @@
 <p>
 <b>Top of Hour View</b>
 
-<input id="spinner" max="24" min="1" name="value">
+<input id="spinner" max="23" min="0" name="value">
 </p>
 
 <button  id="apply3"  onclick="time2Picker();">Top of Hour View</button>
@@ -121,7 +113,7 @@
 
   <!-- Header -->
   <header class="w3-container" style="padding-top:22px">
-<h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+
   </header>
 
   <div class="w3-row-padding w3-margin-bottom">
@@ -139,9 +131,9 @@
 <div class="w3-panel" id="mapPanel">
   <div class="w3-row-padding" style="margin:0 -16px">
 <div class="w3-half">
-  <h5>Map</h5>
+  <h5>Map</h5> 
  
-  <div id="map" class="container" style="min-width:1050px ;height:600px; margin: 0 auto" alt="Wifi Usage"></div>
+  <div id="map" class="container" style="min-width:1150px ;height:850px; margin: 0 auto  " alt="Wifi Usage"></div>
   </div>
   </div>
   </div>
