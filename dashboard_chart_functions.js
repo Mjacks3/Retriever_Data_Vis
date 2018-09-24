@@ -44,19 +44,19 @@ function getbarcharts()
       "data": [
         {
           "name": "Residential Buildings",
-          "y": glbTotalnts[4]+glbTotalnts[8]+glbTotalnts[11]+glbTotalnts[12]+glbTotalnts[17]+glbTotalnts[18]+glbTotalnts[20]+glbTotalnts[24]+glbTotalnts[25]+glbTotalnts[27]+glbTotalnts[28]+glbTotalnts[29],
+          "y": glbTotalnts[4]+glbTotalnts[8]+glbTotalnts[10]+glbTotalnts[11]+glbTotalnts[16]+glbTotalnts[17]+glbTotalnts[19]+glbTotalnts[23]+glbTotalnts[24]+glbTotalnts[26]+glbTotalnts[27]+glbTotalnts[28],
           "drilldown": "Residential Buildings"
         },
       
         {
           "name": "Academic Buildings",
-          "y": glbTotalnts[0]+glbTotalnts[1]+glbTotalnts[2]+glbTotalnts[3]+glbTotalnts[7]+glbTotalnts[10]+glbTotalnts[13]+glbTotalnts[15]+glbTotalnts[16]+glbTotalnts[23]+glbTotalnts[19]+glbTotalnts[21],
+          "y": glbTotalnts[0]+glbTotalnts[1]+glbTotalnts[2]+glbTotalnts[3]+glbTotalnts[7]+glbTotalnts[9]+glbTotalnts[12]+glbTotalnts[14]+glbTotalnts[15]+glbTotalnts[22]+glbTotalnts[18]+glbTotalnts[20],
           "drilldown": "Academic Buildings"
         },
 
         {
           "name": "Support Facilities",
-          "y": glbTotalnts[22]+glbTotalnts[14]+glbTotalnts[5]+glbTotalnts[26]+glbTotalnts[6] + glbTotalnts[9],
+          "y": glbTotalnts[21]+glbTotalnts[13]+glbTotalnts[5]+glbTotalnts[25]+glbTotalnts[6],
           "drilldown": "Support Facilities"
         }
 
@@ -79,44 +79,44 @@ function getbarcharts()
           ],
           [
             "Harbor Hall",
-            glbTotalnts[11]
+            glbTotalnts[10]
           ],
           [
             "Hillside",
-            glbTotalnts[12]
+            glbTotalnts[11]
           ],
           [
             "Patapsco",
-            glbTotalnts[17]
+            glbTotalnts[16]
           ],
      
           [
             "Patapsco Addition",
-            glbTotalnts[18]
+            glbTotalnts[17]
           ],
           [
             "Potomac",
-            glbTotalnts[20]
+            glbTotalnts[19]
           ],
           [
             "Susquehanna",
-            glbTotalnts[24]
+            glbTotalnts[23]
           ],
           [
             "Terrace",
-            glbTotalnts[25]
+            glbTotalnts[24]
           ],
           [
             "Walker AVE North",
-            glbTotalnts[27]
+            glbTotalnts[26]
           ],
           [
             "Walker AVE South",
-            glbTotalnts[28]
+            glbTotalnts[27]
           ],
           [
             "Westhills",
-            glbTotalnts[29]
+            glbTotalnts[28]
           ]
         ]
       },
@@ -147,32 +147,32 @@ function getbarcharts()
           ],
           [
             "Fine Arts",
-            glbTotalnts[10]
+            glbTotalnts[9]
           ],
           [
             "ITE",
-            glbTotalnts[13]
+            glbTotalnts[12]
           ],
           [
             "Math_Psyc",
-            glbTotalnts[15]
+            glbTotalnts[14]
           ],
           [
             "PAHB",
-            glbTotalnts[16]
+            glbTotalnts[15]
           ],
           [
             "Sondheim",
-            glbTotalnts[23]
+            glbTotalnts[22]
           ],
           [
             "Physics",
-            glbTotalnts[19]
+            glbTotalnts[18]
           ],
           
           [
             "Public Policy",
-            glbTotalnts[21]
+            glbTotalnts[20]
           ]
         ]
       
@@ -183,12 +183,12 @@ function getbarcharts()
         "data": [
           [
             "RAC",
-            glbTotalnts[22]
+            glbTotalnts[21]
           ],
           
           [
             "AOK Library",
-            glbTotalnts[14]
+            glbTotalnts[13]
           ],
           [
             "Commons",
@@ -196,15 +196,11 @@ function getbarcharts()
           ],
           [
             "University Center",
-            glbTotalnts[26]
+            glbTotalnts[25]
           ],
           [
             "Dinning",
             glbTotalnts[6]
-          ],
-          [
-            "Event Center",
-            glbTotalnts[9]
           ]
         ]
       }
@@ -214,9 +210,9 @@ function getbarcharts()
 });
 
 
-var resareatotal = glbTotalnts[4]+glbTotalnts[8]+glbTotalnts[11]+glbTotalnts[12]+glbTotalnts[17]+glbTotalnts[18]+glbTotalnts[20]+glbTotalnts[24]+glbTotalnts[25]+glbTotalnts[27]+glbTotalnts[28]+glbTotalnts[29];
+var resareatotal = glbTotalnts[4]+glbTotalnts[8]+glbTotalnts[10]+glbTotalnts[11]+glbTotalnts[16]+glbTotalnts[17]+glbTotalnts[19]+glbTotalnts[23]+glbTotalnts[24]+glbTotalnts[26]+glbTotalnts[27]+glbTotalnts[28];
 var resareaper = Math.round(resareatotal/dashtotal*100*100)/100;
-var acdareatotal = glbTotalnts[0]+glbTotalnts[1]+glbTotalnts[2]+glbTotalnts[3]+glbTotalnts[7]+glbTotalnts[10]+glbTotalnts[13]+glbTotalnts[15]+glbTotalnts[16]+glbTotalnts[23]+glbTotalnts[19] + glbTotalnts[21];
+var acdareatotal = glbTotalnts[0]+glbTotalnts[1]+glbTotalnts[2]+glbTotalnts[3]+glbTotalnts[7]+glbTotalnts[9]+glbTotalnts[12]+glbTotalnts[14]+glbTotalnts[15]+glbTotalnts[22]+glbTotalnts[18] + glbTotalnts[20];
 var acdareaper = Math.round(acdareatotal/dashtotal*10000)/100;
 var colors = Highcharts.getOptions().colors,
   categories = [
@@ -247,16 +243,16 @@ var colors = Highcharts.getOptions().colors,
         "data": [
           Math.round(glbTotalnts[4]/dashtotal*10000)/100,
           Math.round(glbTotalnts[8]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[10]/dashtotal*10000)/100,
           Math.round(glbTotalnts[11]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[12]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[16]/dashtotal*10000)/100,
           Math.round(glbTotalnts[17]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[18]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[20]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[19]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[23]/dashtotal*10000)/100,
           Math.round(glbTotalnts[24]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[25]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[26]/dashtotal*10000)/100,
           Math.round(glbTotalnts[27]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[28]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[29]/dashtotal*10000)/100
+          Math.round(glbTotalnts[28]/dashtotal*10000)/100
         ]
       }
     },
@@ -285,18 +281,18 @@ var colors = Highcharts.getOptions().colors,
           Math.round(glbTotalnts[2]/dashtotal*10000)/100,
           Math.round(glbTotalnts[3]/dashtotal*10000)/100,
           Math.round(glbTotalnts[7]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[10]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[13]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[9]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[12]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[14]/dashtotal*10000)/100,
           Math.round(glbTotalnts[15]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[16]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[23]/dashtotal*10000)/100,
-         Math.round(glbTotalnts[19]/dashtotal*10000)/100,
-         Math.round(glbTotalnts[21]/dashtotal*10000)/100
+          Math.round(glbTotalnts[22]/dashtotal*10000)/100,
+         Math.round(glbTotalnts[18]/dashtotal*10000)/100,
+         Math.round(glbTotalnts[20]/dashtotal*10000)/100
         ]
       }
     },
     {
-      "y": Math.round((glbTotalnts[26]+glbTotalnts[22]+glbTotalnts[14]+glbTotalnts[5]+glbTotalnts[6]+glbTotalnts[9])/dashtotal*10000)/100 ,
+      "y": Math.round((glbTotalnts[25]+glbTotalnts[21]+glbTotalnts[13]+glbTotalnts[5]+glbTotalnts[6])/dashtotal*10000)/100 ,
       "color": colors[2],
       "drilldown": {
         "name": "Support Facilities",
@@ -305,17 +301,15 @@ var colors = Highcharts.getOptions().colors,
           "RAC",
           "AOK Library",
           "Commons",
-          "Dinning Hall",
-          "Event Center"
+          "Dinning Hall"
 
         ],
         "data": [
-         Math.round(glbTotalnts[26]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[22]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[14]/dashtotal*10000)/100,
+         Math.round(glbTotalnts[25]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[21]/dashtotal*10000)/100,
+          Math.round(glbTotalnts[13]/dashtotal*10000)/100,
           Math.round(glbTotalnts[5]/dashtotal*10000)/100,
           Math.round(glbTotalnts[6]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[9]/dashtotal*10000)/100
         ]
       }
     },

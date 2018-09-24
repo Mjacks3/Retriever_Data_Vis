@@ -10,7 +10,8 @@ function getValues()
 }
 
 
-function initMap(start=null, end=null, time_idx = 0 , granularity="Building")
+function initMap(start=null, end=null, time_idx = 0, granularity="Building",
+            timeRange="00%3A00-23%3A59&")
 {
     setTimeout(function(){
     map = new google.maps.Map(document.getElementById('map'), 
@@ -20,7 +21,7 @@ function initMap(start=null, end=null, time_idx = 0 , granularity="Building")
             mapTypeId: 'satellite'
         });
     
-    builds = cmxDataRequest(start,end,time_idx,granularity);
+    builds = cmxDataRequest(start,end,time_idx,granularity,timeRange);
     
     console.log(builds)
     data = timeframeOrganization(builds, time_idx);
@@ -95,7 +96,8 @@ function showArrays(event) {
   infoWindow.open(map);
 }
 
-function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Building" )
+function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Building", 
+                        timeRange="00%3A00-23%3A59&")
 {
     var mid = "";	
     
@@ -114,7 +116,7 @@ function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Build
         "2C629%2C664%2C1025%2C1118%2C1193%2C1206%2C1210%2C1260%2C1357"+
         "%2C1421%2C1875%2C1880%2C1564%2C1932%2C2354%2C2376%2C2398%2C2477"+
         "%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
-        "timeRange=00%3A00-23%3A59&"+
+        "timeRange="+timeRange+
         "period="+start +mid+ end+"&"+
         "granularity="+ granularity + "&"+
         "durationCategories=0-1440&"+
@@ -129,15 +131,16 @@ function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Build
     xhttp.send();
     var response = JSON.parse(xhttp.responseText);
     console.log(response);
+
     var builds; 
     builds = {};
     var ix;
     for (ix = 0; ix < response["results"].length ;ix++)
     {
 		builds[response["results"][ix]["area"]] = 
-    	[response["results"][ix]["data"][time_idx]["value"]];
+    	[response["results"][ix]["data"][time_idx]["value"]]; 	
     }
-
+    console.log(builds);
 	 builds['Chesapeake'].push([39.2567085,-76.7086843]);
 	 builds['Public Policy'].push([39.255092,-76.7094311]);
 	 builds['Administration'].push([39.2533135,-76.7136622]);
