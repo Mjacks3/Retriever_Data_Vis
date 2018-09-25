@@ -37,40 +37,7 @@ function initMap(start=null, end=null, time_idx = 0, granularity="Building",
             map: map  
         })
         
-	
-	
-  // Define the LatLng coordinates for the polygon.
-  var coord_antzuid = [
-      {lat: 39.256603, lng:  -76.712439},
-      {lat:39.257080,  lng: -76.711591},
-      {lat: 39.256735,  lng: -76.710717},
-      {lat:39.256098, lng:-76.711853},
-  ];
-
-  // Construct the polygon.
-  var region = new google.maps.Polygon({
-    paths: coord_antzuid,
-    strokeColor: '#36688F',
-    strokeOpacity: 0.8,
-    strokeWeight: 3,
-    fillColor: '#36688F',
-    fillOpacity: 0.35
-  });
-  region.setMap(map);
-
-  // Add a listener for the click event.
-  region.addListener('click', showArrays);
-  
-  google.maps.event.addListener(region,"mouseover",function(){
-   this.setOptions({fillColor: "#CC6633", strokeColor: "#CC6633"});
-  }); 
-  
-  google.maps.event.addListener(region,"mouseout",function(){
-    this.setOptions({fillColor: "#36688F", strokeColor: "#36688F"});
-  });
-
-  infoWindow = new google.maps.InfoWindow;
-
+    initPolygons();
     changeRadius();
     changeOpacity();
     glbBuilds = builds;
@@ -81,21 +48,6 @@ function initMap(start=null, end=null, time_idx = 0, granularity="Building",
     showloader();
 }
 	
-function showArrays(event) {
-  // Since this polygon has only one path, we can call getPath() to return the
-  // MVCArray of LatLngs.
- // var vertices = region.getPath();
-
-  var contentString = '<h3>Antwerpen Zuid</h3>' +
-      '<strong>Lorem Ipsum</strong><br>John Smith <br>Kerkstraat 01 <br>2000 <br>Antwerp <br>00 000 00 00 <br> john@smith.me'
-
-  // Replace the info windows content and position.
-  infoWindow.setContent(contentString); 
-  infoWindow.setPosition(event.latLng);
-
-  infoWindow.open(map);
-}
-
 function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Building", 
                         timeRange="00%3A00-23%3A59&")
 {
@@ -179,7 +131,6 @@ function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Build
 	 return builds;
 }
 
-
 function timeframeOrganization(builds) 
 {
 	 lat_longs_block = [] ;
@@ -199,48 +150,47 @@ function timeframeOrganization(builds)
     return [lat_longs_block, totalCounts] ;
 }
 
-
-function tOLDimeframeOrganization(builds, startHour = 0, endHour = 0) 
+function toggleHeatmap() 
 {
-	 startHour = new Number( startHour);
-	 endHour = new Number(endHour);
-	 if ( endHour == 0 ) {endHour = 24;}	
-	 if ( startHour > endHour ) 
-	 {
-		alert("Invalid Time fomat");
-		return[[],[]];
-	 } 
+    heatmap.setMap(heatmap.getMap() ? null : map);
+}
 
-	 if (startHour == endHour) 
-	 {
-	  startHour = 0;
-	  endHour = 24;
-	 }
-	
-	 block = [] ;
-	 totalCounts = [];
-	 for (const [key, value] of Object.entries(builds))
-	 {
-        var totalBucket = 0;
-        var timeslot;
-		  for (timeslot = startHour; timeslot < endHour; timeslot++)
-		  {
-    		  totalBucket += value[0][timeslot];
-		  }
-		  totalCounts.push(totalBucket);
-		  var counter; 
-		  for (counter = 0; counter < totalBucket ; counter ++)
-		  {	
-    		  block.push(value[1]);
-		  }	
-	 }
-    return [block,totalCounts] ;
+
+function changeGradient() 
+{
+    var gradient = [
+    'rgba(0, 255, 255, 0)',
+    'rgba(0, 255, 255, 1)',
+    'rgba(0, 191, 255, 1)',
+    'rgba(0, 127, 255, 1)',
+    'rgba(0, 63, 255, 1)',
+    'rgba(0, 0, 255, 1)',
+    'rgba(0, 0, 223, 1)',
+    'rgba(0, 0, 191, 1)',
+    'rgba(0, 0, 159, 1)',
+    'rgba(0, 0, 127, 1)',
+    'rgba(63, 0, 91, 1)',
+    'rgba(127, 0, 63, 1)',
+    'rgba(191, 0, 31, 1)',
+    'rgba(255, 0, 0, 1)'
+    ]
+    heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
 }
 
 
 
-
-
+function getPoints(block) 
+{
+    pts = [];
+    var ind; 
+    
+    for (ind = 0;  ind < block.length ; ind++)
+    {
+        pts.push( new google.maps.LatLng(block[ind][0], block[ind][1]) ) ;
+    }
+    return pts;
+}
+	
 function toggleHeatmap() 
 {
     heatmap.setMap(heatmap.getMap() ? null : map);
@@ -279,17 +229,3 @@ function changeOpacity()
 {
     heatmap.set('opacity', heatmap.get('opacity') ? null : 0.8);
 }
-
-
-function getPoints(block) 
-{
-    pts = [];
-    var ind; 
-    
-    for (ind = 0;  ind < block.length ; ind++)
-    {
-        pts.push( new google.maps.LatLng(block[ind][0], block[ind][1]) ) ;
-    }
-    return pts;
-}
-	
