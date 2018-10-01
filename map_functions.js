@@ -3,6 +3,7 @@ var glbTotalnts;
 var devisenum1;
 var dashtotal = 0;
 var infoWindow;
+var all_buildings;
 
 function getValues()
 {
@@ -21,10 +22,10 @@ function initMap(start=null, end=null, time_idx = 0, granularity="Building",
             mapTypeId: 'satellite'
         });
     
-    builds = cmxDataRequest(start,end,time_idx,granularity,timeRange);
+    all_buildings = cmxDataRequest(start,end,time_idx,granularity,timeRange);
     
-    console.log(builds)
-    data = timeframeOrganization(builds, time_idx);
+    console.log(all_buildings)
+    data = timeframeOrganization(all_buildings, time_idx);
     console.log(data);
     
     block = data[0];
@@ -36,11 +37,11 @@ function initMap(start=null, end=null, time_idx = 0, granularity="Building",
             data: getPoints(block),
             map: map  
         })
-        
+    console.log(all_buildings);
     initPolygons();
     changeRadius();
     changeOpacity();
-    glbBuilds = builds;
+    glbBuilds = all_buildings;
     getdashsum();
     getbarcharts();
     
@@ -64,9 +65,9 @@ function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Build
 	 
     var xhttp = new XMLHttpRequest();
     var restURL= "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
-        "areas=118%2C185%2C304%2C488%2C587%"+
-        "2C629%2C664%2C1025%2C1118%2C1193%2C1206%2C1210%2C1260%2C1357"+
-        "%2C1421%2C1875%2C1880%2C1564%2C1932%2C2354%2C2376%2C2398%2C2477"+
+        "areas=118%2C185%2C211%2C239%2C304%2C488%2C587%2C614%2C629%2C657%2C664%2C1025"+
+        "%2C1118%2C1193%2C1206%2C1210%2C1260%2C1357%2C1389%2C1421%2C1875%2C1880"+
+        "%2C1903%2C1564%2C1932%2C1960%2C2354%2C2376%2C2398%2C2438%2C2477"+
         "%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
         "timeRange="+timeRange+
         "period="+start +mid+ end+"&"+
@@ -78,28 +79,45 @@ function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Build
         "_=1520953855762"
         
        
-    xhttp.open("GET",restURL, false,"admin","HiddenFortress1958");
+    xhttp.open("GET",restURL, false);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
     var response = JSON.parse(xhttp.responseText);
     console.log(response);
 
-    var builds; 
-    builds = {};
+    var builds;
+    var hillside_com = ["Sideling","Pocomoke","Manokin",
+                        "Patuxent","Elk","Deepcreek",
+                        "Casselman","Breton","Hillside"];
+                        
+    builds = {"Hillside": [0]};
+    console.log(response["results"]);
     var ix;
     for (ix = 0; ix < response["results"].length ;ix++)
     {
-		builds[response["results"][ix]["area"]] = 
-    	[response["results"][ix]["data"][time_idx]["value"]]; 	
+        
+        if (hillside_com.includes(response["results"][ix]["area"]))
+        {
+            builds["Hillside"][0] += 
+            response["results"][ix]["data"][time_idx]["value"];
+        }
+        else
+        {
+            console.log(response["results"][ix]["area"]);
+            console.log(response["results"][ix]["data"][time_idx]["value"]);
+            
+    		builds[response["results"][ix]["area"]] =
+        	[response["results"][ix]["data"][time_idx]["value"]];
+    	} 	
     }
     console.log(builds);
-	 builds['Chesapeake'].push([39.2567085,-76.7086843]);
-	 builds['Public Policy'].push([39.255092,-76.7094311]);
-	 builds['Administration'].push([39.2533135,-76.7136622]);
-	 builds['Library'].push([39.25623,-76.7118938]);
+	 builds['Chesapeake'].push([39.256729,-76.708521]);
+	 builds['Public Policy'].push([39.255180,-76.709091]);
+	 builds['Administration'].push([39.253047,-76.713489]);
+	 builds['Library'].push([39.256588,-76.711768]);
 	 builds['Biology'].push([39.2548479,-76.7122021]);
 	 builds['Erickson Hall'].push([39.2570091,-76.7096952]);
-	 builds['Event Center'].push([39.252432,-76.707563]);
+	 builds['Event Center'].push([39.251967,-76.707406]);
 	 
 	 builds['Chemistry'].push([39.2548812,-76.7128226]);
 	
@@ -107,27 +125,27 @@ function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Build
 	 builds['Academic IV'].push([39.2536036,-76.7134087]);
 	 builds['PAHB'].push([39.2552382,-76.7153259]);
 	 builds['Commons'].push([39.2549006,-76.7109555]);
-	 builds['Dining Hall'].push([39.255887,-76.7078899]);
-	 builds['Hillside'].push([39.2578306,-76.7094585]);
+	 builds['Dining Hall'].push([39.255900,-76.707633]);
+	 builds['Hillside'].push([39.258085,-76.709147]);
 	 builds['Susquehanna'].push([39.25553,-76.7089886]);
 	
 	 builds['Patapsco'].push([39.2550174,-76.7064426]);
 	 builds['Patapsco Addition'].push([39.2552908,-76.707214]);
 	 builds['Engineering'].push([39.2546022,-76.7140627]);
-	 builds['Fine Arts'].push([39.2549059,-76.7137036]);
+	 builds['Fine Arts'].push([39.255161,-76.713649]);
 	
 	 builds['Sondheim'].push([39.2534773,-76.7128474]);
-	 builds['Potomac Hall'].push([39.2560987,-76.707022]);
+	 builds['Potomac Hall'].push([39.256020,-76.706618]);
 	
 	 builds['Walker AVE South'].push([39.2587439,-76.7150462]);
-	 builds['Harbor Hall'].push([39.2572848,-76.7084016]);
-	 builds['Physics'].push([39.2543472,-76.7099418]);
+	 builds['Harbor Hall'].push([39.257229,-76.708013]);
+	 builds['Physics'].push([39.254558,-76.709573]);
 	 builds['ITE'].push([39.2538416,-76.714377]);
 	 builds['University Center'].push([39.2543276,-76.7133115]);
-	 builds['Walker AVE North'].push([39.2592171,-76.713879]);
+	 builds['Walker AVE North'].push([39.2592171,-76.713810]);
 	 builds['Terrace'].push([39.2573399,-76.7112603]);
-	 builds['RAC'].push([39.2529955,-76.7128026]);
-	 builds['Westhills'].push([39.2583289,-76.71274]);
+	 builds['RAC'].push([39.252815,-76.712447]);
+	 builds['Westhills'].push([39.258872,-76.712757]);
 	 return builds;
 }
 
