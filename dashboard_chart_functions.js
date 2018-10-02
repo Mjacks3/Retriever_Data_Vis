@@ -44,19 +44,32 @@ function getbarcharts()
       "data": [
         {
           "name": "Residential Buildings",
-          "y": glbTotalnts[4]+glbTotalnts[8]+glbTotalnts[11]+glbTotalnts[12]+glbTotalnts[17]+glbTotalnts[18]+glbTotalnts[20]+glbTotalnts[24]+glbTotalnts[25]+glbTotalnts[27]+glbTotalnts[28]+glbTotalnts[29],
+          "y": all_buildings['Chesapeake'][0]+all_buildings['Erickson Hall'][0]+
+          all_buildings['Hillside'][0]+ all_buildings['Susquehanna'][0]+
+          all_buildings['Patapsco'][0]+all_buildings['Patapsco Addition'][0]+
+          all_buildings['Potomac Hall'][0]+
+          all_buildings['Walker AVE South'][0]+all_buildings['Harbor Hall'][0]+
+          all_buildings['Walker AVE North'][0]+all_buildings['Terrace'][0]+ all_buildings['Westhills'][0],
           "drilldown": "Residential Buildings"
         },
-      
+    
         {
           "name": "Academic Buildings",
-          "y": glbTotalnts[0]+glbTotalnts[1]+glbTotalnts[2]+glbTotalnts[3]+glbTotalnts[7]+glbTotalnts[10]+glbTotalnts[13]+glbTotalnts[15]+glbTotalnts[16]+glbTotalnts[23]+glbTotalnts[19]+glbTotalnts[21],
+          "y": all_buildings['Public Policy'][0]+all_buildings['Administration'][0]+
+          all_buildings['Biology'][0]+all_buildings['Chemistry'][0]+
+          all_buildings['Math_Psyc'][0]+all_buildings['Academic IV'][0]+
+          all_buildings['PAHB'][0]+all_buildings['Engineering'][0]+
+          all_buildings['Fine Arts'][0]+all_buildings['Sondheim'][0]+
+          all_buildings['Physics'][0]+all_buildings['ITE'][0],
+          
           "drilldown": "Academic Buildings"
         },
 
         {
           "name": "Support Facilities",
-          "y": glbTotalnts[22]+glbTotalnts[14]+glbTotalnts[5]+glbTotalnts[26]+glbTotalnts[6] + glbTotalnts[9],
+          "y": all_buildings['Library'][0]+all_buildings['Event Center'][0]+
+          all_buildings['Commons'][0]+ all_buildings['Dining Hall'][0]+
+          all_buildings['University Center'][0]+all_buildings['RAC'][0],
           "drilldown": "Support Facilities"
         }
 
@@ -71,52 +84,52 @@ function getbarcharts()
         "data": [
           [
             "Chesapeake",
-            glbTotalnts[4]
+            all_buildings['Chesapeake'][0]
           ],
           [
             "Erickson Hall",
-            glbTotalnts[8]
+            all_buildings['Erickson Hall'][0]
           ],
           [
             "Harbor Hall",
-            glbTotalnts[11]
+            all_buildings['Harbor Hall'][0]
           ],
           [
             "Hillside",
-            glbTotalnts[12]
+            all_buildings['Hillside'][0]
           ],
           [
             "Patapsco",
-            glbTotalnts[17]
+            all_buildings['Patapsco'][0]
           ],
      
           [
             "Patapsco Addition",
-            glbTotalnts[18]
+            all_buildings['Patapsco Addition'][0]
           ],
           [
             "Potomac",
-            glbTotalnts[20]
+            all_buildings['Potomac Hall'][0]
           ],
           [
             "Susquehanna",
-            glbTotalnts[24]
+            all_buildings['Susquehanna'][0]
           ],
           [
             "Terrace",
-            glbTotalnts[25]
+            all_buildings['Terrace'][0]
           ],
           [
             "Walker AVE North",
-            glbTotalnts[27]
+            all_buildings['Walker AVE North'][0]
           ],
           [
             "Walker AVE South",
-            glbTotalnts[28]
+            all_buildings['Walker AVE South'][0]
           ],
           [
             "Westhills",
-            glbTotalnts[29]
+            all_buildings['Westhills'][0   ]
           ]
         ]
       },
@@ -127,52 +140,52 @@ function getbarcharts()
         "data": [
           [
             "Academic IV",
-            glbTotalnts[0]
+            all_buildings['Academic IV'][0]
           ],
           [
             "Administration Building",
-            glbTotalnts[1]
+            all_buildings['Administration'][0]
           ],
           [
             "Biology",
-            glbTotalnts[2]
+            all_buildings['Biology'][0]
           ],
           [
             "Chemistry",
-            glbTotalnts[3]
+            all_buildings['Chemistry'][0]
           ],
           [
             "Engineering",
-            glbTotalnts[7]
+            all_buildings['Engineering'][0]
           ],
           [
             "Fine Arts",
-            glbTotalnts[10]
+            all_buildings['Fine Arts'][0]
           ],
           [
             "ITE",
-            glbTotalnts[13]
+            all_buildings['ITE'][0]
           ],
           [
             "Math_Psyc",
-            glbTotalnts[15]
+            all_buildings['Math_Psyc'][0]
           ],
           [
             "PAHB",
-            glbTotalnts[16]
+            all_buildings['PAHB'][0]
           ],
           [
             "Sondheim",
-            glbTotalnts[23]
+            all_buildings['Sondheim'][0]
           ],
           [
             "Physics",
-            glbTotalnts[19]
+            all_buildings['Physics'][0]
           ],
           
           [
             "Public Policy",
-            glbTotalnts[21]
+            all_buildings['Public Policy'][0]
           ]
         ]
       
@@ -183,28 +196,28 @@ function getbarcharts()
         "data": [
           [
             "RAC",
-            glbTotalnts[22]
+             all_buildings['RAC'][0]
           ],
           
           [
             "AOK Library",
-            glbTotalnts[14]
+            all_buildings['Library'][0]
           ],
           [
             "Commons",
-            glbTotalnts[5]
+            all_buildings['Commons'][0]
           ],
           [
             "University Center",
-            glbTotalnts[26]
+            all_buildings['University Center'][0]
           ],
           [
-            "Dinning",
-            glbTotalnts[6]
+            "Dining",
+            all_buildings['Dining Hall'][0]
           ],
           [
             "Event Center",
-            glbTotalnts[9]
+            all_buildings['Event Center'][0]
           ]
         ]
       }
@@ -214,10 +227,31 @@ function getbarcharts()
 });
 
 
-var resareatotal = glbTotalnts[4]+glbTotalnts[8]+glbTotalnts[11]+glbTotalnts[12]+glbTotalnts[17]+glbTotalnts[18]+glbTotalnts[20]+glbTotalnts[24]+glbTotalnts[25]+glbTotalnts[27]+glbTotalnts[28]+glbTotalnts[29];
+var resareatotal = all_buildings['Chesapeake'][0]+all_buildings['Erickson Hall'][0]+
+          all_buildings['Hillside'][0]+ all_buildings['Susquehanna'][0]+
+          all_buildings['Patapsco'][0]+all_buildings['Patapsco Addition'][0]+
+          all_buildings['Potomac Hall'][0]+
+          all_buildings['Walker AVE South'][0]+all_buildings['Harbor Hall'][0]+
+          all_buildings['Walker AVE North'][0]+all_buildings['Terrace'][0]+ all_buildings['Westhills'][0];
+
 var resareaper = Math.round(resareatotal/dashtotal*100*100)/100;
-var acdareatotal = glbTotalnts[0]+glbTotalnts[1]+glbTotalnts[2]+glbTotalnts[3]+glbTotalnts[7]+glbTotalnts[10]+glbTotalnts[13]+glbTotalnts[15]+glbTotalnts[16]+glbTotalnts[23]+glbTotalnts[19] + glbTotalnts[21];
+
+var acdareatotal = all_buildings['Public Policy'][0]+all_buildings['Administration'][0]+
+          all_buildings['Biology'][0]+all_buildings['Chemistry'][0]+
+          all_buildings['Math_Psyc'][0]+all_buildings['Academic IV'][0]+
+          all_buildings['PAHB'][0]+all_buildings['Engineering'][0]+
+          all_buildings['Fine Arts'][0]+all_buildings['Sondheim'][0]+
+          all_buildings['Physics'][0]+all_buildings['ITE'][0];
+          
 var acdareaper = Math.round(acdareatotal/dashtotal*10000)/100;
+
+
+var supareatotal = all_buildings['Library'][0]+all_buildings['Event Center'][0]+
+          all_buildings['Commons'][0]+ all_buildings['Dining Hall'][0]+
+          all_buildings['University Center'][0]+all_buildings['RAC'][0];
+          
+var supareaper = Math.round(supareaper/dashtotal*10000)/100;
+
 var colors = Highcharts.getOptions().colors,
   categories = [
     "Residential <br /> Buildings",
@@ -245,18 +279,18 @@ var colors = Highcharts.getOptions().colors,
           "Westhills"
         ],
         "data": [
-          Math.round(glbTotalnts[4]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[8]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[11]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[12]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[17]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[18]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[20]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[24]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[25]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[27]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[28]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[29]/dashtotal*10000)/100
+          Math.round(all_buildings['Chesapeake'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Erickson Hall'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Harbor Hall'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Hillside'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Patapsco'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Patapsco Addition'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Potomac Hall'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Susquehanna'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Terrace'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Walker AVE North'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Walker AVE South'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Westhills'][0]/dashtotal*10000)/100
         ]
       }
     },
@@ -280,18 +314,18 @@ var colors = Highcharts.getOptions().colors,
           "Public Policy"
         ],
         "data": [
-          Math.round(glbTotalnts[0]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[1]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[2]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[3]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[7]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[10]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[13]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[15]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[16]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[23]/dashtotal*10000)/100,
-         Math.round(glbTotalnts[19]/dashtotal*10000)/100,
-         Math.round(glbTotalnts[21]/dashtotal*10000)/100
+          Math.round(all_buildings['Academic IV'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Administration'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Biology'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Chemistry'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Engineering'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Fine Arts'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['ITE'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Math_Psyc'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['PAHB'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Sondheim'][0]/dashtotal*10000)/100,
+         Math.round(all_buildings['Physics'][0]/dashtotal*10000)/100,
+         Math.round(all_buildings['Public Policy'][0]/dashtotal*10000)/100
         ]
       }
     },
@@ -310,12 +344,12 @@ var colors = Highcharts.getOptions().colors,
 
         ],
         "data": [
-         Math.round(glbTotalnts[26]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[22]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[14]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[5]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[6]/dashtotal*10000)/100,
-          Math.round(glbTotalnts[9]/dashtotal*10000)/100
+         Math.round(all_buildings['University Center'][0]/dashtotal*10000)/100,
+         Math.round(all_buildings['RAC'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Library'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Commons'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Dining Hall'][0]/dashtotal*10000)/100,
+          Math.round(all_buildings['Event Center'][0]/dashtotal*10000)/100
         ]
       }
     },

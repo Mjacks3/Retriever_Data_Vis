@@ -11,7 +11,7 @@ function getValues()
 }
 
 
-function initMap(start=null, end=null, time_idx = 0, granularity="Building",
+function initMap(start=null, end=null, time_idx=0, granularity="Building",
             timeRange="00%3A00-23%3A59&")
 {
     setTimeout(function(){
@@ -25,7 +25,7 @@ function initMap(start=null, end=null, time_idx = 0, granularity="Building",
     all_buildings = cmxDataRequest(start,end,time_idx,granularity,timeRange);
     
     console.log(all_buildings)
-    data = timeframeOrganization(all_buildings, time_idx);
+    data = timeframeOrganization(all_buildings);
     console.log(data);
     
     block = data[0];
@@ -53,15 +53,21 @@ function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Build
                         timeRange="00%3A00-23%3A59&")
 {
     var mid = "";	
-    
-    
     if (start == null || end == null)
 	 {
         start = "to";
         end = "day";	
     }
     else {mid = "%3B";}
-
+    
+    var connection_state;
+    
+    if (document.getElementById('all').checked)
+    {connection_state = "all";}
+    else if (document.getElementById('detected').checked)
+    {connection_state = "detected";}
+    else
+    {connection_state = "connected";}
 	 
     var xhttp = new XMLHttpRequest();
     var restURL= "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
@@ -74,7 +80,7 @@ function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Build
         "granularity="+ granularity + "&"+
         "durationCategories=0-1440&"+
         "includeStationary=false&"+
-        "connectionState=connected&"+
+        "connectionState="+connection_state+"&"+
         "type=deviceCount&"+
         "_=1520953855762"
         
@@ -103,8 +109,6 @@ function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Build
         }
         else
         {
-            console.log(response["results"][ix]["area"]);
-            console.log(response["results"][ix]["data"][time_idx]["value"]);
             
     		builds[response["results"][ix]["area"]] =
         	[response["results"][ix]["data"][time_idx]["value"]];

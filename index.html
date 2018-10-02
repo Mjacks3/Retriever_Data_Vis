@@ -48,8 +48,9 @@
 <h3>Retriever Analytics Visualization </h3>
 </div>
 <hr>
+<hr>
 
-<!--------------------------- Date Selector  --------------------------------->
+<!--------------------------- Date Selector --------------------------------->
 <div class="w3-bar-block">
 <h3> Date Selector </h3>
 
@@ -66,7 +67,17 @@
 <p>
 </p>
 <hr>
+<hr>
+<!---------------------------  Connection State  ------------------------------------>	
+<h3> Connection State </h3>
 
+<form>
+<input type="radio" name="reporting" value="1" id="connected" checked="checked">Connected Devices Only<br>
+<input type="radio" name="reporting" value="2" id="detected">Detected Devices Only<br>
+<input type="radio" name="reporting" value="3" id="all">All Devices<br>
+</form>
+
+<hr>
 
 <!--------------------------- Time Views  ------------------------------------>	
 <h3> Time Views </h3>
@@ -81,7 +92,7 @@
 <p> <b>Preset Views</b> </p>
 
 <form>
-<input type="radio" name="time" value="1" id="morning">Morning(5:00am-8:59am)<br>
+<input type="radio" name="time" value="1" id="morning" checked="checked">Morning(5:00am-8:59am)<br>
 <input type="radio" name="time" value="2" id="busniess">Business Hours(9am-4:59pm)<br>
 <input type="radio" name="time" value="3" id="evening">Evening(5pm-8:59pm)<br>
 </form>
