@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; img-src * data: 'unsafe-inline'">
 <!-- Linked Styles -->
+<link rel="icon" href="rtvr.ico">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -18,7 +19,6 @@
 <script src="https://code.highcharts.com/modules/drilldown.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
-
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyBxevA7di7Avo5vGKAgPPSkJa8ud4gnI&callback=initMap&libraries=visualization"></script>
 
 
@@ -27,8 +27,9 @@
 <script type="text/javascript" src="sidebar_button_functions.js"></script>
 <script type="text/javascript" src="secondary_map_functions.js"></script>
 <script type="text/javascript" src="content_loading_functions.js"></script>
-<script type="text/javascript" src="dashboard_chart_functions.js"></script>
-<script type="text/javascript" src="url.js"></script>
+<script defer type="text/javascript" src="dashboard_chart_functions.js"></script>
+<script defer type="text/javascript" src="page_window_functions.js"></script>
+<script defer type="text/javascript" src="url.js"></script>
 <script type="text/javascript" src="map_functions.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- Link ur files <script type="text/javascript"> -->
@@ -148,7 +149,7 @@
 
   <h5>Map</h5> 
  
-  <div id="map" class="container" style="min-width:300px;height:850px; margin: 0 auto" alt="Wifi Usage"></div>
+  <div id="map" class="container" style="min-width:300px;height:750px; margin: 0 auto" alt="Wifi Usage"></div>
   </div>
   </div>
 <hr>
@@ -160,7 +161,7 @@
 <div id="barcontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
 <div id="piecontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
 
-End page content -->
+<--End page content -->
 </div>
 
 <script language="javascript" type="text/javascript">

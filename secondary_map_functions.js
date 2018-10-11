@@ -3,12 +3,12 @@ function initPolygons()
   // Define the LatLng coordinates for each building
   
   var coord_pub = [ 
-      {lat: 39.255441, lng: -76.709444},{lat:39.255183,  lng: -76.708687},
-      {lat: 39.255023,  lng: -76.708776},{lat:39.255133, lng: -76.709563}];
+      {lat: 39.255441, lng: -76.709444},{lat:39.255228,  lng: -76.708642},
+      {lat: 39.254893,  lng: -76.708794},{lat:39.255133, lng: -76.709563}];
  
   var coord_admin =
-      [{lat:39.253243, lng:-76.713598},{lat:39.253154, lng:-76.713274},
-      {lat:39.252886, lng:-76.713400},{lat:39.252981, lng:-76.713718}]; 
+      [{lat:39.253291, lng:-76.713585},{lat:39.253187, lng:-76.713220},
+      {lat:39.252869, lng:-76.713381},{lat:39.252966, lng:-76.713773}]; 
 
   var coord_library =
    [{lat:39.256653, lng:-76.712451}, {lat:39.257083, lng:-76.711621},
@@ -18,38 +18,40 @@ function initPolygons()
     {lat:39.256084, lng:-76.711881},  {lat:39.256610, lng:-76.712448}];
   
   var coord_bio = [ 
-      {lat:39.255344, lng:-76.711639 },{lat:39.254439,  lng: -76.712203  },
-      {lat:39.254529, lng: -76.712395},{lat:39.255405, lng: -76.711905}];  
+      {lat:39.254498, lng:-76.712512 },{lat:39.255497,  lng: -76.712061 },
+      {lat:39.255396, lng: -76.711664},{lat:39.255006, lng: -76.711820}
+      ,{lat:39.254939, lng: -76.711928},{lat:39.254389, lng: -76.712185}];  
   
   var coord_event_center = 
-      [{lat:39.252042, lng:-76.708075},{lat:39.252501, lng:-76.707449},
-      {lat:39.251915, lng:-76.706049},{lat:39.251311, lng:-76.706459} ];
+      [{lat:39.252031, lng:-76.708145},{lat:39.252587, lng:-76.707477},
+      {lat:39.251933, lng:-76.705969},{lat:39.251214, lng:-76.706635} ];
 
   var coord_chem = [ 
       {lat:39.255186, lng:-76.712295},{lat:39.254531,  lng: -76.712638 },
-      {lat:39.254734, lng:-76.713257},{lat:39.255319, lng: -76.712964}];    
-      
+      {lat:39.254736, lng:-76.713348},{lat:39.255391, lng: -76.713030}];
       
   var coord_math_psych = [ 
-      {lat:39.254363, lng:-76.712121},{lat:39.253821, lng:-76.712389},
-      {lat:39.253848, lng:-76.712653 },{lat:39.254420, lng: -76.712389}];
+      {lat:39.254433, lng:-76.712479},{lat:39.254371, lng:-76.712214},
+      {lat:39.253770, lng:-76.712475},{lat:39.253853, lng:-76.712743}];
+      
       
   var coord_sherman =
-   [ {lat:39.253757, lng:-76.712989},{lat:39.253280, lng:-76.713218},
-     {lat:39.253472, lng:-76.713903},{lat:39.254011, lng:-76.713642}];
+   [ {lat:39.253869, lng:-76.712929},{lat:39.253231, lng:-76.713205},
+     {lat:39.253469, lng:-76.713931},{lat:39.254065, lng:-76.713661}];
 
       
   var coord_pahb = 
-  [{lat:39.255838, lng:-76.715748}, {lat:39.255548, lng:-76.715218},
-   {lat:39.255392, lng:-76.715290}, {lat:39.255199, lng:-76.714618},
-   {lat:39.254973, lng:-76.714621}, {lat:39.254784, lng:-76.715088},
+  [{lat:39.255865, lng:-76.715790}, {lat:39.255571, lng:-76.715195},
+   {lat:39.255418, lng:-76.715253}, {lat:39.255203, lng:-76.714560},
+   {lat:39.254782, lng:-76.714621},{lat:39.254784, lng:-76.715088},
    {lat:39.254915, lng:-76.715554},  {lat:39.255159, lng:-76.716087},
     {lat:39.255334, lng:-76.716136}, {lat:39.2555336, lng:-76.716134}];
   
 
   var coord_commons = [ 
-      {lat: 39.255338, lng: -76.711567},{lat:39.255005,  lng:  -76.710423},
-      {lat: 39.254384, lng: -76.710953},{lat:39.254548, lng: -76.711976}];
+      {lat: 39.255436, lng: -76.711552},{lat:39.255087,  lng:  -76.710408},
+      {lat: 39.254308, lng: -76.710760},{lat:39.254442, lng: -76.711315}
+      ,{lat:39.254739, lng: -76.711215},{lat:39.254986, lng: -76.711790}];
   
   
   var coord_dining = 
@@ -71,8 +73,8 @@ function initPolygons()
       {lat:39.255560, lng: -76.713848 },{lat:39.254993 , lng: -76.714120  }];   
   
    var coord_sondheim = [ 
-      {lat:39.254025 , lng: -76.713632 },{lat:39.253973,  lng: -76.713364},
-      {lat:39.253416, lng: -76.713640},{lat: 39.253471, lng: -76.713896  }];   
+      {lat:39.253808 , lng: -76.712818},{lat:39.253712,  lng: -76.712504},
+      {lat:39.253104, lng: -76.712802},{lat: 39.253198, lng: -76.713087 }];   
   
    var coord_physics = [ 
        {lat:39.254645, lng:-76.709268},{lat:39.254475, lng:-76.709307},
@@ -81,17 +83,19 @@ function initPolygons()
 
   
    var coord_ite = [ 
-      {lat: 39.254057, lng:-76.713787 },{lat: 39.253473,  lng:-76.714085  },
-      {lat:39.253636 , lng: -76.714701 },{lat:39.254205 , lng:-76.714508   }];
+      {lat: 39.254057, lng:-76.713787 },{lat: 39.253363,  lng:-76.714129  },
+      {lat:39.253567 , lng: -76.714851 },{lat:39.254272 , lng:-76.714508   }];
       
       
    var coord_university_cen = [ 
-      {lat:39.254677, lng:-76.713330 },{lat:39.254545 ,  lng: -76.712808 },
-      {lat:39.253933, lng:-76.713130 },{lat:39.254076, lng: -76.713653  }]; 
+      {lat:39.254538, lng:-76.712819 },{lat:39.253921 ,lng: -76.713072 },
+      {lat:39.254094, lng:-76.713650 },{lat:39.254706, lng: -76.713352  }]; 
       
    var coord_rac =  [ 
-      {lat:39.253411 , lng:-76.712452 },{lat:39.253280 ,  lng:-76.711886  },
-      {lat:39.252297 , lng:-76.712441 },{lat: 39.252618, lng:  -76.713209  }];
+      {lat:39.252557 , lng:-76.713264 },{lat:39.252941 ,  lng:-76.713088  },
+      {lat:39.253122 , lng:-76.712758 },{lat: 39.253493, lng:  -76.712598  },
+      {lat: 39.253276, lng:  -76.711755  },{lat: 39.252196, lng:  -76.712202  },
+      {lat: 39.252495, lng:  -76.713250  }];
       
    var coord_patapsco =  [ 
        {lat:39.255575, lng:-76.706228},{lat:39.255537, lng:-76.705992},
@@ -148,8 +152,8 @@ function initPolygons()
      {lat:39.258416, lng:-76.712889},{lat:39.258997, lng:-76.713324}]
      
      var coord_walker_south =
-     [{lat:39.259367, lng:-76.714421},{lat:39.259914, lng:-76.713846},
-     {lat:39.259037, lng:-76.713785},{lat:39.259367, lng:-76.714426}]
+     [{lat:39.259389, lng:-76.714513},{lat:39.259914, lng:-76.713846},
+     {lat:39.259571, lng:-76.713200},{lat:39.259008, lng:-76.713834}]
 
      var coord_walker_north =
      [{lat:39.258665, lng:-76.715626},{lat:39.259314, lng:-76.714871},
@@ -283,6 +287,8 @@ function initPolygons()
   region_commons.setMap(map);
   region_dining.setMap(map);
   region_eng.setMap(map);
+  region_bio.setMap(map);
+  region_ite.setMap(map);
   region_fine_art.setMap(map);
   region_sondheim.setMap(map);
   region_physics.setMap(map);
@@ -291,6 +297,7 @@ function initPolygons()
   region_patapsco.setMap(map);
   region_potomac.setMap(map);
   region_susquehanna.setMap(map);
+  region_chem.setMap(map);
   region_chesapeake.setMap(map);
   region_erickson.setMap(map);
   region_harbor.setMap(map);
@@ -330,6 +337,13 @@ function initPolygons()
        
   google.maps.event.addListener( region_bio,"mouseout",function()
       {this.setOptions({fillColor: "#0000FF", strokeColor: "#0000FF"});});
+      
+  google.maps.event.addListener( region_chem,"mouseover",function(evnt)
+      {this.setOptions({fillColor: "#CC6633", strokeColor: "#CC6633"});
+       showArrays(evnt,"Chemistry") ;}); 
+       
+  google.maps.event.addListener( region_chem,"mouseout",function()
+      {this.setOptions({fillColor: "#0000FF", strokeColor: "#0000FF"});});      
       
   google.maps.event.addListener( region_event_center,"mouseover",function(evnt)
       {this.setOptions({fillColor: "#CC6633", strokeColor: "#CC6633"});
@@ -380,6 +394,13 @@ function initPolygons()
        
   google.maps.event.addListener( region_eng,"mouseout",function()
       {this.setOptions({fillColor: "#0000FF", strokeColor: "#0000FF"});});      
+      
+  google.maps.event.addListener( region_ite,"mouseover",function(evnt)
+      {this.setOptions({fillColor: "#CC6633", strokeColor: "#CC6633"});
+       showArrays(evnt,"Information Technology/") ;}); 
+       
+  google.maps.event.addListener( region_ite,"mouseout",function()
+      {this.setOptions({fillColor: "#0000FF", strokeColor: "#0000FF"});});       
       
   google.maps.event.addListener( region_fine_art,"mouseover",function(evnt)
       {this.setOptions({fillColor: "#CC6633", strokeColor: "#CC6633"});

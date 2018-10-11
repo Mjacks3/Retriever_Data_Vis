@@ -7,6 +7,8 @@ var overlayBg = document.getElementById("myOverlay");
 // Toggle between showing and hiding the sidebar, and add overlay effect
 function w3_open() 
 {
+    console.log("Entered");
+    
     if (mySidebar.style.display === 'block')
     {
         mySidebar.style.display = 'none';
@@ -27,9 +29,3 @@ function w3_close()
 }
 
 
-
-
-<script language="javascript" type="text/javascript">
-     $(window).load(function() {
-     $('#loading').hide();
-  });

@@ -46,7 +46,6 @@ function getbarcharts()
           "name": "Residential Buildings",
           "y": all_buildings['Chesapeake'][0]+all_buildings['Erickson Hall'][0]+
           all_buildings['Hillside'][0]+ all_buildings['Susquehanna'][0]+
-          all_buildings['Patapsco'][0]+all_buildings['Patapsco Addition'][0]+
           all_buildings['Potomac Hall'][0]+
           all_buildings['Walker AVE South'][0]+all_buildings['Harbor Hall'][0]+
           all_buildings['Walker AVE North'][0]+all_buildings['Terrace'][0]+ all_buildings['Westhills'][0],
@@ -103,10 +102,6 @@ function getbarcharts()
             all_buildings['Patapsco'][0]
           ],
      
-          [
-            "Patapsco Addition",
-            all_buildings['Patapsco Addition'][0]
-          ],
           [
             "Potomac",
             all_buildings['Potomac Hall'][0]
@@ -229,7 +224,6 @@ function getbarcharts()
 
 var resareatotal = all_buildings['Chesapeake'][0]+all_buildings['Erickson Hall'][0]+
           all_buildings['Hillside'][0]+ all_buildings['Susquehanna'][0]+
-          all_buildings['Patapsco'][0]+all_buildings['Patapsco Addition'][0]+
           all_buildings['Potomac Hall'][0]+
           all_buildings['Walker AVE South'][0]+all_buildings['Harbor Hall'][0]+
           all_buildings['Walker AVE North'][0]+all_buildings['Terrace'][0]+ all_buildings['Westhills'][0];
@@ -270,7 +264,6 @@ var colors = Highcharts.getOptions().colors,
           "Harbor Hall",
           "Hillside",
           "Patapsco",
-          "Patapsco Addition",
           "Potomac",
           "Susquehanna",
           "Terrace",
@@ -284,7 +277,6 @@ var colors = Highcharts.getOptions().colors,
           Math.round(all_buildings['Harbor Hall'][0]/dashtotal*10000)/100,
           Math.round(all_buildings['Hillside'][0]/dashtotal*10000)/100,
           Math.round(all_buildings['Patapsco'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Patapsco Addition'][0]/dashtotal*10000)/100,
           Math.round(all_buildings['Potomac Hall'][0]/dashtotal*10000)/100,
           Math.round(all_buildings['Susquehanna'][0]/dashtotal*10000)/100,
           Math.round(all_buildings['Terrace'][0]/dashtotal*10000)/100,

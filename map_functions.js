@@ -17,7 +17,7 @@ function initMap(start=null, end=null, time_idx=0, granularity="Building",
     map = new google.maps.Map(document.getElementById('map'), 
         {
             tilt: 0,
-            zoom: 16.5,
+            zoom: 16.2,
             center: {lat: 39.2558715, lng: -76.7118267},
             mapTypeId: 'satellite'
         });
@@ -82,8 +82,9 @@ function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Build
     var hillside_com = ["Sideling","Pocomoke","Manokin",
                         "Patuxent","Elk","Deepcreek",
                         "Casselman","Breton","Hillside"];
+    var patapsco = ["Patapsco", "Patapsco Addition"]
                         
-    builds = {"Hillside": [0]};
+    builds = {"Hillside": [0],"Patapsco": [0] };
     console.log(response["results"]);
     var ix;
     for (ix = 0; ix < response["results"].length ;ix++)
@@ -92,6 +93,11 @@ function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Build
         if (hillside_com.includes(response["results"][ix]["area"]))
         {
             builds["Hillside"][0] += 
+            response["results"][ix]["data"][time_idx]["value"];
+        }
+        else if ( patapsco.includes(response["results"][ix]["area"]))
+        {
+            builds["Patapsco"][0] += 
             response["results"][ix]["data"][time_idx]["value"];
         }
         else
@@ -112,28 +118,27 @@ function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Build
 	 
 	 builds['Chemistry'].push([39.2548812,-76.7128226]);
 	
-	 builds['Math_Psyc'].push([39.2540944,-76.7125407]);
+	 builds['Math_Psyc'].push([39.254104,-76.712457]);
 	 builds['Academic IV'].push([39.2536036,-76.7134087]);
 	 builds['PAHB'].push([39.2552382,-76.7153259]);
 	 builds['Commons'].push([39.2549006,-76.7109555]);
 	 builds['Dining Hall'].push([39.255900,-76.707633]);
 	 builds['Hillside'].push([39.258085,-76.709147]);
-	 builds['Susquehanna'].push([39.25553,-76.7089886]);
+	 builds['Susquehanna'].push([39.255695,-76.708620]);
 	
-	 builds['Patapsco'].push([39.2550174,-76.7064426]);
-	 builds['Patapsco Addition'].push([39.2552908,-76.707214]);
-	 builds['Engineering'].push([39.2546022,-76.7140627]);
+	 builds['Patapsco'].push([39.255138,-76.706791]);
+	 builds['Engineering'].push([39.254517,-76.713951]);
 	 builds['Fine Arts'].push([39.255161,-76.713649]);
 	
 	 builds['Sondheim'].push([39.2534773,-76.7128474]);
 	 builds['Potomac Hall'].push([39.256020,-76.706618]);
 	
-	 builds['Walker AVE South'].push([39.2587439,-76.7150462]);
+	 builds['Walker AVE South'].push([39.259463,-76.713824]);
 	 builds['Harbor Hall'].push([39.257229,-76.708013]);
 	 builds['Physics'].push([39.254558,-76.709573]);
 	 builds['ITE'].push([39.2538416,-76.714377]);
-	 builds['University Center'].push([39.2543276,-76.7133115]);
-	 builds['Walker AVE North'].push([39.2592171,-76.713810]);
+	 builds['University Center'].push([39.254320,-76.713233]);
+	 builds['Walker AVE North'].push([39.258806,-76.714932]);
 	 builds['Terrace'].push([39.2573399,-76.7112603]);
 	 builds['RAC'].push([39.252815,-76.712447]);
 	 builds['Westhills'].push([39.258872,-76.712757]);
