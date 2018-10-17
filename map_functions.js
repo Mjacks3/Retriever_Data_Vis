@@ -1,30 +1,37 @@
-var glbBuilds; 
+ var glbBuilds; 
 var glbTotalnts;
 var devisenum1;
 var dashtotal = 0;
 var infoWindow;
+var all_buildings;
 
 function getValues()
 {
     return glbBuilds;
 }
 
-
-function initMap(start=null, end=null, time_idx = 0, granularity="Building",
-            timeRange="00%3A00-23%3A59&")
+function initMap(start=null, end=null,now_view = false,time_idx=0, 
+                    granularity="Building", timeRange="00%3A00-23%3A59&")
 {
+   
     setTimeout(function(){
     map = new google.maps.Map(document.getElementById('map'), 
         {
-            zoom: 16.5,
+            tilt: 0,
+            zoom: 16.2,
             center: {lat: 39.2558715, lng: -76.7118267},
             mapTypeId: 'satellite'
         });
     
-    builds = cmxDataRequest(start,end,time_idx,granularity,timeRange);
+    if (now_view == true)
+    {all_buildings = cmxNowDataRequest(); }
+    else
+    {
+    all_buildings = cmxDataRequest(start,end,timeRange,granularity,time_idx);
+    }
     
-    console.log(builds)
-    data = timeframeOrganization(builds, time_idx);
+    console.log(all_buildings)
+    data = timeframeOrganization(all_buildings);
     console.log(data);
     
     block = data[0];
@@ -36,44 +43,11 @@ function initMap(start=null, end=null, time_idx = 0, granularity="Building",
             data: getPoints(block),
             map: map  
         })
-        
-	
-	
-  // Define the LatLng coordinates for the polygon.
-  var coord_antzuid = [
-      {lat: 39.256603, lng:  -76.712439},
-      {lat:39.257080,  lng: -76.711591},
-      {lat: 39.256735,  lng: -76.710717},
-      {lat:39.256098, lng:-76.711853},
-  ];
-
-  // Construct the polygon.
-  var region = new google.maps.Polygon({
-    paths: coord_antzuid,
-    strokeColor: '#36688F',
-    strokeOpacity: 0.8,
-    strokeWeight: 3,
-    fillColor: '#36688F',
-    fillOpacity: 0.35
-  });
-  region.setMap(map);
-
-  // Add a listener for the click event.
-  region.addListener('click', showArrays);
-  
-  google.maps.event.addListener(region,"mouseover",function(){
-   this.setOptions({fillColor: "#CC6633", strokeColor: "#CC6633"});
-  }); 
-  
-  google.maps.event.addListener(region,"mouseout",function(){
-    this.setOptions({fillColor: "#36688F", strokeColor: "#36688F"});
-  });
-
-  infoWindow = new google.maps.InfoWindow;
-
+    console.log(all_buildings);
+    initPolygons();
     changeRadius();
     changeOpacity();
-    glbBuilds = builds;
+    glbBuilds = all_buildings;
     getdashsum();
     getbarcharts();
     
@@ -81,104 +55,105 @@ function initMap(start=null, end=null, time_idx = 0, granularity="Building",
     showloader();
 }
 	
-function showArrays(event) {
-  // Since this polygon has only one path, we can call getPath() to return the
-  // MVCArray of LatLngs.
- // var vertices = region.getPath();
-
-  var contentString = '<h3>Antwerpen Zuid</h3>' +
-      '<strong>Lorem Ipsum</strong><br>John Smith <br>Kerkstraat 01 <br>2000 <br>Antwerp <br>00 000 00 00 <br> john@smith.me'
-
-  // Replace the info windows content and position.
-  infoWindow.setContent(contentString); 
-  infoWindow.setPosition(event.latLng);
-
-  infoWindow.open(map);
-}
-
-function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Building", 
-                        timeRange="00%3A00-23%3A59&")
+function cmxDataRequest(start=null, end=null, timeRange="00%3A00-23%3A59&",
+                                     granularity = "Building", time_idx = 0)
 {
     var mid = "";	
-    
-    
     if (start == null || end == null)
 	 {
         start = "to";
         end = "day";	
     }
     else {mid = "%3B";}
-
-	 
+    
+    var connection_state;
+    
+    if (document.getElementById('all').checked)
+    {connection_state = "all";}
+    else if (document.getElementById('detected').checked)
+    {connection_state = "detected";}
+    else
+    {connection_state = "connected";}
+    
+    console.log(timeRange);
+    var restURL = getrestURL(timeRange,start,mid,end,granularity,connection_state);
+    
     var xhttp = new XMLHttpRequest();
-    var restURL= "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
-        "areas=118%2C185%2C304%2C488%2C587%"+
-        "2C629%2C664%2C1025%2C1118%2C1193%2C1206%2C1210%2C1260%2C1357"+
-        "%2C1421%2C1875%2C1880%2C1564%2C1932%2C2354%2C2376%2C2398%2C2477"+
-        "%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
-        "timeRange="+timeRange+
-        "period="+start +mid+ end+"&"+
-        "granularity="+ granularity + "&"+
-        "durationCategories=0-1440&"+
-        "includeStationary=false&"+
-        "connectionState=connected&"+
-        "type=deviceCount&"+
-        "_=1520953855762"
-        
-       
-    xhttp.open("GET",restURL, false,"admin","HiddenFortress1958");
+
+    xhttp.open("GET",restURL, false);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
     var response = JSON.parse(xhttp.responseText);
+    console.log("resposnse");
     console.log(response);
 
-    var builds; 
-    builds = {};
+    var builds;
+    var hillside_com = ["Sideling","Pocomoke","Manokin",
+                        "Patuxent","Elk","Deepcreek",
+                        "Casselman","Breton","Hillside"];
+                        
+    var patapsco = ["Patapsco", "Patapsco Addition"]
+                        
+    builds = {"Hillside": [0],"Patapsco": [0] };
+    console.log(response["results"]);
     var ix;
     for (ix = 0; ix < response["results"].length ;ix++)
     {
-		builds[response["results"][ix]["area"]] = 
-    	[response["results"][ix]["data"][time_idx]["value"]]; 	
+        
+        if (hillside_com.includes(response["results"][ix]["area"]))
+        {
+            builds["Hillside"][0] += 
+            response["results"][ix]["data"][time_idx]["value"];
+        }
+        else if ( patapsco.includes(response["results"][ix]["area"]))
+        {
+            builds["Patapsco"][0] += 
+            response["results"][ix]["data"][time_idx]["value"];
+        }
+        else
+        {
+            
+    		builds[response["results"][ix]["area"]] =
+        	[response["results"][ix]["data"][time_idx]["value"]];
+    	  } 	
     }
     console.log(builds);
-	 builds['Chesapeake'].push([39.2567085,-76.7086843]);
-	 builds['Public Policy'].push([39.255092,-76.7094311]);
-	 builds['Administration'].push([39.2533135,-76.7136622]);
-	 builds['Library'].push([39.25623,-76.7118938]);
+	 builds['Chesapeake'].push([39.256729,-76.708521]);
+	 builds['Public Policy'].push([39.255180,-76.709091]);
+	 builds['Administration'].push([39.253047,-76.713489]);
+	 builds['Library'].push([39.256588,-76.711768]);
 	 builds['Biology'].push([39.2548479,-76.7122021]);
 	 builds['Erickson Hall'].push([39.2570091,-76.7096952]);
-	 builds['Event Center'].push([39.252432,-76.707563]);
+	 builds['Event Center'].push([39.251967,-76.707406]);
 	 
 	 builds['Chemistry'].push([39.2548812,-76.7128226]);
 	
-	 builds['Math_Psyc'].push([39.2540944,-76.7125407]);
+	 builds['Math_Psyc'].push([39.254104,-76.712457]);
 	 builds['Academic IV'].push([39.2536036,-76.7134087]);
 	 builds['PAHB'].push([39.2552382,-76.7153259]);
 	 builds['Commons'].push([39.2549006,-76.7109555]);
-	 builds['Dining Hall'].push([39.255887,-76.7078899]);
-	 builds['Hillside'].push([39.2578306,-76.7094585]);
-	 builds['Susquehanna'].push([39.25553,-76.7089886]);
+	 builds['Dining Hall'].push([39.255900,-76.707633]);
+	 builds['Hillside'].push([39.258085,-76.709147]);
+	 builds['Susquehanna'].push([39.255695,-76.708620]);
 	
-	 builds['Patapsco'].push([39.2550174,-76.7064426]);
-	 builds['Patapsco Addition'].push([39.2552908,-76.707214]);
-	 builds['Engineering'].push([39.2546022,-76.7140627]);
-	 builds['Fine Arts'].push([39.2549059,-76.7137036]);
+	 builds['Patapsco'].push([39.255138,-76.706791]);
+	 builds['Engineering'].push([39.254517,-76.713951]);
+	 builds['Fine Arts'].push([39.255161,-76.713649]);
 	
 	 builds['Sondheim'].push([39.2534773,-76.7128474]);
-	 builds['Potomac Hall'].push([39.2560987,-76.707022]);
+	 builds['Potomac Hall'].push([39.256020,-76.706618]);
 	
-	 builds['Walker AVE South'].push([39.2587439,-76.7150462]);
-	 builds['Harbor Hall'].push([39.2572848,-76.7084016]);
-	 builds['Physics'].push([39.2543472,-76.7099418]);
+	 builds['Walker AVE South'].push([39.259463,-76.713824]);
+	 builds['Harbor Hall'].push([39.257229,-76.708013]);
+	 builds['Physics'].push([39.254558,-76.709573]);
 	 builds['ITE'].push([39.2538416,-76.714377]);
-	 builds['University Center'].push([39.2543276,-76.7133115]);
-	 builds['Walker AVE North'].push([39.2592171,-76.713879]);
+	 builds['University Center'].push([39.254320,-76.713233]);
+	 builds['Walker AVE North'].push([39.258806,-76.714932]);
 	 builds['Terrace'].push([39.2573399,-76.7112603]);
-	 builds['RAC'].push([39.2529955,-76.7128026]);
-	 builds['Westhills'].push([39.2583289,-76.71274]);
+	 builds['RAC'].push([39.252815,-76.712447]);
+	 builds['Westhills'].push([39.258872,-76.712757]);
 	 return builds;
 }
-
 
 function timeframeOrganization(builds) 
 {
@@ -199,48 +174,47 @@ function timeframeOrganization(builds)
     return [lat_longs_block, totalCounts] ;
 }
 
-
-function tOLDimeframeOrganization(builds, startHour = 0, endHour = 0) 
+function toggleHeatmap() 
 {
-	 startHour = new Number( startHour);
-	 endHour = new Number(endHour);
-	 if ( endHour == 0 ) {endHour = 24;}	
-	 if ( startHour > endHour ) 
-	 {
-		alert("Invalid Time fomat");
-		return[[],[]];
-	 } 
+    heatmap.setMap(heatmap.getMap() ? null : map);
+}
 
-	 if (startHour == endHour) 
-	 {
-	  startHour = 0;
-	  endHour = 24;
-	 }
-	
-	 block = [] ;
-	 totalCounts = [];
-	 for (const [key, value] of Object.entries(builds))
-	 {
-        var totalBucket = 0;
-        var timeslot;
-		  for (timeslot = startHour; timeslot < endHour; timeslot++)
-		  {
-    		  totalBucket += value[0][timeslot];
-		  }
-		  totalCounts.push(totalBucket);
-		  var counter; 
-		  for (counter = 0; counter < totalBucket ; counter ++)
-		  {	
-    		  block.push(value[1]);
-		  }	
-	 }
-    return [block,totalCounts] ;
+
+function changeGradient() 
+{
+    var gradient = [
+    'rgba(0, 255, 255, 0)',
+    'rgba(0, 255, 255, 1)',
+    'rgba(0, 191, 255, 1)',
+    'rgba(0, 127, 255, 1)',
+    'rgba(0, 63, 255, 1)',
+    'rgba(0, 0, 255, 1)',
+    'rgba(0, 0, 223, 1)',
+    'rgba(0, 0, 191, 1)',
+    'rgba(0, 0, 159, 1)',
+    'rgba(0, 0, 127, 1)',
+    'rgba(63, 0, 91, 1)',
+    'rgba(127, 0, 63, 1)',
+    'rgba(191, 0, 31, 1)',
+    'rgba(255, 0, 0, 1)'
+    ]
+    heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
 }
 
 
 
-
-
+function getPoints(block) 
+{
+    pts = [];
+    var ind; 
+    
+    for (ind = 0;  ind < block.length ; ind++)
+    {
+        pts.push( new google.maps.LatLng(block[ind][0], block[ind][1]) ) ;
+    }
+    return pts;
+}
+	
 function toggleHeatmap() 
 {
     heatmap.setMap(heatmap.getMap() ? null : map);
@@ -279,17 +253,3 @@ function changeOpacity()
 {
     heatmap.set('opacity', heatmap.get('opacity') ? null : 0.8);
 }
-
-
-function getPoints(block) 
-{
-    pts = [];
-    var ind; 
-    
-    for (ind = 0;  ind < block.length ; ind++)
-    {
-        pts.push( new google.maps.LatLng(block[ind][0], block[ind][1]) ) ;
-    }
-    return pts;
-}
-	
