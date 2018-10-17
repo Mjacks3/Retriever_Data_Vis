@@ -33,6 +33,7 @@
 <script defer type="text/javascript" src="url.js"></script>
 <script type="text/javascript" src="map_functions.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="additional_data_requests.js"></script>
 <!-- Link ur files <script type="text/javascript"> -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -90,7 +91,7 @@
 <!--------------------------- Top container  --------------------------------->
 <div class="w3-bar w3-top w3-black w3-large"   style="z-index:4">
 <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-<span class="w3-bar-item w3-right">DoitVis</span>
+<span class="w3-bar-item w3-right">DoIT Analytics</span>
 </div>
 <!--------------------------- End/ Top container  ---------------------------->
 
@@ -98,11 +99,6 @@
 <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
 
 <div class="w3-container w3-row">
-<div class="w3-container">
-<h2>R.A.V.</h2>
-<h3>Retriever Analytics Visualization </h3>
-</div>
-<hr>
 
 <!--------------------------- Date Selector --------------------------------->
 <div class="w3-bar-block">
@@ -134,26 +130,30 @@
 
 <!--------------------------- Time Views  ------------------------------------>	
 <h3> Time Views </h3>
+<hr>
 
-<p>
-<b>Total Time View </b>
-<button id="apply2" onclick="time0Picker();"> Generate Total View </button>
+<!---------------------------  Now View    ------------------------------------>	
+<p> <b>Now View</b> </p>
+
+<button id="apply1" onclick="timeNowPicker();"> Generate Now View </button>
 </p> 
 <hr>
-	
-<!---------------------------             ------------------------------------>	
-<p> <b>Preset Views</b> </p>
 
+<!---------------------------    24hr View      ------------------------------------>	
+<p> <b>Preset Views</b> </p>
 <form>
-<input type="radio" name="time" value="1" id="morning" checked="checked">Morning(5:00am-8:59am)<br>
+<input type="radio" name="time" value="0" id="24hr"checked="checked">24hr(12:00AM-11:59PM)<br>
+<input type="radio" name="time" value="1" id="morning" >Morning(5:00am-8:59am)<br>
 <input type="radio" name="time" value="2" id="busniess">Business Hours(9am-4:59pm)<br>
 <input type="radio" name="time" value="3" id="evening">Evening(5pm-8:59pm)<br>
+
 </form>
+
 <button id="apply2" onclick="time1Picker();">Generate Preset View</button>
 
 <hr>
 
-<!------------------------                ------------------------------------>
+<!------------------------     Top of Hour View       ------------------------------------>
 
 <p>
 <b>Top of Hour View</b>

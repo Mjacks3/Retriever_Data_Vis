@@ -1,4 +1,4 @@
-var glbBuilds; 
+ var glbBuilds; 
 var glbTotalnts;
 var devisenum1;
 var dashtotal = 0;
@@ -10,9 +10,10 @@ function getValues()
     return glbBuilds;
 }
 
-function initMap(start=null, end=null, time_idx=0, granularity="Building",
-            timeRange="00%3A00-23%3A59&")
+function initMap(start=null, end=null,now_view = false,time_idx=0, 
+                    granularity="Building", timeRange="00%3A00-23%3A59&")
 {
+   
     setTimeout(function(){
     map = new google.maps.Map(document.getElementById('map'), 
         {
@@ -22,7 +23,12 @@ function initMap(start=null, end=null, time_idx=0, granularity="Building",
             mapTypeId: 'satellite'
         });
     
-    all_buildings = cmxDataRequest(start,end,time_idx,granularity,timeRange);
+    if (now_view == true)
+    {all_buildings = cmxNowDataRequest(); }
+    else
+    {
+    all_buildings = cmxDataRequest(start,end,timeRange,granularity,time_idx);
+    }
     
     console.log(all_buildings)
     data = timeframeOrganization(all_buildings);
@@ -49,8 +55,8 @@ function initMap(start=null, end=null, time_idx=0, granularity="Building",
     showloader();
 }
 	
-function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Building", 
-                        timeRange="00%3A00-23%3A59&")
+function cmxDataRequest(start=null, end=null, timeRange="00%3A00-23%3A59&",
+                                     granularity = "Building", time_idx = 0)
 {
     var mid = "";	
     if (start == null || end == null)
@@ -69,19 +75,23 @@ function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Build
     else
     {connection_state = "connected";}
     
+    console.log(timeRange);
     var restURL = getrestURL(timeRange,start,mid,end,granularity,connection_state);
+    
     var xhttp = new XMLHttpRequest();
 
     xhttp.open("GET",restURL, false);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
     var response = JSON.parse(xhttp.responseText);
+    console.log("resposnse");
     console.log(response);
 
     var builds;
     var hillside_com = ["Sideling","Pocomoke","Manokin",
                         "Patuxent","Elk","Deepcreek",
                         "Casselman","Breton","Hillside"];
+                        
     var patapsco = ["Patapsco", "Patapsco Addition"]
                         
     builds = {"Hillside": [0],"Patapsco": [0] };
@@ -105,7 +115,7 @@ function cmxDataRequest(start=null, end=null, time_idx = 0, granularity = "Build
             
     		builds[response["results"][ix]["area"]] =
         	[response["results"][ix]["data"][time_idx]["value"]];
-    	} 	
+    	  } 	
     }
     console.log(builds);
 	 builds['Chesapeake'].push([39.256729,-76.708521]);
