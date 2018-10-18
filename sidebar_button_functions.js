@@ -63,6 +63,7 @@ function time1Picker()
             initMap(
             start = startDate.value, 
             end = endDate.value, 
+            now_view = false,
             time_idx = 0, 
             granularity = "Building",
             timeRange="09%3A00-16%3A59&");
