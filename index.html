@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
- <title>DoIT Campus Analytics </title>
+<title>Retriever PAW </title>
 <!-- <title>CMX AP Related UMBC Student Analysis</title>-->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,7 +46,7 @@
 <div class="w3-bar w3-top w3-signal-black w3-large"   style="z-index:4">
 <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
 <span class="w3-bar-item w3-left"><img src="Pictures/paw2.png"  style="width:25px;height:25px;"></span>
-<span class="w3-bar-item w3-right">DoIT Analytics</span>
+<span class="w3-bar-item w3-right">Retriever PAW - Patrons Attached to Wifi</span>
 </div>
 <!--------------------------- End/ Top container  ---------------------------->
 
@@ -55,22 +55,11 @@
 
 <div class="w3-container w3-row">
 
-<!--------------------------- Date Selector --------------------------------->
-<div class="w3-bar-block">
-<h3> Date Selector </h3>
 
-<p>
-<div>Start Date: &nbsp&nbsp 
-<input type="date" id="startDate" ></div>
-</p>
+<h3><i>PAW Analytics Tool</i></h3>
+ Select a <b> Connection State</b>, then analyze PAWS using either
+a <b>Live View </b> or one of the <b>Archived Views</b>.
 
-<p>
-<div>End Date:  &nbsp&nbsp
- <input type="date" id="endDate" ></div>
-</p>
-
-<p>
-</p>
 <hr>
 <!---------------------------  Connection State  ------------------------------------>	
 <h3> Connection State </h3>
@@ -82,16 +71,32 @@
 </form>
 
 <hr>
+<!---------------------------  Live View    ------------------------------------>	
+<h3>Live View</h3>
+
+<button id="apply1" onclick="timeNowPicker();"> Generate Live View </button>
+</p> 
+<p> <b>OR </b> </p>
+<!--------------------------- Date Selector --------------------------------->
+<div class="w3-bar-block">
+<h3> Archived Views</h3>
+
+<p> <b>Date(s) Selector</b> </p>
+<p>
+<div>Start Date: &nbsp&nbsp 
+<input type="date" id="startDate" ></div>
+</p>
+
+<p>
+<div>End Date:  &nbsp&nbsp
+ <input type="date" id="endDate" ></div>
+</p>
+
+
 
 <!--------------------------- Time Views  ------------------------------------>	
-<h3> Time Views </h3>
 
-<!---------------------------  Now View    ------------------------------------>	
-<p> <b>Now View</b> </p>
 
-<button id="apply1" onclick="timeNowPicker();"> Generate Now View </button>
-</p> 
-<hr>
 
 <!---------------------------    24hr View      ------------------------------------>	
 <p> <b>Preset Views</b> </p>
@@ -105,12 +110,12 @@
 
 <button id="apply2" onclick="time1Picker();">Generate Preset View</button>
 
-<hr>
-
+<p>
+<b>OR</b>
 <!------------------------     Top of Hour View       ------------------------------------>
 
 <p>
-<b>Top of Hour View</b>
+<b>Hourly Views</b>
 
 <input id="spinner" max="23" min="0" name="value">
 </p>
@@ -135,15 +140,6 @@
 
   </header>
 
-
-  <div class="w3-container w3-2018-quiet-gray ">
-<div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
-<div class="w3-right">
-  <h3><span id="dashtotal"></span></p></h3>
-</div>
-<div class="w3-clear"></div>
-<h4>Total Devices Number</h4>
-</div>
 
 <div class="w3-container w3-white ">
 <div class="row">
@@ -237,13 +233,18 @@
 	</div>
 </div>
 </div>
+</div>
 
+<div class="w3-container w3-white ">
+<div class="w3-left"><i class="fa fa-wifi w3-xxxlarge"></i></div>
+<div class="w3-center"><h2>Total Devices Number 
+<span id="dashtotal"></span></h2></div>
+</div>
 
 </div>
 
-
+  
 <div class= "w3-container w3-white" id="mapPanel">
-  <b><h5>Map</h5></b>
   <div id="map" class="container" style="min-width:300px;height:750px; margin: 0 auto" alt="Wifi Usage"></div>
   </div>
 

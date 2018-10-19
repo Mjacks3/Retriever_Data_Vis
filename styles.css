@@ -56,7 +56,7 @@ img.resize {
     position: relative;
     width: 200px;
     max-width: 200px;
-    border-radius: 8px;
+    border-radius: 6px;
 }
 
 .ibcontainer img {
