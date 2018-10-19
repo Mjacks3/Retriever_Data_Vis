@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html>
-<title>CMX AP Related UMBC Student Analysis</title>
+ <title>DoIT Campus Analytics </title>
+<!-- <title>CMX AP Related UMBC Student Analysis</title>-->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; img-src * data: 'unsafe-inline'">
+
 <!-- Linked Styles -->
-<link rel="icon" href="rtvr.ico">
+<link rel="icon" href="Pictures/rtvr.ico">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="styles.css" rel="stylesheet" type="text/css"> 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-2018.css">
 
 
 <!-- Linked Javascript  -->
@@ -31,22 +35,23 @@
 <script defer type="text/javascript" src="page_window_functions.js"></script>
 <script defer type="text/javascript" src="url.js"></script>
 <script type="text/javascript" src="map_functions.js"></script>
-<script type="text/javascript" src="additional_data_requests.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="additional_data_requests.js"></script>
 <!-- Link ur files <script type="text/javascript"> -->
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <body class="w3-light-grey">
 
 <!--------------------------- Top container  --------------------------------->
-<div class="w3-bar w3-top w3-black w3-large"   style="z-index:4">
-<button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+<div class="w3-bar w3-top w3-signal-black w3-large"   style="z-index:4">
+<button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+<span class="w3-bar-item w3-left"><img src="Pictures/paw2.png"  style="width:25px;height:25px;"></span>
 <span class="w3-bar-item w3-right">DoIT Analytics</span>
 </div>
 <!--------------------------- End/ Top container  ---------------------------->
 
 <!--------------------------- Sidebar/menu  ---------------------------------->
-<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+<nav class="w3-sidebar w3-collapse w3-amber w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
 
 <div class="w3-container w3-row">
 
@@ -80,7 +85,6 @@
 
 <!--------------------------- Time Views  ------------------------------------>	
 <h3> Time Views </h3>
-<hr>
 
 <!---------------------------  Now View    ------------------------------------>	
 <p> <b>Now View</b> </p>
@@ -122,46 +126,135 @@
 <!-- !PAGE CONTENT! loader myDiv-->
 
 <div id="loader">
-<img src="Loading_icon.gif" style="width:21%">
+<img src="Pictures/Loading_icon.gif" style="width:21%">
 </div>
-<div id="myDiv" class="w3-main" style="margin-left:300px;margin-top:43px;">
+<div id="myDiv" class="w3-main" style="margin-left:300px ;margin-top:20px;">
 
   <!-- Header -->
   <header class="w3-container" style="padding-top:22px">
 
   </header>
 
-  <div class="w3-row-padding w3-margin-bottom">
-<div class="w3-quarter">
-  <div class="w3-container w3-red w3-padding-16">
+
+  <div class="w3-container w3-2018-quiet-gray ">
 <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
 <div class="w3-right">
   <h3><span id="dashtotal"></span></p></h3>
 </div>
 <div class="w3-clear"></div>
 <h4>Total Devices Number</h4>
-  </div>
 </div>
-  </div>
-  
-<div class="w3-panel" id="mapPanel">
-  <div class="w3-row-padding">
 
-  <h5>Map</h5> 
- 
+<div class="w3-container w3-white ">
+<div class="row">
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/Commons.jpg"  alt="Commons" style="width:100%">
+  	<button class="btn">Commons</font></button>
+	</div>
+	</div>
+
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/Library.jpg" alt="Library" style="width:100%">
+  	<button class="btn">Library</button>
+	</div>
+</div>
+
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/DHall.jpg" alt="DHall" style="width:100%">
+  	<button class="btn">Dinning Hall</button>
+	</div>
+</div>
+
+
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/UC.jpg" style="width:100%">
+  	<button class="btn">University Center</button>
+	
+</div>
+</div>
+
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/EventCenter.jpg" alt="EventCenter" style="width:100%">
+  	<button class="btn">Event Center</button>
+	</div>
+</div>
+
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/ITE.jpg" alt="Snow" style="width:100%">
+  	<button class="btn">ITE</button>
+	</div>
+</div>
+</div>
+
+<div class="row">
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/Commons.jpg"  alt="Commons" style="width:100%">
+  	<button class="btn">Commons</button>
+	</div>
+	</div>
+
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/Library.jpg" alt="Library" style="width:100%">
+  	<button class="btn">Library</button>
+	</div>
+</div>
+
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/DHall.jpg" alt="DHall" style="width:100%">
+  	<button class="btn">Dinning Hall</button>
+	</div>
+</div>
+
+
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/UC.jpg" style="width:100%">
+  	<button class="btn">University Center</button>
+	
+</div>
+</div>
+
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/EventCenter.jpg" alt="EventCenter" style="width:100%">
+  	<button class="btn">Event Center</button>
+	</div>
+</div>
+
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/ITE.jpg" alt="Snow" style="width:100%">
+  	<button class="btn">ITE</button>
+	</div>
+</div>
+</div>
+
+
+</div>
+
+
+<div class= "w3-container w3-white" id="mapPanel">
+  <b><h5>Map</h5></b>
   <div id="map" class="container" style="min-width:300px;height:750px; margin: 0 auto" alt="Wifi Usage"></div>
   </div>
-  </div>
-<hr>
 
-<div class="w3-container">
 
-</div>
-<h5>&nbsp Charts</h5>
+<div class="w3-container w3-white">
+
+<!--</div>-->
 <div id="barcontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
 <div id="piecontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
 
-<--End page content -->
+<!--End page content -->
 </div>
 
 <script language="javascript" type="text/javascript">
