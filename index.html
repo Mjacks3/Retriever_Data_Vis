@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
- <title>DoIT Campus Analytics </title>
-<!-- <title>CMX AP Related UMBC Student Analysis</title>-->
+ <title>Retriever PAW</title>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; img-src * data: 'unsafe-inline'">
@@ -40,22 +40,23 @@
 <!-- Link ur files <script type="text/javascript"> -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<body class="w3-light-grey">
+<!-- Header -->
+<header class="w3-container" style="padding-top:22px"></header>
+<body class="w3-white">
 
 <!--------------------------- Top container  --------------------------------->
 <div class="w3-bar w3-top w3-signal-black w3-large"   style="z-index:4">
 <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
 <span class="w3-bar-item w3-left"><img src="Pictures/paw2.png"  style="width:25px;height:25px;"></span>
-<span class="w3-bar-item w3-right">DoIT Analytics</span>
+<span class="w3-bar-item w3-right">Retriever PAW - Patrons Attached to Wifi</span>
 </div>
-<!--------------------------- End/ Top container  ---------------------------->
 
 <!--------------------------- Sidebar/menu  ---------------------------------->
 <nav class="w3-sidebar w3-collapse w3-amber w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
 
 <div class="w3-container w3-row">
 
-<!--------------------------- Date Selector --------------------------------->
+<!--------------------------- Date Selector -->
 <div class="w3-bar-block">
 <h3> Date Selector </h3>
 
@@ -72,7 +73,7 @@
 <p>
 </p>
 <hr>
-<!---------------------------  Connection State  ------------------------------------>	
+<!---------------------------  Connection State -->	
 <h3> Connection State </h3>
 
 <form>
@@ -83,17 +84,17 @@
 
 <hr>
 
-<!--------------------------- Time Views  ------------------------------------>	
+<!--------------------------- Time Views-------->	
 <h3> Time Views </h3>
 
-<!---------------------------  Now View    ------------------------------------>	
+<!---------------------------  Now View---->	
 <p> <b>Now View</b> </p>
 
 <button id="apply1" onclick="timeNowPicker();"> Generate Now View </button>
 </p> 
 <hr>
 
-<!---------------------------    24hr View      ------------------------------------>	
+<!---------------------------    24hr View-->	
 <p> <b>Preset Views</b> </p>
 <form>
 <input type="radio" name="time" value="0" id="24hr"checked="checked">24hr(12:00AM-11:59PM)<br>
@@ -107,7 +108,7 @@
 
 <hr>
 
-<!------------------------     Top of Hour View       ------------------------------------>
+<!------------------------     Top of Hour View---->
 
 <p>
 <b>Top of Hour View</b>
@@ -119,7 +120,7 @@
 </div>
 </nav>
 
-<!--------------------------- End Sidebar/menu  ------------------------------>
+
 <!-- Overlay effect when opening sidebar on small screens -->
 <div class="w3-overlay w3-hide-large w3-animate-opacity"  style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
@@ -130,10 +131,7 @@
 </div>
 <div id="myDiv" class="w3-main" style="margin-left:300px ;margin-top:20px;">
 
-  <!-- Header -->
-  <header class="w3-container" style="padding-top:22px">
 
-  </header>
 
 
   <div class="w3-container w3-2018-quiet-gray ">
