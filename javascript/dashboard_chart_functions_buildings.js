@@ -1,0 +1,4 @@
+function generatebuildingViews()
+{
+    cosnole.log   
+}                                                                                                                                          
