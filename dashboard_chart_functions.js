@@ -1,19 +1,3 @@
-var zone = {
-
-"Commons_F1_Bookstore": ["First Floor", 83],
-"Commons_F1_Food&Flag": ["First Floor", 393],
-"Commons_F1_FrontDesk":  ["First Floor", 145],
-"Commons_F1_Openarea": ["First Floor", 160],
-"Commons_F1_Quad":  ["First Floor", 292],
-"Commons_F2_FlatTuesday":  ["Second Floor", 88],
-"Commons_F2_GameRoom":  ["Second Floor", 59],
-"Commons_F2_Offices":  ["Second Floor", 34],
-"Commons_F2_OpenArea":  ["Second Floor", 58],
-"Commons_F2_SportsZone":  ["Mezzanen", 67],
-"Commons_F2_StudentOrgSpace":  ["Second Floor", 90],
-"Commons_F2_UpperFood": ["Mezzanen", 209]
-}
-
 function getbarcharts()
 {
   Highcharts.chart('barcontainer', {
@@ -21,7 +5,7 @@ function getbarcharts()
     type: 'column'
   },
   title: {
-    text: 'Devices Number by Floor in Commons'
+    text: 'Devices Number by Areas on Campus'
   },
   subtitle: {
     text: 'Click the columns to view versions. School Website: <a href="https://www.umbc.edu/" target="_blank">umbc.edu</a>'
@@ -55,30 +39,37 @@ function getbarcharts()
 
   "series": [
     {
-      "name": "UMBC Campus - Commons",
+      "name": "UMBC Campus",
       "colorByPoint": true,
       "data": [
         {
-          "name": "First Floor",
-          "y": zone['Commons_F1_Bookstore'][1]+zone['Commons_F1_Food&Flag'][1]+
-          zone['Commons_F1_FrontDesk'][1]+ zone['Commons_F1_Openarea'][1]+
-         zone['Commons_F1_Quad'][1],
-          "drilldown": "First Floor"
+          "name": "Residential Buildings",
+          "y": all_buildings['Chesapeake'][0]+all_buildings['Erickson Hall'][0]+
+          all_buildings['Hillside'][0]+ all_buildings['Susquehanna'][0]+
+          all_buildings['Potomac Hall'][0]+
+          all_buildings['Walker AVE South'][0]+all_buildings['Harbor Hall'][0]+
+          all_buildings['Walker AVE North'][0]+all_buildings['Terrace'][0]+ all_buildings['Westhills'][0],
+          "drilldown": "Residential Buildings"
         },
     
         {
-          "name": "Second Floor",
-          "y": zone['Commons_F2_FlatTuesday'][1]+zone['Commons_F2_GameRoom'][1]+
-          zone['Commons_F2_Offices'][1]+ zone['Commons_F2_OpenArea'][1]+
-         zone['Commons_F2_StudentOrgSpace'][1],
+          "name": "Academic Buildings",
+          "y": all_buildings['Public Policy'][0]+all_buildings['Administration'][0]+
+          all_buildings['Biology'][0]+all_buildings['Chemistry'][0]+
+          all_buildings['Math_Psyc'][0]+all_buildings['Academic IV'][0]+
+          all_buildings['PAHB'][0]+all_buildings['Engineering'][0]+
+          all_buildings['Fine Arts'][0]+all_buildings['Sondheim'][0]+
+          all_buildings['Physics'][0]+all_buildings['ITE'][0],
           
-          "drilldown": "Second Floor"
+          "drilldown": "Academic Buildings"
         },
 
         {
-          "name": "Mezzanen",
-          "y": zone['Commons_F2_SportsZone'][1]+zone['Commons_F2_UpperFood'][1],
-          "drilldown": "Mezzanen"
+          "name": "Support Facilities",
+          "y": all_buildings['Library'][0]+all_buildings['Event Center'][0]+
+          all_buildings['Commons'][0]+ all_buildings['Dining Hall'][0]+
+          all_buildings['University Center'][0]+all_buildings['RAC'][0],
+          "drilldown": "Support Facilities"
         }
 
       ]
@@ -87,71 +78,141 @@ function getbarcharts()
   "drilldown": {
     "series": [
       {
-        "name": "First Floor",
-        "id": "First Floor",
+        "name": "Residential Buildings",
+        "id": "Residential Buildings",
         "data": [
           [
-            "Book Store",
-            zone['Commons_F1_Bookstore'][1]
+            "Chesapeake",
+            all_buildings['Chesapeake'][0]
           ],
           [
-            "Open Area",
-            zone['Commons_F1_Openarea'][1]
+            "Erickson Hall",
+            all_buildings['Erickson Hall'][0]
           ],
           [
-            "Food & Under the Flag",
-            zone['Commons_F1_Food&Flag'][1]
+            "Harbor Hall",
+            all_buildings['Harbor Hall'][0]
           ],
           [
-            "Front Desk",
-            zone['Commons_F1_FrontDesk'][1]
+            "Hillside",
+            all_buildings['Hillside'][0]
           ],
           [
-            "Quad",
-            zone['Commons_F1_Quad'][1]
+            "Patapsco",
+            all_buildings['Patapsco'][0]
+          ],
+     
+          [
+            "Potomac",
+            all_buildings['Potomac Hall'][0]
+          ],
+          [
+            "Susquehanna",
+            all_buildings['Susquehanna'][0]
+          ],
+          [
+            "Terrace",
+            all_buildings['Terrace'][0]
+          ],
+          [
+            "Walker AVE North",
+            all_buildings['Walker AVE North'][0]
+          ],
+          [
+            "Walker AVE South",
+            all_buildings['Walker AVE South'][0]
+          ],
+          [
+            "Westhills",
+            all_buildings['Westhills'][0   ]
           ]
         ]
       },
       
       {
-        "name": "Second Floor",
-        "id": "Second Floor",
+        "name": "Academic Buildings",
+        "id": "Academic Buildings",
         "data": [
           [
-            "Flat Tuesday",
-            zone['Commons_F2_FlatTuesday'][1]
+            "Academic IV",
+            all_buildings['Academic IV'][0]
           ],
           [
-            "Game Room",
-            zone['Commons_F2_GameRoom'][1]
+            "Administration Building",
+            all_buildings['Administration'][0]
           ],
           [
-            "Offices Area",
-            zone['Commons_F2_Offices'][1]
+            "Biology",
+            all_buildings['Biology'][0]
           ],
           [
-            "Open Area",
-            zone['Commons_F2_OpenArea'][1]
+            "Chemistry",
+            all_buildings['Chemistry'][0]
           ],
           [
-            "Student Organizations Space",
-            zone['Commons_F2_StudentOrgSpace'][1]
-          ]
-        ]
-      
-      },
-      {
-        "name": "Mezzanen",
-        "id": "Mezzanen",
-        "data": [
+            "Engineering",
+            all_buildings['Engineering'][0]
+          ],
           [
-            "Sports Zone",
-             zone['Commons_F2_SportsZone'][1]
+            "Fine Arts",
+            all_buildings['Fine Arts'][0]
+          ],
+          [
+            "ITE",
+            all_buildings['ITE'][0]
+          ],
+          [
+            "Math_Psyc",
+            all_buildings['Math_Psyc'][0]
+          ],
+          [
+            "PAHB",
+            all_buildings['PAHB'][0]
+          ],
+          [
+            "Sondheim",
+            all_buildings['Sondheim'][0]
+          ],
+          [
+            "Physics",
+            all_buildings['Physics'][0]
           ],
           
           [
-            "Upper Floor Food Area",
-            zone['Commons_F2_UpperFood'][1]
+            "Public Policy",
+            all_buildings['Public Policy'][0]
+          ]
+        ]
+      
+      },
+      {
+        "name": "Support Facilities",
+        "id": "Support Facilities",
+        "data": [
+          [
+            "RAC",
+             all_buildings['RAC'][0]
+          ],
+          
+          [
+            "AOK Library",
+            all_buildings['Library'][0]
+          ],
+          [
+            "Commons",
+            all_buildings['Commons'][0]
+          ],
+          [
+            "University Center",
+            all_buildings['University Center'][0]
+          ],
+          [
+            "Dining",
+            all_buildings['Dining Hall'][0]
+          ],
+          [
+            "Event Center",
+            all_buildings['Event Center'][0]
           ]
         ]
       }
@@ -159,8 +220,6 @@ function getbarcharts()
     ]
   }
 });
-
-
 
 var resareatotal = all_buildings['Chesapeake'][0]+all_buildings['Erickson Hall'][0]+
           all_buildings['Hillside'][0]+ all_buildings['Susquehanna'][0]+
