@@ -55,7 +55,7 @@ function getbarcharts()
 
   "series": [
     {
-      "name": "UMBC Campus - Commons",
+      "name": "UMBC Commons",
       "colorByPoint": true,
       "data": [
         {
@@ -160,128 +160,90 @@ function getbarcharts()
   }
 });
 
+var totaldiv = zone['Commons_F1_Bookstore'][1]+zone['Commons_F1_Food&Flag'][1]+
+          zone['Commons_F1_FrontDesk'][1]+ zone['Commons_F1_Openarea'][1]+
+         zone['Commons_F1_Quad'][1] + zone['Commons_F2_FlatTuesday'][1]+zone['Commons_F2_GameRoom'][1]+
+          zone['Commons_F2_Offices'][1]+ zone['Commons_F2_OpenArea'][1]+
+         zone['Commons_F2_StudentOrgSpace'][1] +zone['Commons_F2_SportsZone'][1]+zone['Commons_F2_UpperFood'][1];
 
+var f1total = zone['Commons_F1_Bookstore'][1]+zone['Commons_F1_Food&Flag'][1]+
+          zone['Commons_F1_FrontDesk'][1]+ zone['Commons_F1_Openarea'][1]+
+         zone['Commons_F1_Quad'][1];
 
-var resareatotal = all_buildings['Chesapeake'][0]+all_buildings['Erickson Hall'][0]+
-          all_buildings['Hillside'][0]+ all_buildings['Susquehanna'][0]+
-          all_buildings['Potomac Hall'][0]+ all_buildings['Patapsco'][0]+
-          all_buildings['Walker AVE South'][0]+all_buildings['Harbor Hall'][0]+
-          all_buildings['Walker AVE North'][0]+all_buildings['Terrace'][0]+ all_buildings['Westhills'][0];
+var f1per = Math.round(f1total/totaldiv*100*100)/100;
 
-var resareaper = Math.round(resareatotal/dashtotal*100*100)/100;
-
-var acdareatotal = all_buildings['Public Policy'][0]+all_buildings['Administration'][0]+
-          all_buildings['Biology'][0]+all_buildings['Chemistry'][0]+
-          all_buildings['Math_Psyc'][0]+all_buildings['Academic IV'][0]+
-          all_buildings['PAHB'][0]+all_buildings['Engineering'][0]+
-          all_buildings['Fine Arts'][0]+all_buildings['Sondheim'][0]+
-          all_buildings['Physics'][0]+all_buildings['ITE'][0];
+var f2total = zone['Commons_F2_FlatTuesday'][1]+zone['Commons_F2_GameRoom'][1]+
+          zone['Commons_F2_Offices'][1]+ zone['Commons_F2_OpenArea'][1]+
+         zone['Commons_F2_StudentOrgSpace'][1];
           
-var acdareaper = Math.round(acdareatotal/dashtotal*10000)/100;
+var f2per = Math.round(f2total/totaldiv*10000)/100;
 
 
-var supareatotal = all_buildings['Library'][0]+all_buildings['Event Center'][0]+
-          all_buildings['Commons'][0]+ all_buildings['Dining Hall'][0]+
-          all_buildings['University Center'][0]+all_buildings['RAC'][0];
+var metotal = zone['Commons_F2_SportsZone'][1]+zone['Commons_F2_UpperFood'][1];
           
-var supareaper = Math.round(supareatotal/dashtotal*10000)/100;
+var meper = Math.round(metotal/totaldiv*10000)/100;
 
 var colors = Highcharts.getOptions().colors,
   categories = [
-    "Residential <br /> Buildings",
-    "Academic <br /> Buildings",
-    "Support <br /> Facilities",
+    "First Floor",
+    "Second Floor",
+    "Mezzanen",
   ],
   data = [
     {
-      "y": resareaper,
+      "y": f1per,
       "color": colors[0],
       "drilldown": {
-        "name": "Residential Buildings",
+        "name": "First Floor",
         "categories": [
-          "Chesapeake",
-          "Erickson Hall",
-          "Harbor Hall",
-          "Hillside",
-          "Patapsco",
-          "Potomac",
-          "Susquehanna",
-          "Terrace",
-          "Walker AVE North",
-          "Walker AVE South",
-          "Westhills"
+          "Book Store",
+          "open Area",
+          "Food & Under the Flags",
+          "Front Desk",
+          "Quad"
         ],
         "data": [
-          Math.round(all_buildings['Chesapeake'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Erickson Hall'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Harbor Hall'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Hillside'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Patapsco'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Potomac Hall'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Susquehanna'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Terrace'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Walker AVE North'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Walker AVE South'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Westhills'][0]/dashtotal*10000)/100
+          Math.round(zone['Commons_F1_Bookstore'][1]/totaldiv*10000)/100,
+          Math.round(zone['Commons_F1_Openarea'][1]/totaldiv*10000)/100,
+          Math.round(zone['Commons_F1_Food&Flag'][1]/totaldiv*10000)/100,
+          Math.round(zone['Commons_F1_FrontDesk'][1]/totaldiv*10000)/100,
+          Math.round(zone['Commons_F1_Quad'][1]/totaldiv*10000)/100
         ]
       }
     },
     {
-      "y": acdareaper,
+      "y": f2per,
       "color": colors[1],
       "drilldown": {
-        "name": "Academic Buildings",
+        "name": "Second Floor",
         "categories": [
-          "Academic IV",
-          "Administration Building",
-          "Biology",
-          "Chemistry",
-          "Engineering",
-          "Fine Arts",
-          "ITE",
-          "Math_Psyc",
-          "PAHB",
-          "Sondheim",
-          "Physics",
-          "Public Policy"
+          "Flat Tuesday",
+          "Game Room",
+          "Office Area",
+          "Open Area",
+          "Student Organizations Space"
         ],
         "data": [
-          Math.round(all_buildings['Academic IV'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Administration'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Biology'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Chemistry'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Engineering'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Fine Arts'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['ITE'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Math_Psyc'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['PAHB'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Sondheim'][0]/dashtotal*10000)/100,
-         Math.round(all_buildings['Physics'][0]/dashtotal*10000)/100,
-         Math.round(all_buildings['Public Policy'][0]/dashtotal*10000)/100
+         Math.round(zone['Commons_F2_FlatTuesday'][1]/totaldiv*10000)/100,
+          Math.round(zone['Commons_F2_GameRoom'][1]/totaldiv*10000)/100,
+          Math.round(zone['Commons_F2_Offices'][1]/totaldiv*10000)/100,
+          Math.round(zone['Commons_F2_OpenArea'][1]/totaldiv*10000)/100,
+          Math.round(zone['Commons_F2_StudentOrgSpace'][1]/totaldiv*10000)/100
         ]
       }
     },
     {
-      "y": supareaper ,
+      "y": meper ,
       "color": colors[2],
       "drilldown": {
-        "name": "Support Facilities",
+        "name": "Mezzanen",
         "categories": [
-          "University Center",
-          "RAC",
-          "AOK Library",
-          "Commons",
-          "Dinning Hall",
-          "Event Center"
-
+          "Sports Zone",
+          "Upper Floor Food Area"
         ],
         "data": [
-         Math.round(all_buildings['University Center'][0]/dashtotal*10000)/100,
-         Math.round(all_buildings['RAC'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Library'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Commons'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Dining Hall'][0]/dashtotal*10000)/100,
-          Math.round(all_buildings['Event Center'][0]/dashtotal*10000)/100
+         Math.round(zone['Commons_F2_SportsZone'][1]/totaldiv*10000)/100,
+          Math.round(zone['Commons_F2_UpperFood'][1]/totaldiv*10000)/100
         ]
       }
     },
@@ -390,11 +352,12 @@ Highcharts.chart('piecontainer', {
 }
 
 function getdashsum(){
-  dashtotal = 0;
-  for (var i = 0; i < glbTotalnts.length; i++){
-    dashtotal += glbTotalnts[i];
-  }
-  document.getElementById("dashtotal").innerHTML = dashtotal;
+  var totaldiv = zone['Commons_F1_Bookstore'][1]+zone['Commons_F1_Food&Flag'][1]+
+          zone['Commons_F1_FrontDesk'][1]+ zone['Commons_F1_Openarea'][1]+
+         zone['Commons_F1_Quad'][1] + zone['Commons_F2_FlatTuesday'][1]+zone['Commons_F2_GameRoom'][1]+
+          zone['Commons_F2_Offices'][1]+ zone['Commons_F2_OpenArea'][1]+
+         zone['Commons_F2_StudentOrgSpace'][1] +zone['Commons_F2_SportsZone'][1]+zone['Commons_F2_UpperFood'][1];
+  document.getElementById("dashtotal").innerHTML = totaldiv;
 }
 
 function requestBarChart()
