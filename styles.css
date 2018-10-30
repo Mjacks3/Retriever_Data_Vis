@@ -52,3 +52,54 @@ img.resize {
   text-align: center;
 }
 
+.ibcontainer {
+    position: relative;
+    width: 200px;
+    max-width: 200px;
+    border-radius: 8px;
+}
+
+.ibcontainer img {
+    width: 100%;
+    height: 133px;
+    border-radius: 8px;
+}
+
+.ibcontainer .btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: rgba(50,0,0,0.3);
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.ibcontainer .btn:hover {
+    background-color: black;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.column {
+    float: left;
+    width: 16.66%;
+    padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+

@@ -397,7 +397,7 @@ function initPolygons()
       
   google.maps.event.addListener( region_ite,"mouseover",function(evnt)
       {this.setOptions({fillColor: "#CC6633", strokeColor: "#CC6633"});
-       showArrays(evnt,"Information Technology/") ;}); 
+       showArrays(evnt,"Information Technology") ;}); 
        
   google.maps.event.addListener( region_ite,"mouseout",function()
       {this.setOptions({fillColor: "#0000FF", strokeColor: "#0000FF"});});       
@@ -422,14 +422,7 @@ function initPolygons()
        
   google.maps.event.addListener( region_physics,"mouseout",function()
       {this.setOptions({fillColor: "#0000FF", strokeColor: "#0000FF"});});
-      
-  google.maps.event.addListener( region_ite,"mouseover",function(evnt)
-      {this.setOptions({fillColor: "#CC6633", strokeColor: "#CC6633"});
-       showArrays(evnt,"Information Technology") ;}); 
-       
-  google.maps.event.addListener( region_ite,"mouseout",function()
-      {this.setOptions({fillColor: "#0000FF", strokeColor: "#0000FF"});});      
-      
+          
   google.maps.event.addListener( region_university_cen,"mouseover",function(evnt)
       {this.setOptions({fillColor: "#CC6633", strokeColor: "#CC6633"});
        showArrays(evnt,"University Center") ;}); 

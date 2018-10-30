@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
-<title>CMX AP Related UMBC Student Analysis</title>
+ <title>DoIT Campus Analytics </title>
+<!-- <title>CMX AP Related UMBC Student Analysis</title>-->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; img-src * data: 'unsafe-inline'">
 
 <!-- Linked Styles -->
-<link rel="icon" href="rtvr.ico">
+<link rel="icon" href="Pictures/rtvr.ico">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="styles.css" rel="stylesheet" type="text/css"> 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-2018.css">
 
 
 <!-- Linked Javascript  -->
@@ -33,76 +36,24 @@
 <script defer type="text/javascript" src="url.js"></script>
 <script type="text/javascript" src="map_functions.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="additional_data_requests.js"></script>
 <!-- Link ur files <script type="text/javascript"> -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-.ibcontainer {
-    position: relative;
-    width: 200px;
-    max-width: 200px;
-}
-
-.ibcontainer img {
-    width: 100%;
-    height: 133px;
-}
-
-.ibcontainer .btn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    background-color: rgba(50,0,0,0.3);
-    color: white;
-    font-size: 16px;
-    padding: 12px 24px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.ibcontainer .btn:hover {
-    background-color: black;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-.column {
-    float: left;
-    width: 16.66%;
-    padding: 5px;
-}
-
-/* Clearfix (clear floats) */
-.row::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-</style>
 
 <body class="w3-light-grey">
 
 <!--------------------------- Top container  --------------------------------->
-<div class="w3-bar w3-top w3-black w3-large"   style="z-index:4">
-<button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-<span class="w3-bar-item w3-right">DoitVis</span>
+<div class="w3-bar w3-top w3-signal-black w3-large"   style="z-index:4">
+<button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+<span class="w3-bar-item w3-left"><img src="Pictures/paw2.png"  style="width:25px;height:25px;"></span>
+<span class="w3-bar-item w3-right">DoIT Analytics</span>
 </div>
 <!--------------------------- End/ Top container  ---------------------------->
 
 <!--------------------------- Sidebar/menu  ---------------------------------->
-<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+<nav class="w3-sidebar w3-collapse w3-amber w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
 
 <div class="w3-container w3-row">
-<div class="w3-container">
-<h2>R.A.V.</h2>
-<h3>Retriever Analytics Visualization </h3>
-</div>
-<hr>
 
 <!--------------------------- Date Selector --------------------------------->
 <div class="w3-bar-block">
@@ -135,25 +86,28 @@
 <!--------------------------- Time Views  ------------------------------------>	
 <h3> Time Views </h3>
 
-<p>
-<b>Total Time View </b>
-<button id="apply2" onclick="time0Picker();"> Generate Total View </button>
+<!---------------------------  Now View    ------------------------------------>	
+<p> <b>Now View</b> </p>
+
+<button id="apply1" onclick="timeNowPicker();"> Generate Now View </button>
 </p> 
 <hr>
-	
-<!---------------------------             ------------------------------------>	
-<p> <b>Preset Views</b> </p>
 
+<!---------------------------    24hr View      ------------------------------------>	
+<p> <b>Preset Views</b> </p>
 <form>
-<input type="radio" name="time" value="1" id="morning" checked="checked">Morning(5:00am-8:59am)<br>
+<input type="radio" name="time" value="0" id="24hr"checked="checked">24hr(12:00AM-11:59PM)<br>
+<input type="radio" name="time" value="1" id="morning" >Morning(5:00am-8:59am)<br>
 <input type="radio" name="time" value="2" id="busniess">Business Hours(9am-4:59pm)<br>
 <input type="radio" name="time" value="3" id="evening">Evening(5pm-8:59pm)<br>
+
 </form>
+
 <button id="apply2" onclick="time1Picker();">Generate Preset View</button>
 
 <hr>
 
-<!------------------------                ------------------------------------>
+<!------------------------     Top of Hour View       ------------------------------------>
 
 <p>
 <b>Top of Hour View</b>
@@ -172,46 +126,44 @@
 <!-- !PAGE CONTENT! loader myDiv-->
 
 <div id="loader">
-<img src="Loading_icon.gif" style="width:21%">
+<img src="Pictures/Loading_icon.gif" style="width:21%">
 </div>
-<div id="myDiv" class="w3-main" style="margin-left:300px;margin-top:43px;">
+<div id="myDiv" class="w3-main" style="margin-left:300px ;margin-top:20px;">
 
   <!-- Header -->
   <header class="w3-container" style="padding-top:22px">
 
   </header>
 
-  <div class="w3-row-padding w3-margin-bottom">
-<div class="w3-quarter">
-  <div class="w3-container w3-red w3-padding-16">
+
+  <div class="w3-container w3-2018-quiet-gray ">
 <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
 <div class="w3-right">
   <h3><span id="dashtotal"></span></p></h3>
 </div>
 <div class="w3-clear"></div>
 <h4>Total Devices Number</h4>
-  </div>
 </div>
-  </div>
 
+<div class="w3-container w3-white ">
 <div class="row">
   <div class="column">
 	<div class="ibcontainer">
-  	<img src="Commons.jpg" alt="Commons" style="width:100%">
-  	<button class="btn">Commons</button>
+  	<img src="Pictures/Commons.jpg"  alt="Commons" style="width:100%">
+  	<button onclick="window.location.href='Commons.html'" class="btn">Commons</font></button>
 	</div>
 	</div>
 
   <div class="column">
 	<div class="ibcontainer">
-  	<img src="Library.jpg" alt="Library" style="width:100%">
+  	<img src="Pictures/Library.jpg" alt="Library" style="width:100%">
   	<button class="btn">Library</button>
 	</div>
 </div>
 
   <div class="column">
 	<div class="ibcontainer">
-  	<img src="DHall.jpg" alt="DHall" style="width:100%">
+  	<img src="Pictures/DHall.jpg" alt="DHall" style="width:100%">
   	<button class="btn">Dinning Hall</button>
 	</div>
 </div>
@@ -219,7 +171,7 @@
 
   <div class="column">
 	<div class="ibcontainer">
-  	<img src="UC.jpg" alt="UC" style="width:100%">
+  	<img src="Pictures/UC.jpg" style="width:100%">
   	<button class="btn">University Center</button>
 	
 </div>
@@ -227,37 +179,127 @@
 
   <div class="column">
 	<div class="ibcontainer">
-  	<img src="EventCenter.jpg" alt="EventCenter" style="width:100%">
+  	<img src="Pictures/EventCenter.jpg" alt="EventCenter" style="width:100%">
   	<button class="btn">Event Center</button>
 	</div>
 </div>
 
   <div class="column">
 	<div class="ibcontainer">
-  	<img src="ITE.jpg" alt="Snow" style="width:100%">
-  	<button class="btn">ITE</button>
+  	<img src="Pictures/RAC.jpg" alt="RAC" style="width:100%">
+  	<button class="btn">RAC</button>
 	</div>
 </div>
 </div>
 
-<div class="w3-panel" id="mapPanel">
-  <div class="w3-row-padding">
+<div class="row">
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/Biology.jpg"  alt="Biology" style="width:100%">
+  	<button class="btn">Biology Science</button>
+	</div>
+	</div>
 
-  <h5>Map</h5> 
- 
-  <div id="map" class="container" style="min-width:300px;height:750px; margin: 0 auto" alt="Wifi Usage"></div>
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/Chemistry.jpg" alt="Chemistry" style="width:100%">
+  	<button class="btn">Meyerhoff Chemistry</button>
+	</div>
+</div>
+
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/Math&Psyc.jpg" alt="Math & Psyc" style="width:100%">
+  	<button class="btn">Math & Psyc</button>
+	</div>
+</div>
+
+
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/Sherman.jpg" alt = "Sherman" style="width:100%">
+  	<button class="btn">Sherman</button>
+	
+</div>
+</div>
+
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/Sondheim.jpg" alt="Sondheim" style="width:100%">
+  	<button class="btn">Sondheim</button>
+	</div>
+</div>
+
+  <div class="column">
+	<div class="ibcontainer">
+  	<img src="Pictures/Admin.jpg" alt="Admin" style="width:100%">
+  	<button class="btn">Admin</button>
+	</div>
+</div>
+</div>
+
+<div class="row">
+  <div class="column">
+  <div class="ibcontainer">
+    <img src="Pictures/ITE.jpg"  alt="ITE" style="width:100%">
+    <button class="btn">ITE</button>
   </div>
   </div>
-<hr>
 
-<div class="w3-container">
+  <div class="column">
+  <div class="ibcontainer">
+    <img src="Pictures/Engineering.jpg" alt="Engineering" style="width:100%">
+    <button class="btn">Engineering</button>
+  </div>
+</div>
+
+  <div class="column">
+  <div class="ibcontainer">
+    <img src="Pictures/FineArts.jpg" alt="FineArts" style="width:100%">
+    <button class="btn">Fine Arts</button>
+  </div>
+</div>
+
+
+  <div class="column">
+  <div class="ibcontainer">
+    <img src="Pictures/PHAP.jpg" alt = "PHAP" style="width:100%">
+    <button class="btn">PHAP</button>
+  
+</div>
+</div>
+
+  <div class="column">
+  <div class="ibcontainer">
+    <img src="Pictures/PUB.jpg" alt="PUB" style="width:100%">
+    <button class="btn">Public Policy</button>
+  </div>
+</div>
+
+  <div class="column">
+  <div class="ibcontainer">
+    <img src="Pictures/Physics.jpg" alt="Physics" style="width:100%">
+    <button class="btn">Physics</button>
+  </div>
+</div>
+</div>
 
 </div>
-<h5>&nbsp Charts</h5>
+
+
+<div class= "w3-container w3-white" id="mapPanel">
+  <b><h5>Map</h5></b>
+  <div id="map" class="container" style="min-width:300px;height:750px; margin: 0 auto" alt="Wifi Usage"></div>
+  </div>
+
+
+<div class="w3-container w3-white">
+
+<!--</div>-->
 <div id="barcontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
 <div id="piecontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
 
-<--End page content -->
+<!--End page content -->
 </div>
 
 <script language="javascript" type="text/javascript">

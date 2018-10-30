@@ -224,7 +224,7 @@ function getbarcharts()
 
 var resareatotal = all_buildings['Chesapeake'][0]+all_buildings['Erickson Hall'][0]+
           all_buildings['Hillside'][0]+ all_buildings['Susquehanna'][0]+
-          all_buildings['Potomac Hall'][0]+
+          all_buildings['Potomac Hall'][0]+ all_buildings['Patapsco'][0]+
           all_buildings['Walker AVE South'][0]+all_buildings['Harbor Hall'][0]+
           all_buildings['Walker AVE North'][0]+all_buildings['Terrace'][0]+ all_buildings['Westhills'][0];
 
@@ -244,7 +244,7 @@ var supareatotal = all_buildings['Library'][0]+all_buildings['Event Center'][0]+
           all_buildings['Commons'][0]+ all_buildings['Dining Hall'][0]+
           all_buildings['University Center'][0]+all_buildings['RAC'][0];
           
-var supareaper = Math.round(supareaper/dashtotal*10000)/100;
+var supareaper = Math.round(supareatotal/dashtotal*10000)/100;
 
 var colors = Highcharts.getOptions().colors,
   categories = [
@@ -322,7 +322,7 @@ var colors = Highcharts.getOptions().colors,
       }
     },
     {
-      "y": Math.round((glbTotalnts[26]+glbTotalnts[22]+glbTotalnts[14]+glbTotalnts[5]+glbTotalnts[6]+glbTotalnts[9])/dashtotal*10000)/100 ,
+      "y": supareaper ,
       "color": colors[2],
       "drilldown": {
         "name": "Support Facilities",
