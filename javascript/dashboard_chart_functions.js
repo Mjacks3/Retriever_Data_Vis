@@ -17,7 +17,6 @@ function getbarcharts()
     title: {
       text: 'Total Number of Devices'
     }
-
   },
   legend: {
     enabled: false
