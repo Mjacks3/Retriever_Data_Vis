@@ -1,13 +1,22 @@
+<!--- Old. Use for referenced -->
 <!DOCTYPE html>
 <html>
- <title>DoIT Campus Analytics </title>
-<!-- <title>CMX AP Related UMBC Student Analysis</title>-->
+ <title>Retriever PAW</title>
+ <head>
+ 
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+
+<!-- Meta -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; img-src * data: 'unsafe-inline'">
+<header class="w3-container" style="padding-top:22px"></header>
+
 
 <!-- Linked Styles -->
-<link rel="icon" href="Pictures/rtvr.ico">
+<!-- Favicon must be in root dir-->
+<link rel="icon" href="rtvr.ico">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,47 +24,48 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-2018.css">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
 
 <!-- Linked Javascript  -->
+
+<!-- Online  -->
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/data.js"></script>
 <script src="https://code.highcharts.com/modules/drilldown.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyBxevA7di7Avo5vGKAgPPSkJa8ud4gnI&callback=initMap&libraries=visualization"></script>
-
-
-<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="sidebar_button_functions.js"></script>
-<script type="text/javascript" src="secondary_map_functions.js"></script>
-<script type="text/javascript" src="content_loading_functions.js"></script>
-<script defer type="text/javascript" src="dashboard_chart_functions.js"></script>
-<script defer type="text/javascript" src="page_window_functions.js"></script>
-<script defer type="text/javascript" src="url.js"></script>
-<script type="text/javascript" src="map_functions.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="additional_data_requests.js"></script>
-<!-- Link ur files <script type="text/javascript"> -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 
-<body class="w3-light-grey">
+<!-- Local :Campus Scope  -->
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyBxevA7di7Avo5vGKAgPPSkJa8ud4gnI&callback=initMap&libraries=visualization"></script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+<script type="text/javascript" src="javascript/sidebar_button_functions.js"></script>
+<script type="text/javascript" src="javascript/secondary_map_functions.js"></script>
+<script type="text/javascript" src="javascript/content_loading_functions.js"></script>
+<script type="text/javascript" src="javascript/additional_data_requests.js"></script>
+<script type="text/javascript" src="javascript/map_functions.js"></script>
+<script defer type="text/javascript" src="javascript/dashboard_chart_functions.js"></script>
+<script defer type="text/javascript" src="javascript/page_window_functions.js"></script>
+<script defer type="text/javascript" src="javascript/url.js"></script>
+
+ </head>
+<body class="w3-white">
 
 <!--------------------------- Top container  --------------------------------->
 <div class="w3-bar w3-top w3-signal-black w3-large"   style="z-index:4">
 <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
 <span class="w3-bar-item w3-left"><img src="Pictures/paw2.png"  style="width:25px;height:25px;"></span>
-<span class="w3-bar-item w3-right">DoIT Analytics</span>
+<span class="w3-bar-item w3-right">Retriever PAW - Patrons Attached to Wifi</span>
 </div>
-<!--------------------------- End/ Top container  ---------------------------->
 
 <!--------------------------- Sidebar/menu  ---------------------------------->
 <nav class="w3-sidebar w3-collapse w3-amber w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-
 <div class="w3-container w3-row">
 
-<!--------------------------- Date Selector --------------------------------->
+<!--------------------------- Date Selector -->
+
 <div class="w3-bar-block">
 <h3> Date Selector </h3>
 
@@ -72,7 +82,7 @@
 <p>
 </p>
 <hr>
-<!---------------------------  Connection State  ------------------------------------>	
+<!---------------------------  Connection State -->	
 <h3> Connection State </h3>
 
 <form>
@@ -83,228 +93,58 @@
 
 <hr>
 
-<!--------------------------- Time Views  ------------------------------------>	
+<!--------------------------- Time Views-------->	
 <h3> Time Views </h3>
 
-<!---------------------------  Now View    ------------------------------------>	
+<!--------------------------------------------------------------- Now View---->	
 <p> <b>Now View</b> </p>
 
-<button id="apply1" onclick="timeNowPicker();"> Generate Now View </button>
 </p> 
 <hr>
 
-<!---------------------------    24hr View      ------------------------------------>	
+<!---------------------------------------------------------------  24hr View-->	
 <p> <b>Preset Views</b> </p>
 <form>
 <input type="radio" name="time" value="0" id="24hr"checked="checked">24hr(12:00AM-11:59PM)<br>
 <input type="radio" name="time" value="1" id="morning" >Morning(5:00am-8:59am)<br>
 <input type="radio" name="time" value="2" id="busniess">Business Hours(9am-4:59pm)<br>
 <input type="radio" name="time" value="3" id="evening">Evening(5pm-8:59pm)<br>
-
 </form>
 
-<button id="apply2" onclick="time1Picker();">Generate Preset View</button>
 
 <hr>
 
-<!------------------------     Top of Hour View       ------------------------------------>
-
+<!------------------------------------------------------  Top of Hour View---->
 <p>
 <b>Top of Hour View</b>
 
 <input id="spinner" max="23" min="0" name="value">
 </p>
 
-<button  id="apply3"  onclick="time2Picker();">Top of Hour View</button>
+
 </div>
 </nav>
 
-<!--------------------------- End Sidebar/menu  ------------------------------>
 <!-- Overlay effect when opening sidebar on small screens -->
 <div class="w3-overlay w3-hide-large w3-animate-opacity"  style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! loader myDiv-->
-
-<div id="loader">
-<img src="Pictures/Loading_icon.gif" style="width:21%">
-</div>
 <div id="myDiv" class="w3-main" style="margin-left:300px ;margin-top:20px;">
+ 
+Webpage introduction/Tutorial Page Goes Here
 
-  <!-- Header -->
-  <header class="w3-container" style="padding-top:22px">
+<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer interdum, erat vel lacinia gravida, dui metus dapibus erat, sit amet molestie risus metus quis ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis ultricies posuere diam ut pulvinar. Cras eu libero odio. Aenean condimentum ipsum in tellus scelerisque rhoncus. Nulla id posuere lacus. Vestibulum ullamcorper consequat placerat. Duis ullamcorper facilisis odio, sed efficitur magna hendrerit quis. Duis efficitur, quam at ultrices iaculis, eros nulla condimentum erat, eget egestas mi orci sit amet magna. Proin ac dapibus augue, quis tempus quam.
 
-  </header>
+In ultricies ultricies nisl id consequat. Vestibulum maximus, elit ut maximus scelerisque, tortor lectus imperdiet elit, in tristique arcu ante in tellus. Curabitur ullamcorper sagittis lacus, in pellentesque nisl tempor ut. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent eu pellentesque metus, id molestie eros. Suspendisse id quam nec eros ullamcorper fringilla vel et nisl. Maecenas ultricies magna arcu, et tempus justo congue sit amet. Donec non nisl eget purus aliquam ullamcorper eu et sapien. Nunc porta lectus odio. Quisque accumsan ex ut risus tempor varius. Vivamus tristique ultricies ligula.
 
+Morbi eget mauris euismod, dignissim est et, aliquet urna. Donec ultrices odio eu sollicitudin tempor. Nullam dignissim ipsum cursus metus porttitor mollis. Curabitur sed mauris eu arcu imperdiet rutrum. Ut elit libero, ultricies eu ante auctor, ullamcorper ullamcorper purus. Vivamus mattis malesuada purus, a consectetur ex. Ut sit amet ipsum diam. Duis ultrices nibh non tortor porttitor, non scelerisque metus imperdiet. Pellentesque sit amet imperdiet mi. Maecenas varius laoreet turpis non fringilla.
 
-  <div class="w3-container w3-2018-quiet-gray ">
-<div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
-<div class="w3-right">
-  <h3><span id="dashtotal"></span></p></h3>
-</div>
-<div class="w3-clear"></div>
-<h4>Total Devices Number</h4>
-</div>
+Nullam eget purus ut diam imperdiet accumsan ac sit amet metus. Aenean auctor pulvinar imperdiet. Nulla est dui, elementum pharetra dui et, varius ornare lorem. Aenean sem nisl, feugiat a mi vel, elementum pharetra augue. Vivamus in turpis malesuada, posuere urna sit amet, ornare felis. Aenean nec sapien non metus ultrices sollicitudin nec a magna. Nam ultrices leo bibendum mi facilisis, in sollicitudin velit pellentesque. Phasellus efficitur dui cursus, laoreet dui vitae, eleifend nulla. Nullam iaculis, orci at fringilla tempor, ante lacus consectetur lorem, non lobortis libero leo elementum est. Nulla ut nisl luctus, viverra sem at, ullamcorper nisi. Fusce augue odio, vestibulum vitae condimentum eget, efficitur ac risus. In aliquet sem at feugiat euismod. Aliquam in purus condimentum, porta quam vel, commodo diam. Sed at bibendum tellus. Phasellus pulvinar quam et orci pulvinar, eget porta purus volutpat. Suspendisse elementum felis vel enim auctor, vel vehicula magna fringilla.
 
-<div class="w3-container w3-white ">
-<div class="row">
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Commons.jpg"  alt="Commons" style="width:100%">
-  	<button onclick="window.location.href='Commons.html'" class="btn">Commons</font></button>
-	</div>
-	</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Library.jpg" alt="Library" style="width:100%">
-  	<button class="btn">Library</button>
-	</div>
-</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/DHall.jpg" alt="DHall" style="width:100%">
-  	<button class="btn">Dinning Hall</button>
-	</div>
-</div>
-
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/UC.jpg" style="width:100%">
-  	<button class="btn">University Center</button>
-	
-</div>
-</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/EventCenter.jpg" alt="EventCenter" style="width:100%">
-  	<button class="btn">Event Center</button>
-	</div>
-</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/RAC.jpg" alt="RAC" style="width:100%">
-  	<button class="btn">RAC</button>
-	</div>
-</div>
-</div>
-
-<div class="row">
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Biology.jpg"  alt="Biology" style="width:100%">
-  	<button class="btn">Biology Science</button>
-	</div>
-	</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Chemistry.jpg" alt="Chemistry" style="width:100%">
-  	<button class="btn">Meyerhoff Chemistry</button>
-	</div>
-</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Math&Psyc.jpg" alt="Math & Psyc" style="width:100%">
-  	<button class="btn">Math & Psyc</button>
-	</div>
-</div>
-
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Sherman.jpg" alt = "Sherman" style="width:100%">
-  	<button class="btn">Sherman</button>
-	
-</div>
-</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Sondheim.jpg" alt="Sondheim" style="width:100%">
-  	<button class="btn">Sondheim</button>
-	</div>
-</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Admin.jpg" alt="Admin" style="width:100%">
-  	<button class="btn">Admin</button>
-	</div>
-</div>
-</div>
-
-<div class="row">
-  <div class="column">
-  <div class="ibcontainer">
-    <img src="Pictures/ITE.jpg"  alt="ITE" style="width:100%">
-    <button class="btn">ITE</button>
-  </div>
-  </div>
-
-  <div class="column">
-  <div class="ibcontainer">
-    <img src="Pictures/Engineering.jpg" alt="Engineering" style="width:100%">
-    <button class="btn">Engineering</button>
-  </div>
-</div>
-
-  <div class="column">
-  <div class="ibcontainer">
-    <img src="Pictures/FineArts.jpg" alt="FineArts" style="width:100%">
-    <button class="btn">Fine Arts</button>
-  </div>
-</div>
-
-
-  <div class="column">
-  <div class="ibcontainer">
-    <img src="Pictures/PHAP.jpg" alt = "PHAP" style="width:100%">
-    <button class="btn">PHAP</button>
-  
-</div>
-</div>
-
-  <div class="column">
-  <div class="ibcontainer">
-    <img src="Pictures/PUB.jpg" alt="PUB" style="width:100%">
-    <button class="btn">Public Policy</button>
-  </div>
-</div>
-
-  <div class="column">
-  <div class="ibcontainer">
-    <img src="Pictures/Physics.jpg" alt="Physics" style="width:100%">
-    <button class="btn">Physics</button>
-  </div>
-</div>
-</div>
-
-</div>
-
-
-<div class= "w3-container w3-white" id="mapPanel">
-  <b><h5>Map</h5></b>
-  <div id="map" class="container" style="min-width:300px;height:750px; margin: 0 auto" alt="Wifi Usage"></div>
-  </div>
-
-
-<div class="w3-container w3-white">
-
-<!--</div>-->
-<div id="barcontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
-<div id="piecontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
-
+Sed finibus ante at aliquet lobortis. Sed eleifend sit amet felis ac iaculis. Mauris sodales facilisis augue. Integer pharetra at nisl sit amet feugiat. Duis semper diam a libero placerat, eget scelerisque ex accumsan. Mauris orci massa, imperdiet ut mattis id, rutrum eu ex. Quisque mollis ex tincidunt consequat dignissim. Integer luctus justo sit amet mauris lacinia laoreet. Integer id laoreet neque. Etiam faucibus diam in purus tempus lacinia. Pellentesque et massa pellentesque, pharetra elit at, facilisis felis. Aenean gravida felis sit amet tortor ultricies auctor. Etiam nec pellentesque augue. Proin sed pharetra dolor, malesuada maximus libero. Ut condimentum enim lorem, vel euismod dolor vehicula eget.
 <!--End page content -->
+
 </div>
-
-<script language="javascript" type="text/javascript">
-var spinner = $( "#spinner" ).spinner();
-</script>
-
 </body>
 </html>
