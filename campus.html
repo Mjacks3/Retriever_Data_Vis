@@ -60,25 +60,32 @@ $("#building_list").load("templates/building_list.html");
 
 <div id="navbar"></div>
 <div id="sidebar"></div>
-<div id="loader"style="display: none" ><img src="pictures/Loading_icon.gif" style="width:21%"></div>
+<div id="loader"style="display: none" ><img src="Pictures/Loading_icon.gif" style="width:21%"></div>
 <div id="myDiv" class="w3-main" style="margin-left:300px ;margin-top:20px;">
 
-<!--Modilarize Later-->
-<div class="w3-container w3-2018-quiet-gray ">
-<div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
-<div class="w3-right">
-<h3><span id="dashtotal"></span></p></h3>
-</div>
-<div class="w3-clear"></div>
-<h4>Total Devices Number</h4>
-</div> 
-<!--End Modilarize Later-->
+
 
 <div id="building_list"></div>
 
 <!--map-->
 <div class= "w3-container w3-white" id="mapPanel"><b><h5>Map</h5></b>
 <div id="map" class="container" style="min-width:300px;height:750px; margin: 0 auto" alt="Wifi Usage"></div>
+
+
+
+<!--Modilarize Later- w3-signal-black->
+<div class="w3-container w3-amber">
+<div class="w3-left "><i class="fa fa-paw w3-xxxlarge w3-amber"></i></div>
+<div class="w3-right w3-signal-black"><i class="fa fa-paw w3-xxxlarge w3-signal-black"></i></div>
+
+<span id="currentrequest"></span><h4>  Total Devices Number</h4>
+<h3 id="dashtotal"></h3>
+ 
+</div>
+</div>
+<!--End Modilarize Later-->
+
+
 
 <!--charts-->
 <div class="w3-container w3-white">

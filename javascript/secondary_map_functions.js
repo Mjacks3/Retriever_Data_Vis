@@ -513,6 +513,11 @@ function initPolygons()
        
   google.maps.event.addListener( region_walker_north,"mouseout",function()
       {this.setOptions({fillColor: "#0000FF", strokeColor: "#0000FF"});});     
+      
+      
+ google.maps.event.addListener(region_commons,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/commons.html';
+});
             
   infoWindow = new google.maps.InfoWindow;
 

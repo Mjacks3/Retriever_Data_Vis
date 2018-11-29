@@ -1,4 +1,5 @@
 var zones;  
+var zone_names;
 var orderedAreas;
 var currentBuilding;
 
@@ -13,29 +14,63 @@ function generateBuildingZones(building)
     
     var response = JSON.parse(xhttp.responseText);
     console.log(response);
-	 zones = {}
-	 orderedAreas = "";
+	 zones = {};
+	 zone_names = [];
+	 var zone_registers = []
 	 
+	 orderedAreas = "";
+	 console.log("Here");
     for (ix = 0; ix < response["userLevels"][3]["children"].length ;ix++)
     {
+     //zone_registers.push(response["userLevels"][3]["children"][ix]["ancestors"][0]+"/"+
+     //       response["userLevels"][3]["children"][ix]["ancestors"][1]+"/"+
+     //       response["userLevels"][3]["children"][ix]["ancestors"][2]+"/"+
+     //       response["userLevels"][3]["children"][ix]["name"]);
+            
+            
 		if (response["userLevels"][3]["children"][ix]["ancestors"][1] == building)
 		{		
 			zones[response["userLevels"][3]["children"][ix]["name"]] = 
             [response["userLevels"][3]["children"][ix]["ancestors"][2],0];
             
+            zone_names.push(response["userLevels"][3]["children"][ix]["name"]);
             
          if (orderedAreas == ""){orderedAreas += String(response["userLevels"][3]["children"][ix]["id"]);}
         else {orderedAreas += "%2C"+ String(response["userLevels"][3]["children"][ix]["id"]) ;}
 		}
     }
+    //console.log(JSON.stringify(zone_registers)) print full array
+    console.log(zone_names); 
+    //mystring = "System Campus/PAHB/First Floor/RM 151";
+    //xhttp.open("GET","https://cmx.noc.umbc.edu/api/config/v1/zoneCountParams/1?clusterId=1&zoneHierarchy=["+mystring+"]",
+    //false);
+    //xhttp.setRequestHeader("Content-type", "application/json");
+    //xhttp.send();
+    //var response2 = JSON.parse(xhttp.responseText);
+    
 }         
+
+function cmxNowDataRequestBuilding()
+{  
+    console.log("Now Request");
+    
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("OPTIONS","https://cmx.noc.umbc.edu/api/location/v1/clients/count/byzone", true );
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send();
+    
+    console.log(xhttp.responseText);
+    var response = JSON.parse(xhttp.responseText);
+    console.log("RESPONSE");
+    console.log(response);
+}
 
 function requestZoneData(start=null, end=null,now_view = false,time_idx=0, 
                     granularity="Zone", timeRange="00%3A00-23%3A59&")                                                                                                
 {
     setTimeout(function()
     {
-    if (now_view == true){console.log("Empty"); }
+    if (now_view == true){cmxNowDataRequestBuilding(); }
     
     else{cmxZoneDataRequest(start,end,timeRange,granularity,time_idx);} 
     
@@ -201,7 +236,7 @@ for (ix = 0 ;  ix < Array.from(floors).length ; ix++)
 	
 	pie_data_array.push({
 		"y": Number( ((floor_total/total_detected) *100).toFixed(2)) ,
-		"color": colors[Math.floor(Math.random() *colors.length)],
+		"color": colors[ix],
 		"drilldown":{"name": Array.from(floors)[ix],"categories":categories,"data":data}
 	})
 }
@@ -248,15 +283,15 @@ Highcharts.chart('piecontainer', {
     yAxis: {title: {text: 'Total percent Detected Devices'}},
     plotOptions: { pie: {shadow: true, center: ['50%', '50%']}},
     tooltip: {valueSuffix: '%'},
-    series: [{name: currentBuilding,data: browserData,size: '90%',
+    series: [{name: currentBuilding,data: browserData,size: '60%',
         dataLabels: 
         {formatter: function () {return this.y > 5 ? this.point.name : null;},
         color: '#ffffff',distance: -30}}, 
             {
         name: 'Zones',
         data: versionsData,
-        size: '70%',
-        innerSize: '50%',
+        size: '80%',
+        innerSize: '60%',
         dataLabels: {
          formatter: function () {
                 // display only if larger than 1

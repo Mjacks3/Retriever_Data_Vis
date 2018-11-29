@@ -3,16 +3,6 @@
 <div class="w3-container w3-row">
 
 <!--------------------------- Date Selector -->
-<div class="type-2">
-<div>
-    <a href="" class="btn btn-2">
-      <span class="txt">Test Button Implement for later</span>
-      <span class="round"><i class="fa fa-paw"></i></span>
-    </a>
-</div>
-</div>
-
-
 <div class="w3-bar-block">
 <h3> Date Selector </h3>
 
@@ -46,7 +36,9 @@
 <!---------------------------  Now View---->	
 <p> <b>Now View</b> </p>
 
-<button id="apply1" onclick="timeNowPicker();"> Generate Now View </button>
+<button class="button button5"id="apply1" onclick="timeNowPicker();">Report Now View</button>
+
+
 </p> 
 <hr>
 
@@ -59,8 +51,7 @@
 <input type="radio" name="time" value="3" id="evening">Evening(5pm-8:59pm)<br>
 
 </form>
-
-<button id="apply2" onclick="time1Picker();">Generate Preset View</button>
+<button class="button button5"id="apply1" onclick="time1Picker();">Report Preset View</button>
 
 <hr>
 
@@ -72,9 +63,10 @@
 <input id="spinner" max="23" min="0" name="value">
 <script language="javascript" type="text/javascript">var spinner = $("#spinner" ).spinner();</script>
 </p>
+<button class="button button5"id="apply1" onclick="time2Picker();">Report Top of Hour View</button>
 
-<button  id="apply3"  onclick="time2Picker();">Top of Hour View</button>
 </div>
+
 </nav>
 <!-- Overlay effect when opening sidebar on small screens -->
 <div class="w3-overlay w3-hide-large w3-animate-opacity"  style="cursor:pointer" title="close side menu" id="myOverlay"></div>

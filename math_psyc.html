@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+ <title>Retriever PAW</title>
+<head> 
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+
+<!-- Meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; img-src * data: 'unsafe-inline'">
+<header class="w3-container" style="padding-top:22px"></header>
+
+
+<!-- Linked Styles -->
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="styles.css" rel="stylesheet" type="text/css"> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-2018.css">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+<!-- Linked Javascript  -->
+
+<!-- Common  -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+
+<script defer type="text/javascript" src="javascript/page_window_functions.js"></script>
+<script type="text/javascript" src="javascript/building_view_functions.js"></script>
+<script type="text/javascript" src="javascript/building_sidebar_functions.js"></script>
+<script type="text/javascript" src="javascript/content_loading_functions.js"></script>
+<script defer type="text/javascript" src="javascript/url.js"></script>
+
+<script language="javascript" type="text/javascript">
+$(function()
+{
+$("#navbar").load("templates/navbar.html");
+$("#sidebar").load("templates/sidebar.html");
+$("#building_list").load("templates/building_list.html");
+})
+</script> 
+
+</head> 
+<body onLoad="generateBuildingZones('Math_Psyc')" class="w3-white">
+
+<div id="navbar"></div>
+<div id="sidebar"></div>
+<div id="loader" style="display: none"><img src="Pictures/Loading_icon.gif" style="width:21%"></div>
+<div id="myDiv" class="w3-main" style="margin-left:300px ;margin-top:20px;">
+
+<div class="container">
+<img src="Pictures/header/Math_Psyc_header.jpg"/> 
+</div>
+<br />
+<br />
+
+<script language="javascript" type="text/javascript">
+$(window).load(function() {
+    $('.container').find('img').each(function() {
+        var imgClass = (this.width / this.height > 1) ? 'wide' : 'tall';
+        $(this).addClass(imgClass);
+    })
+})
+</script> 
+
+<div id="barcontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
+<div id="piecontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div> 
+<hr>
+<br>
+<div id="building_list"></div>
+</div>
+</html>

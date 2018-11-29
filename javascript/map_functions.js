@@ -4,6 +4,7 @@ var devisenum1;
 var dashtotal = 0;
 var infoWindow;
 var all_buildings;
+var currentrequest = "";
 
 function getValues()
 {
@@ -24,9 +25,14 @@ function initMap(start=null, end=null,now_view = false,time_idx=0,
         });
     
     if (now_view == true)
-    {all_buildings = cmxNowDataRequest(); }
+    {currentrequest = "Boop";
+     document.getElementById("currentrequest").innerHTML = currentrequest;
+    all_buildings = cmxNowDataRequest(); 
+    }
     else
     {
+    currentrequest = "Bop";
+    document.getElementById("currentrequest").innerHTML = currentrequest;
     all_buildings = cmxDataRequest(start,end,timeRange,granularity,time_idx);
     }
     

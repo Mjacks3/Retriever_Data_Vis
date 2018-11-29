@@ -1,6 +1,7 @@
 function timeNowPicker() 
 {
-   console.log("timeNowPicker")
+   //console.log("timeNowPicker");
+   requestZoneData(start = null,end = null,now_view = true);  
 };    
 
 function time1Picker() 
