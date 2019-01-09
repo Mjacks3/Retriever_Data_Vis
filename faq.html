@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+ <title>Retriever P.A.W.</title>
+ <head>
+ 
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+
+<!-- Meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; img-src * data: 'unsafe-inline'">
+<header class="w3-container" style="padding-top:22px"></header>
+
+
+<!-- Linked Styles -->
+<!-- Favicon must be in root dir-->
+<link rel="icon" href="rtvr.ico">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" hre f="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="styles.css" rel="stylesheet" type="text/css"> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-2018.css">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+<!-- Linked Javascript  -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script defer type="text/javascript" src="javascript/page_window_functions.js"></script>
+
+<!-- Online  -->
+<script language="javascript" type="text/javascript">
+$(function(){$("#building_list").load("templates/building_list.html");})</script> 
+ </head>
+<body class="w3-white">
+
+<!--------------------------- Top container  --------------------------------->
+<div class="w3-bar w3-top w3-signal-black w3-large"   style="z-index:4">
+<span class="w3-bar-item w3-left"><img src="Pictures/paw2.png"  style="width:25px;height:25px;"></span>
+<button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-grey" onclick="w3_open();"><i class="fa fa-bars"></i>Sidebar</button>
+<button class="w3-bar-item w3-button" onclick="window.location.href='index.html'">Home </button>
+<button class="w3-bar-item w3-left w3-button" onclick="window.location.href='campus.html'">Overview</button>
+<span class="w3-bar-item w3-right">Retriever PAW - Patrons Attached to Wifi</span>
+</div>
+
+
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity "  style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! loader myDiv-->
+
+<div  class="w3-main" style="margin-top:20px;">
+<div id="building_list""text-align: center"></div>
+<div class="w3-amber">
+
+<h1 style="text-align: center"> Welcome to the Netviz Analytics Hub - <b>Retriever PAW : Patrons Attached to Wifi</b> - Powered by Cisco Connected Mobile Experiences! </h1> <p>
+
+
+<font size="7.5"  style="text-align:left;"> 
+Head to the overview page to start generating campus-scope PAW reports or click on one of the academic/supporting buildings to get more in building-scope reports.
+</font>
+
+<h2 style="text-align: center"> Helpful Terminalogy & Concepts :</h2>
+
+<h3 style="text-align: center"><b>Visit</b></h3>
+
+<div style="margin: 25px 50px 75px;">
+<font size="5.5"  style="text-align:left;"> 
+In CMX, a visit is defined as follows: The appearance of a device in a single <b> area </b> on a single day (where a day is defined as beginning at 00:00
+and ending at 23:59). If the device appears more than once in this area, over the same day, it is counted as only one visit. <p>
+</font>
+
+<h3 style="text-align: center"><b>Area</b></h3>
+
+<div style="margin: 25px 50px 75px;">
+<font size="5.5"  style="text-align:left;"> 
+An area is defined as a campus, building, floor or zone. Campuses may contain a number of buildings, buildings may contain a number of floors,
+and floors may contain a number of zones. Zones within a single floor cannot overlap.
+</font>
+
+
+<p>
+</div>
+<div>
+
+</div>
+</body>
+</html>

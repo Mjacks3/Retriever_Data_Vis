@@ -94,6 +94,8 @@ img.resize {
 .column {
     float: left;
     width: 16.66%;
+    min-width: 5%; 
+    
     padding: 5px;
 }
 
@@ -179,65 +181,7 @@ a .round i {
   line-height: 1.45;
 }
 
-.type-1 a:hover {
-  padding-left: 48px;
-  padding-right: 28px;
-}
-.type-1 a:hover .round {
-  width: calc(100% - 6px);
-  -moz-border-radius: 30px;
-  -webkit-border-radius: 30px;
-  border-radius: 30px;
-}
-.type-1 a:hover .round i {
-  left: 12%;
-}
 
-.type-2 a:hover .round {
-  background: none;
-}
-.type-2 a:hover .round i {
-  left: 70%;
-}
-
-.type-3 .round {
-  background: transparent;
-}
-.type-3 a {
-  position: relative;
-  overflow: hidden;
-}
-.type-3 a.btn-1:after {
-  background-color: #f59965;
-}
-.type-3 a.btn-2:after {
-  background-color: #00c4eb;
-}
-.type-3 a.btn-3:after {
-  background-color: #737478;
-}
-.type-3 a:after {
-  content: "";
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-  width: 37px;
-  height: 38px;
-  position: absolute;
-  right: 3px;
-  top: 3px;
-  -moz-transition: all 0.3s ease-out;
-  -o-transition: all 0.3s ease-out;
-  -webkit-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
-}
-.type-3 a:hover:after {
-  right: 100%;
-  width: 50%;
-}
-.type-3 a:hover i {
-  margin-left: 4px;
-}
 
 
 .button5 {
@@ -311,4 +255,28 @@ a .round i {
     float: left;
     width: 16.66%;
     padding: 5px;
+}
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  min-width: 600px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
