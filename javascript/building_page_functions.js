@@ -3,7 +3,7 @@ var zone_names;
 var orderedAreas;
 var currentBuilding;
 
-
+ 
 function generateBuildingZones(building)
 {
     currentBuilding = building;
@@ -19,9 +19,9 @@ function generateBuildingZones(building)
 	 var zone_registers = []
 	 
 	 orderedAreas = "";
-	 console.log("Here");
     for (ix = 0; ix < response["userLevels"][3]["children"].length ;ix++)
     {
+	//Implemplemented these
      //zone_registers.push(response["userLevels"][3]["children"][ix]["ancestors"][0]+"/"+
      //       response["userLevels"][3]["children"][ix]["ancestors"][1]+"/"+
      //       response["userLevels"][3]["children"][ix]["ancestors"][2]+"/"+
@@ -39,30 +39,38 @@ function generateBuildingZones(building)
         else {orderedAreas += "%2C"+ String(response["userLevels"][3]["children"][ix]["id"]) ;}
 		}
     }
-    //console.log(JSON.stringify(zone_registers)) print full array
-    console.log(zone_names); 
-    //mystring = "System Campus/PAHB/First Floor/RM 151";
-    //xhttp.open("GET","https://cmx.noc.umbc.edu/api/config/v1/zoneCountParams/1?clusterId=1&zoneHierarchy=["+mystring+"]",
-    //false);
-    //xhttp.setRequestHeader("Content-type", "application/json");
-    //xhttp.send();
-    //var response2 = JSON.parse(xhttp.responseText);
-    
+
+
+	
+	//showPage();
+	requestZoneData(start=null, end=null,now_view = true)
+	;
+	
+	
 }         
 
 function cmxNowDataRequestBuilding()
-{  
-    console.log("Now Request");
-    
+{ 
     var xhttp = new XMLHttpRequest();
-    xhttp.open("OPTIONS","https://cmx.noc.umbc.edu/api/location/v1/clients/count/byzone", true );
+    
+    xhttp.open("GET","https://cmx.noc.umbc.edu/api/location/v1/clients/count/byzone",false );
+    xhttp.setRequestHeader('Authorization','Basic ' + "YWRtaW46Q2xvd25zYXJlcGVvcGxlMg==");
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
     
-    console.log(xhttp.responseText);
     var response = JSON.parse(xhttp.responseText);
-    console.log("RESPONSE");
-    console.log(response);
+	console.log(response);
+    var ix;
+	console.log(zones);
+	
+	for (ix = 0; ix < response["ZoneCounts"]["zoneCountList"].length ;ix++)
+    { 
+		if (response["ZoneCounts"]["zoneCountList"][ix]["hierarchy"].split("/")[1] == currentBuilding)
+		{			
+    		zones[response["ZoneCounts"]["zoneCountList"][ix]["hierarchy"].split("/")[3]][1] =
+    		response["ZoneCounts"]["zoneCountList"][ix]["zoneCount"];
+		}
+	}
 }
 
 function requestZoneData(start=null, end=null,now_view = false,time_idx=0, 
@@ -78,7 +86,7 @@ function requestZoneData(start=null, end=null,now_view = false,time_idx=0,
     
     //Dashcharts
     getBuildingCharts();
-    
+    getNewBuildingCharts();
     showPage();}, 700)
     showloader();
 }
@@ -141,6 +149,117 @@ function getZoneRestURL(timeRange,start,mid,end,granularity,connection_state)
         return restURL; 
 }
 
+function getNewBuildingCharts()
+{
+Highcharts.chart('linecontainer', {
+
+    chart: {
+        scrollablePlotArea: {
+            minWidth: 700
+        }
+    },
+
+    data: {
+        csvURL: 'https://cdn.rawgit.com/highcharts/highcharts/' +
+            '057b672172ccc6c08fe7dbb27fc17ebca3f5b770/samples/data/analytics.csv',
+        beforeParse: function (csv) {
+            return csv.replace(/\n\n/g, '\n');
+        }
+    },
+
+    title: {
+        text: 'Daily sessions at www.highcharts.com'
+    },
+
+    subtitle: {
+        text: 'Source: Google Analytics'
+    },
+
+    xAxis: {
+        tickInterval: 7 * 24 * 3600 * 1000, // one week
+        tickWidth: 0,
+        gridLineWidth: 1,
+        labels: {
+            align: 'left',
+            x: 3,
+            y: -3
+        }
+    },
+
+    yAxis: [{ // left y axis
+        title: {
+            text: null
+        },
+        labels: {
+            align: 'left',
+            x: 3,
+            y: 16,
+            format: '{value:.,0f}'
+        },
+        showFirstLabel: false
+    }, { // right y axis
+        linkedTo: 0,
+        gridLineWidth: 0,
+        opposite: true,
+        title: {
+            text: null
+        },
+        labels: {
+            align: 'right',
+            x: -3,
+            y: 16,
+            format: '{value:.,0f}'
+        },
+        showFirstLabel: false
+    }],
+
+    legend: {
+        align: 'left',
+        verticalAlign: 'top',
+        borderWidth: 0
+    },
+
+    tooltip: {
+        shared: true,
+        crosshairs: true
+    },
+
+    plotOptions: {
+        series: {
+            cursor: 'pointer',
+            point: {
+                events: {
+                    click: function (e) {
+                        hs.htmlExpand(null, {
+                            pageOrigin: {
+                                x: e.pageX || e.clientX,
+                                y: e.pageY || e.clientY
+                            },
+                            headingText: this.series.name,
+                            maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
+                                this.y + ' sessions',
+                            width: 200
+                        });
+                    }
+                }
+            },
+            marker: {
+                lineWidth: 1
+            }
+        }
+    },
+
+    series: [{
+        name: 'All sessions',
+        lineWidth: 4,
+        marker: {
+            radius: 4
+        }
+    }, {
+        name: 'New users'
+    }]
+});
+}
 
 function getBuildingCharts()
 {

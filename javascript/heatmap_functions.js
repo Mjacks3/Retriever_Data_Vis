@@ -1,3 +1,83 @@
+function toggleHeatmap() 
+{
+    heatmap.setMap(heatmap.getMap() ? null : map);
+}
+
+
+function changeGradient() 
+{
+    var gradient = [
+    'rgba(0, 255, 255, 0)',
+    'rgba(0, 255, 255, 1)',
+    'rgba(0, 191, 255, 1)',
+    'rgba(0, 127, 255, 1)',
+    'rgba(0, 63, 255, 1)',
+    'rgba(0, 0, 255, 1)',
+    'rgba(0, 0, 223, 1)',
+    'rgba(0, 0, 191, 1)',
+    'rgba(0, 0, 159, 1)',
+    'rgba(0, 0, 127, 1)',
+    'rgba(63, 0, 91, 1)',
+    'rgba(127, 0, 63, 1)',
+    'rgba(191, 0, 31, 1)',
+    'rgba(255, 0, 0, 1)'
+    ]
+    heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+}
+
+
+
+function getPoints(block) 
+{
+    pts = [];
+    var ind; 
+    
+    for (ind = 0;  ind < block.length ; ind++)
+    {
+        pts.push( new google.maps.LatLng(block[ind][0], block[ind][1]) ) ;
+    }
+    return pts;
+}
+	
+function toggleHeatmap() 
+{
+    heatmap.setMap(heatmap.getMap() ? null : map);
+}
+
+
+function changeGradient() 
+{
+    var gradient = [
+    'rgba(0, 255, 255, 0)',
+    'rgba(0, 255, 255, 1)',
+    'rgba(0, 191, 255, 1)',
+    'rgba(0, 127, 255, 1)',
+    'rgba(0, 63, 255, 1)',
+    'rgba(0, 0, 255, 1)',
+    'rgba(0, 0, 223, 1)',
+    'rgba(0, 0, 191, 1)',
+    'rgba(0, 0, 159, 1)',
+    'rgba(0, 0, 127, 1)',
+    'rgba(63, 0, 91, 1)',
+    'rgba(127, 0, 63, 1)',
+    'rgba(191, 0, 31, 1)',
+    'rgba(255, 0, 0, 1)'
+    ]
+    heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+}
+
+
+function changeRadius()
+{
+    heatmap.set('radius', heatmap.get('radius') ? null : 57);
+}
+
+
+function changeOpacity() 
+{
+    heatmap.set('opacity', heatmap.get('opacity') ? null : 0.8);
+}
+
 function initPolygons()
 {
   // Define the LatLng coordinates for each building
@@ -160,122 +240,121 @@ function initPolygons()
      {lat:39.258887, lng:-76.714149},{lat:39.258240, lng:-76.714939}]
           
  //  {lat:, lng:}
-        
   var region_pub = new google.maps.Polygon({
-    paths: coord_pub,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});
+    paths: coord_pub,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});
     
   var region_admin = new google.maps.Polygon({
-    paths: coord_admin,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});  
+    paths: coord_admin,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});  
     
   var region_library = new google.maps.Polygon({
-    paths: coord_library,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});
+    paths: coord_library,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});
        
   var region_bio = new google.maps.Polygon({
-    paths: coord_bio,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});   
+    paths: coord_bio,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});   
     
   var region_event_center = new google.maps.Polygon({
-    paths: coord_event_center,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});    
+    paths: coord_event_center,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});    
     
   var region_chem = new google.maps.Polygon({
-    paths: coord_chem,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});    
+    paths: coord_chem,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});    
     
   var region_math_psych = new google.maps.Polygon({
-    paths: coord_math_psych,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});  
+    paths: coord_math_psych,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});  
     
   var region_sherman = new google.maps.Polygon({
-    paths: coord_sherman,strokeColor: '#0000FF ',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25}); 
+    paths: coord_sherman,strokeColor: '#0000FF ',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125}); 
     
   var region_pahb = new google.maps.Polygon({
-    paths: coord_pahb,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});   
+    paths: coord_pahb,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});   
     
   var region_commons = new google.maps.Polygon({
-    paths: coord_commons,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25}); 
+    paths: coord_commons,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125}); 
     
   var region_dining = new google.maps.Polygon({
-    paths: coord_dining,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});       
+    paths: coord_dining,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});       
     
   var region_eng = new google.maps.Polygon({
-    paths: coord_eng,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});    
+    paths: coord_eng,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});    
     
   var region_fine_art = new google.maps.Polygon({
-    paths: coord_fine_art,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});   
+    paths: coord_fine_art,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});   
     
   var region_sondheim = new google.maps.Polygon({
-    paths: coord_sondheim,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});
+    paths: coord_sondheim,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});
     
   var region_physics = new google.maps.Polygon({
-    paths: coord_physics,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});   
+    paths: coord_physics,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});   
     
   var region_ite = new google.maps.Polygon({
-    paths: coord_ite,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});    
+    paths: coord_ite,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});    
     
   var region_university_cen = new google.maps.Polygon({
-    paths: coord_university_cen,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});     
+    paths: coord_university_cen,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});     
     
   var region_rac = new google.maps.Polygon({
-    paths: coord_rac,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});     
+    paths: coord_rac,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});     
     
   var region_patapsco = new google.maps.Polygon({
-    paths: coord_patapsco,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});
+    paths: coord_patapsco,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});
     
   var region_potomac = new google.maps.Polygon({
-    paths: coord_potomac,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});
+    paths: coord_potomac,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});
     
    var region_susquehanna = new google.maps.Polygon({
-    paths: coord_susquehanna,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});
+    paths: coord_susquehanna,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});
     
    var region_chesapeake = new google.maps.Polygon({
-    paths: coord_chesapeake,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});
+    paths: coord_chesapeake,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});
     
   var region_erickson = new google.maps.Polygon({
-    paths: coord_erickson,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});
+    paths: coord_erickson,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});
 
   var region_harbor = new google.maps.Polygon({
-    paths: coord_harbor,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});    
+    paths: coord_harbor,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});    
     
   var region_hillside = new google.maps.Polygon({
-    paths: coord_hillside,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});
+    paths: coord_hillside,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});
     
   var region_terrace = new google.maps.Polygon({
-    paths: coord_terrace,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});
+    paths: coord_terrace,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});
     
   var region_west_hill = new google.maps.Polygon({
-    paths: coord_west_hill,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});
+    paths: coord_west_hill,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});
     
   var region_walker_south = new google.maps.Polygon({
-    paths: coord_walker_south,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});
+    paths: coord_walker_south,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});
     
   var region_walker_north = new google.maps.Polygon({
-    paths: coord_walker_north,strokeColor: '#0000FF',strokeOpacity: 0.75, 
-    strokeWeight: 2.5, fillColor: '#0000FF',fillOpacity: 0.25});
+    paths: coord_walker_north,strokeColor: '#0000FF',strokeOpacity: 0.25, 
+    strokeWeight: .25, fillColor: '#0000FF',fillOpacity: 0.125});
     
   region_pub.setMap(map);
   region_admin.setMap(map);
@@ -517,6 +596,57 @@ function initPolygons()
       
  google.maps.event.addListener(region_commons,"click", function(){
     document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/commons.html';
+});
+ google.maps.event.addListener(region_library,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/library.html';
+});
+ google.maps.event.addListener(region_dining,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/dining_hall.html';
+});
+ google.maps.event.addListener(region_university_cen,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/region_university_center.html';
+});
+ google.maps.event.addListener(region_pub,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/pub.html';
+});
+ google.maps.event.addListener(region_admin,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/admin.html';
+});
+ google.maps.event.addListener(region_event_center,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/event_center.html';
+});
+ google.maps.event.addListener(region_math_psych,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/math_psyc.html';
+});
+ google.maps.event.addListener(region_sherman,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/sherman.html';
+}); 
+google.maps.event.addListener(region_pahb,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/pahb.html';
+});
+ google.maps.event.addListener(region_eng,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/engineering.html';
+});
+ google.maps.event.addListener(region_bio,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/biology.html';
+});
+ google.maps.event.addListener(region_ite,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/ite.html';
+});
+ google.maps.event.addListener(region_fine_art,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/fine_arts.html';
+});
+ google.maps.event.addListener(region_sondheim,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/sondheim.html';
+});
+ google.maps.event.addListener(region_physics,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/physics.html';
+}); 
+google.maps.event.addListener(region_rac,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/rac.html';
+});
+google.maps.event.addListener(region_chem,"click", function(){
+    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/chemistry.html';
 });
             
   infoWindow = new google.maps.InfoWindow;
