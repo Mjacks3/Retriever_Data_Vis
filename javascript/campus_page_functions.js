@@ -201,9 +201,23 @@ function getbarcharts(){
   
   for (ix = 0 ;  ix  < support_buildings.length ; ix++){
 	total_support_count += all_buildings[support_buildings[ix]][0];
-	support_drilldown.push([support_buildings[ix], all_buildings[support_buildings[ix]][0]]);
+	support_drilldown.push(
+	
+	
+	
+	[  support_buildings[ix] ,
+	all_buildings[support_buildings[ix]][0]
+	]
+	
+	
+	
+	
+	);
+	
 	support_percentage.push( Math.round( all_buildings[support_buildings[ix]][0]/dashtotal*10000)/100);
   }
+  
+  console.log(support_drilldown);
   
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //Bar Chart
@@ -227,9 +241,9 @@ function getbarcharts(){
     }],
   "drilldown": {
     "series": [
-      {"name": "Residential Buildings","id": "Residential Buildings","data": [residential_drilldown]},
-      {"name": "Academic Buildings","id": "Academic Buildings","data": [academic_drilldown]},
-      {"name": "Support Facilities","id": "Support Facilities","data": [support_drilldown]}]
+      {"name": "Residential Buildings","id": "Residential Buildings","data": residential_drilldown},
+      {"name": "Academic Buildings","id": "Academic Buildings","data": academic_drilldown},
+      {"name": "Support Facilities","id": "Support Facilities","data": support_drilldown}]
   }});
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -498,6 +512,71 @@ function getlinechart(overalldict){
   },
   series: seriesarray
 });
-}                                                                                                            
+}            
+
+
+ plotOptions: {line: {dataLabels: {enabled: true},enableMouseTracking: true}   
+  series:
+  {allowPointSelect: true, 
+  point: {
+	  events:{
+                         click: function() 
+							{
+								alert('okk');
+								alert( this.series.index);
+								alert(this.index);
+							}
+							}}
+							
+							}
+							
+							}                                                                                                
+
+
+
+
+  
+ plotOptions: {
+    line: {
+      dataLabels: {
+        enabled: true
+      },
+      enableMouseTracking: false
+    }
+  },
+  series: seriesarray
+});
+
+} 
+							});
+}
+				
+  series: seriesarray
+  
+              plotOptions:{
+                series:{
+                    allowPointSelect: true,
+                    point: {
+                        events:
+                        {
+                         click: function() 
+							{
+								alert('okk');
+								alert( this.series.index);
+								alert(this.index);
+							}
+
+                        }                        
+                    },
+                    
+                }
+            },
+			
+			
+		*/	
+			
+                                                                                                           
+
+
 
 
