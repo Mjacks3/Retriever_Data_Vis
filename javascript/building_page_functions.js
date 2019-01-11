@@ -20,14 +20,7 @@ function generateBuildingZones(building)
 	 
 	 orderedAreas = "";
     for (ix = 0; ix < response["userLevels"][3]["children"].length ;ix++)
-    {
-	//Implemplemented these
-     //zone_registers.push(response["userLevels"][3]["children"][ix]["ancestors"][0]+"/"+
-     //       response["userLevels"][3]["children"][ix]["ancestors"][1]+"/"+
-     //       response["userLevels"][3]["children"][ix]["ancestors"][2]+"/"+
-     //       response["userLevels"][3]["children"][ix]["name"]);
-            
-            
+    {      
 		if (response["userLevels"][3]["children"][ix]["ancestors"][1] == building)
 		{		
 			zones[response["userLevels"][3]["children"][ix]["name"]] = 
@@ -43,44 +36,18 @@ function generateBuildingZones(building)
 
 	
 	//showPage();
-	requestZoneData(start=null, end=null,now_view = true)
-	;
+	initiateRequest(start=null, end=null);
 	
 	
 }         
 
-function cmxNowDataRequestBuilding()
-{ 
-    var xhttp = new XMLHttpRequest();
-    
-    xhttp.open("GET","https://cmx.noc.umbc.edu/api/location/v1/clients/count/byzone",false );
-    xhttp.setRequestHeader('Authorization','Basic ' + "YWRtaW46Q2xvd25zYXJlcGVvcGxlMg==");
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send();
-    
-    var response = JSON.parse(xhttp.responseText);
-	console.log(response);
-    var ix;
-	console.log(zones);
-	
-	for (ix = 0; ix < response["ZoneCounts"]["zoneCountList"].length ;ix++)
-    { 
-		if (response["ZoneCounts"]["zoneCountList"][ix]["hierarchy"].split("/")[1] == currentBuilding)
-		{			
-    		zones[response["ZoneCounts"]["zoneCountList"][ix]["hierarchy"].split("/")[3]][1] =
-    		response["ZoneCounts"]["zoneCountList"][ix]["zoneCount"];
-		}
-	}
-}
 
-function requestZoneData(start=null, end=null,now_view = false,time_idx=0, 
-                    granularity="Zone", timeRange="00%3A00-23%3A59&")                                                                                                
+function initiateRequest(start=null, end=null,time_idx=0, 
+		granularity="Zone", timeRange="00%3A00-23%3A59&")                                                                                                
 {
     setTimeout(function()
     {
-    if (now_view == true){cmxNowDataRequestBuilding(); }
-    
-    else{cmxZoneDataRequest(start,end,timeRange,granularity,time_idx);} 
+	cmxZoneDataRequest(start,end,timeRange,granularity,time_idx);
     
     console.log(zones);
     
