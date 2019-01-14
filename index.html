@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html>
- <title>DoIT Campus Analytics </title>
-<!-- <title>CMX AP Related UMBC Student Analysis</title>-->
+ <title>Retriever PAW</title>
+<head> 
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+
+<!-- Meta -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; img-src * data: 'unsafe-inline'">
+<header class="w3-container" style="padding-top:22px"></header>
+
 
 <!-- Linked Styles -->
-<link rel="icon" href="Pictures/rtvr.ico">
+<!-- Favicon must be in root dir-->
+<link rel="icon" href="favicon.ico">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,296 +22,85 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-2018.css">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
 
 <!-- Linked Javascript  -->
+
+<!-- Common  -->
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/data.js"></script>
 <script src="https://code.highcharts.com/modules/drilldown.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+
+<!-- Local :Campus Scope  -->
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyBxevA7di7Avo5vGKAgPPSkJa8ud4gnI&callback=initMap&libraries=visualization"></script>
-
-
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="sidebar_button_functions.js"></script>
-<script type="text/javascript" src="secondary_map_functions.js"></script>
-<script type="text/javascript" src="content_loading_functions.js"></script>
-<script defer type="text/javascript" src="dashboard_chart_functions.js"></script>
-<script defer type="text/javascript" src="page_window_functions.js"></script>
-<script defer type="text/javascript" src="url.js"></script>
-<script type="text/javascript" src="map_functions.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="additional_data_requests.js"></script>
-<!-- Link ur files <script type="text/javascript"> -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="javascript/auxiliary_functions.js"></script>
+<script type="text/javascript" src="javascript/campus_page_functions.js"></script>
+<script type="text/javascript" src="javascript/building_page_functions.js"></script>
+<script type="text/javascript" src="javascript/heatmap_functions.js"></script>
 
-<body class="w3-light-grey">
+<script language="javascript" type="text/javascript">
+$(function()
+{
+$("#navbar").load("templates/navbar.html");
+$("#sidebar").load("templates/sidebar.html");
+$("#building_list").load("templates/building_list.html");
+})
+</script> 
+<body class="w3-white">
 
-<!--------------------------- Top container  --------------------------------->
-<div class="w3-bar w3-top w3-signal-black w3-large"   style="z-index:4">
-<button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-<span class="w3-bar-item w3-left"><img src="Pictures/paw2.png"  style="width:25px;height:25px;"></span>
-<span class="w3-bar-item w3-right">DoIT Analytics</span>
+<div id="navbar"></div>
+<div id="sidebar"style="z-index:1"></div>
+<div id="loader"style="display: none" ><img src="Pictures/Loading_icon.gif" style="width:21%"></div>
+<div id="myDiv" class="w3-main" style="z-index:-3;margin-left:300px ;margin-top:20px;">
+
+
+<!--Modilarize Later-->
+<div class="w3-container w3-signal-black">
+<div class="w3-left "><i class="fa fa-paw w3-xxxlarge w3-signal-black"></i></div>
+<div class="w3-right w3-signal-black"><i class="fa fa-wifi w3-xxxlarge w3-signal-black"></i></div>
+
+<span id="currentrequest"></span><h4>  Total Devices Number</h4>
+<h3 id="dashtotal"></h3>
+ 
 </div>
-<!--------------------------- End/ Top container  ---------------------------->
+<!--End Modilarize Later-->
 
-<!--------------------------- Sidebar/menu  ---------------------------------->
-<nav class="w3-sidebar w3-collapse w3-amber w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+<div id="building_list"></div>
 
-<div class="w3-container w3-row">
-
-<!--------------------------- Date Selector --------------------------------->
-<div class="w3-bar-block">
-<h3> Date Selector </h3>
-
-<p>
-<div>Start Date: &nbsp&nbsp 
-<input type="date" id="startDate" ></div>
-</p>
-
-<p>
-<div>End Date:  &nbsp&nbsp
- <input type="date" id="endDate" ></div>
-</p>
-
-<p>
-</p>
-<hr>
-<!---------------------------  Connection State  ------------------------------------>	
-<h3> Connection State </h3>
-
-<form>
-<input type="radio" name="reporting" value="1" id="connected" checked="checked">Connected Devices Only<br>
-<input type="radio" name="reporting" value="2" id="detected">Detected Devices Only<br>
-<input type="radio" name="reporting" value="3" id="all">All Devices<br>
-</form>
-
-<hr>
-
-<!--------------------------- Time Views  ------------------------------------>	
-<h3> Time Views </h3>
-
-<!---------------------------  Now View    ------------------------------------>	
-<p> <b>Now View</b> </p>
-
-<button id="apply1" onclick="timeNowPicker();"> Generate Now View </button>
-</p> 
-<hr>
-
-<!---------------------------    24hr View      ------------------------------------>	
-<p> <b>Preset Views</b> </p>
-<form>
-<input type="radio" name="time" value="0" id="24hr"checked="checked">24hr(12:00AM-11:59PM)<br>
-<input type="radio" name="time" value="1" id="morning" >Morning(5:00am-8:59am)<br>
-<input type="radio" name="time" value="2" id="busniess">Business Hours(9am-4:59pm)<br>
-<input type="radio" name="time" value="3" id="evening">Evening(5pm-8:59pm)<br>
-
-</form>
-
-<button id="apply2" onclick="time1Picker();">Generate Preset View</button>
-
-<hr>
-
-<!------------------------     Top of Hour View       ------------------------------------>
-
-<p>
-<b>Top of Hour View</b>
-
-<input id="spinner" max="23" min="0" name="value">
-</p>
-
-<button  id="apply3"  onclick="time2Picker();">Top of Hour View</button>
-</div>
-</nav>
-
-<!--------------------------- End Sidebar/menu  ------------------------------>
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large w3-animate-opacity"  style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
-<!-- !PAGE CONTENT! loader myDiv-->
-
-<div id="loader">
-<img src="Pictures/Loading_icon.gif" style="width:21%">
-</div>
-<div id="myDiv" class="w3-main" style="margin-left:300px ;margin-top:20px;">
-
-  <!-- Header -->
-  <header class="w3-container" style="padding-top:22px">
-
-  </header>
+<!--map-->
+<div class= "w3-container w3-white" id="mapPanel"><b><h5>Map</h5></b>
+<div id="map" class="container" style="min-width:300px;height:750px; margin: 0 auto" alt="Wifi Usage"></div>
 
 
-  <div class="w3-container w3-2018-quiet-gray ">
-<div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
-<div class="w3-right">
-  <h3><span id="dashtotal"></span></p></h3>
-</div>
-<div class="w3-clear"></div>
-<h4>Total Devices Number</h4>
-</div>
 
-<div class="w3-container w3-white ">
-<div class="row">
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Commons.jpg"  alt="Commons" style="width:100%">
-  	<button onclick="window.location.href='Commons.html'" class="btn">Commons</font></button>
-	</div>
-	</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Library.jpg" alt="Library" style="width:100%">
-  	<button class="btn">Library</button>
-	</div>
-</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/DHall.jpg" alt="DHall" style="width:100%">
-  	<button class="btn">Dinning Hall</button>
-	</div>
-</div>
-
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/UC.jpg" style="width:100%">
-  	<button class="btn">University Center</button>
-	
-</div>
-</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/EventCenter.jpg" alt="EventCenter" style="width:100%">
-  	<button class="btn">Event Center</button>
-	</div>
-</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/RAC.jpg" alt="RAC" style="width:100%">
-  	<button class="btn">RAC</button>
-	</div>
-</div>
-</div>
-
-<div class="row">
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Biology.jpg"  alt="Biology" style="width:100%">
-  	<button class="btn">Biology Science</button>
-	</div>
-	</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Chemistry.jpg" alt="Chemistry" style="width:100%">
-  	<button class="btn">Meyerhoff Chemistry</button>
-	</div>
-</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Math&Psyc.jpg" alt="Math & Psyc" style="width:100%">
-  	<button class="btn">Math & Psyc</button>
-	</div>
-</div>
-
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Sherman.jpg" alt = "Sherman" style="width:100%">
-  	<button class="btn">Sherman</button>
-	
-</div>
-</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Sondheim.jpg" alt="Sondheim" style="width:100%">
-  	<button class="btn">Sondheim</button>
-	</div>
-</div>
-
-  <div class="column">
-	<div class="ibcontainer">
-  	<img src="Pictures/Admin.jpg" alt="Admin" style="width:100%">
-  	<button class="btn">Admin</button>
-	</div>
-</div>
-</div>
-
-<div class="row">
-  <div class="column">
-  <div class="ibcontainer">
-    <img src="Pictures/ITE.jpg"  alt="ITE" style="width:100%">
-    <button class="btn">ITE</button>
-  </div>
-  </div>
-
-  <div class="column">
-  <div class="ibcontainer">
-    <img src="Pictures/Engineering.jpg" alt="Engineering" style="width:100%">
-    <button class="btn">Engineering</button>
-  </div>
-</div>
-
-  <div class="column">
-  <div class="ibcontainer">
-    <img src="Pictures/FineArts.jpg" alt="FineArts" style="width:100%">
-    <button class="btn">Fine Arts</button>
-  </div>
-</div>
-
-
-  <div class="column">
-  <div class="ibcontainer">
-    <img src="Pictures/PHAP.jpg" alt = "PHAP" style="width:100%">
-    <button class="btn">PHAP</button>
-  
-</div>
-</div>
-
-  <div class="column">
-  <div class="ibcontainer">
-    <img src="Pictures/PUB.jpg" alt="PUB" style="width:100%">
-    <button class="btn">Public Policy</button>
-  </div>
-</div>
-
-  <div class="column">
-  <div class="ibcontainer">
-    <img src="Pictures/Physics.jpg" alt="Physics" style="width:100%">
-    <button class="btn">Physics</button>
-  </div>
-</div>
-</div>
 
 </div>
 
 
-<div class= "w3-container w3-white" id="mapPanel">
-  <b><h5>Map</h5></b>
-  <div id="map" class="container" style="min-width:300px;height:750px; margin: 0 auto" alt="Wifi Usage"></div>
-  </div>
 
 
+<!--charts-->
 <div class="w3-container w3-white">
-
-<!--</div>-->
+<div id="linecontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
 <div id="barcontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
 <div id="piecontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
 
-<!--End page content -->
+
+<!--<div id="Hiddenbarcontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>--->
+<!--<div id="Hiddenpiecontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div> -->
+
+
 </div>
 
-<script language="javascript" type="text/javascript">
-var spinner = $( "#spinner" ).spinner();
-</script>
 
-</body>
+</div>
+</body> 
 </html>

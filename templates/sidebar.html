@@ -1,0 +1,48 @@
+<!--------------------------- Sidebar/menu  ---------------------------------->
+<nav class="w3-sidebar w3-collapse w3-amber w3-animate-left" style="z-index:3;width:300px;overflow: visible;" id="mySidebar"><br>
+<div class="w3-container w3-row">
+
+<!--------------------------- Date Selector -->
+<div class="w3-bar-block">
+<h3> Date Selector <div class="tooltip"><i class="fa fa-info-circle "></i>
+ <span class="tooltiptext"> <font size="4">
+- Leave fields blank to default to today  OR <br>
+- Choose the same date in both fields to select that day OR<br>
+- Choose different dates to select a range
+ 
+ </font></span></div></h3> 
+ 
+<p>
+<div>Start Date: &nbsp&nbsp 
+<input type="date" id="startDate" ></div>
+</p>
+
+<p>
+<div>End Date:  &nbsp&nbsp
+ <input type="date" id="endDate" ></div>
+</p>
+
+<br>
+<br>
+
+<!---------------------------  Connection State -->
+	
+ <h3> Connection State <div class="tooltip"><i class="fa fa-info-circle "></i>
+ <span class="tooltiptext"> <font size="4">
+ - Connected Devices Only: Reports clients connencted to UMBC's Wifi Networks.<br>
+ - Detected Devices Only: Reports clients probing check available UMBC WIFI networks but are not connencted to them.
+</font></span></div></h3> 
+ 
+
+<form>
+<input type="radio" name="reporting" value="1" id="connected" checked="checked">Connected Devices Only<br>
+<input type="radio" name="reporting" value="2" id="detected">Detected Devices Only<br>
+<input type="radio" name="reporting" value="3" id="all">All Devices<br>
+</form>
+
+<br>
+<br>
+
+<button class="button button5"id="apply1" onclick="time2Picker();">Generate Report</button>
+
+<button class="button button6" id="overall" onclick="callreq();">Overall Time View</button>
