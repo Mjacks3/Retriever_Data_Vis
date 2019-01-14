@@ -595,58 +595,58 @@ function initPolygons()
       
       
  google.maps.event.addListener(region_commons,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/commons.html';
+    document.location.href ='commons.html';
 });
  google.maps.event.addListener(region_library,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/library.html';
+    document.location.href ='library.html';
 });
  google.maps.event.addListener(region_dining,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/dining_hall.html';
+    document.location.href ='dining_hall.html';
 });
  google.maps.event.addListener(region_university_cen,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/region_university_center.html';
+    document.location.href ='region_university_center.html';
 });
  google.maps.event.addListener(region_pub,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/pub.html';
+    document.location.href ='pub.html';
 });
  google.maps.event.addListener(region_admin,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/admin.html';
+    document.location.href ='admin.html';
 });
  google.maps.event.addListener(region_event_center,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/event_center.html';
+    document.location.href ='event_center.html';
 });
  google.maps.event.addListener(region_math_psych,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/math_psyc.html';
+    document.location.href ='math_psyc.html';
 });
  google.maps.event.addListener(region_sherman,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/sherman.html';
+    document.location.href ='sherman.html';
 }); 
 google.maps.event.addListener(region_pahb,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/pahb.html';
+    document.location.href ='pahb.html';
 });
  google.maps.event.addListener(region_eng,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/engineering.html';
+    document.location.href ='engineering.html';
 });
  google.maps.event.addListener(region_bio,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/biology.html';
+    document.location.href ='biology.html';
 });
  google.maps.event.addListener(region_ite,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/ite.html';
+    document.location.href ='ite.html';
 });
  google.maps.event.addListener(region_fine_art,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/fine_arts.html';
+    document.location.href ='fine_arts.html';
 });
  google.maps.event.addListener(region_sondheim,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/sondheim.html';
+    document.location.href ='sondheim.html';
 });
  google.maps.event.addListener(region_physics,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/physics.html';
+    document.location.href ='physics.html';
 }); 
 google.maps.event.addListener(region_rac,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/rac.html';
+    document.location.href ='rac.html';
 });
 google.maps.event.addListener(region_chem,"click", function(){
-    document.location.href ='https://swe.umbc.edu/~mjacks3/CMX_DoIT/chemistry.html';
+    document.location.href ='chemistry.html';
 });
             
   infoWindow = new google.maps.InfoWindow;

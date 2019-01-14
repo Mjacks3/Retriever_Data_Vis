@@ -22,6 +22,7 @@ function getValues()
 function initMap(start=null, end=null,now_view = false,time_idx=0, 
                     granularity="Building", timeRange="00%3A00-23%3A59&")
 {
+  currentBuilding = "campus";
     setTimeout(function()
     {
     
@@ -348,6 +349,15 @@ function requestBarChart()
     getbarcharts();     
 }                    
 
+
+function callreq(){
+  if (currentBuilding = "campus"){
+    beginDataRequest();
+  }
+  else{
+    datareq(currentBuilding);
+  }
+}
 
           
 function beginDataRequest(){
