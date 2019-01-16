@@ -185,10 +185,10 @@ a .round i {
 
 .button5 {
     color: black;
-    border: 2px solid #555555;
+    border: 1px solid black;
 }
 .button5:hover {
-    background-color: #555555;
+    background-color: black;
     color: white;
 }
 
