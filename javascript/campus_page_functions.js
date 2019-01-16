@@ -15,7 +15,10 @@ var support_buildings = ["Library","Event Center","Commons","Dining Hall","Unive
 function initCampusReportGeneration()
 {
     setTimeout(function(){
+		
 	currentPage = "campus";
+	
+	
     beginDataRequest()
     showPage();}, 100)
 	
@@ -55,6 +58,10 @@ function beginDataRequest(){
   globalCurrentDataSetEntireSelection = response;
 	
   generateSummaryfromEntireDateSelection();
+	
+	
+	
+	
 	
 	
 	
@@ -158,8 +165,13 @@ function generatelinechart(overalldict){
   subtitle: {text: 'Each line represents the total device count  over the whole campus.'},
   xAxis: {categories: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM','1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM']},
   yAxis: {title: {text: 'Device Count'}},
-  plotOptions: {line: {dataLabels: {enabled: true},enableMouseTracking: true},
-  series:{allowPointSelect: true, point: {events:{ click: function() 
+  
+  plotOptions:
+  {line: {dataLabels:
+  {enabled: true},
+  enableMouseTracking: true},
+  series:{allowPointSelect: true, 
+  point: {events:{ click: function() 
 							{
 								generateSummaryfromPoint(this.series.index, this.index);
 							}}}}
@@ -244,6 +256,7 @@ function generateSummaryfromPoint(seriesindex, hourindex)
 	document.getElementById("dashtotal").innerHTML = totalCounts;
 
 	heatmapConfiguration(campusDictionaryCount);
+	
 	generateCharts(campusDictionaryCount);
 }
 

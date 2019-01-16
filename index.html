@@ -40,6 +40,7 @@
 
 <!-- Local :Campus Scope  -->
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyBxevA7di7Avo5vGKAgPPSkJa8ud4gnI&callback=initCampusReportGeneration&libraries=visualization"></script>
+
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <script type="text/javascript" src="javascript/auxiliary_functions.js"></script>
 <script type="text/javascript" src="javascript/campus_page_functions.js"></script>
@@ -63,17 +64,17 @@ $("#building_list").load("templates/building_list.html");
 
 
 <!--Modilarize Later-->
-<div class="w3-container w3-signal-black">
+
+<div class="w3-container w3-signal-black" :>
 <div class="w3-left "><i class="fa fa-paw w3-xxxlarge w3-signal-black"></i></div>
 <div class="w3-right w3-signal-black"><i class="fa fa-wifi w3-xxxlarge w3-signal-black"></i></div>
 
 <span id="currentrequest"></span><h4>  Total Devices Number</h4>
 <h3 id="dashtotal"></h3>
- 
 </div>
 <!--End Modilarize Later-->
 
-<div id="building_list"></div>
+<div id="building_list" ></div>
 <hr>
 <br>
 
@@ -81,10 +82,17 @@ $("#building_list").load("templates/building_list.html");
 <div id="linecontainer" style="min-width: 300px; min-height: 400px; margin: 0 auto"></div>
 </div>
 
-<!--map-->
 <hr>
 <br>
 
+
+
+
+
+
+
+<br>
+<!--map-->
 <div class= "w3-container w3-white" id="mapPanel">
 <div id="map" class="container" style="min-width:300px;height:750px; margin: 0 auto" alt="Wifi Usage"></div>
 </div>
