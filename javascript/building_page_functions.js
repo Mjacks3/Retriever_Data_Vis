@@ -1,13 +1,26 @@
-var zones;  
-var zone_names;
+var globalZoneDict;  
 var orderedAreas;
-var currentBuilding = "campus";
+var globalCurrentZoneDataSet;
+var globalCurrentZoneDataSetEntireSelection;
 
- 
+
+function initBuildingReportGeneration(building)
+{
+	setTimeout(function()
+    {
+	currentPage = building;
+	generateBuildingZones(building);
+	beginZoneDataRequest();
+	
+	//ADD IN ANGEL's FUNCTIONS FOR LINE GRAPH AND FUZE WITH YOUR CAMPUS MAP CONFIG.
+    //getBuildingCharts();
+	showPage();}, 250)
+    showloader();
+}
+
+
 function generateBuildingZones(building)
 {
-	
-    currentBuilding = building;
     var xhttp = new XMLHttpRequest();  
     xhttp.open("GET","https://cmx.noc.umbc.edu/api/config/v1/heterarchy/allUserLevels?filterElements=false&_=1540573524517", false);
     xhttp.setRequestHeader("Content-type", "application/json");
@@ -15,126 +28,204 @@ function generateBuildingZones(building)
     
     var response = JSON.parse(xhttp.responseText);
     console.log(response);
-	 zones = {};
-	 zone_names = [];
+	globalZoneDict = {};
+	zone_names = [];
 	var zone_registers = []
 	 
-	 orderedAreas = "";
+	orderedAreas = "";
     for (ix = 0; ix < response["userLevels"][3]["children"].length ;ix++)
     {      
 		if (response["userLevels"][3]["children"][ix]["ancestors"][1] == building)
 		{		
-			zones[response["userLevels"][3]["children"][ix]["name"]] = 
+			globalZoneDict[response["userLevels"][3]["children"][ix]["name"]] = 
             [response["userLevels"][3]["children"][ix]["ancestors"][2],0];
-            
-            zone_names.push(response["userLevels"][3]["children"][ix]["name"]);
-            
          if (orderedAreas == ""){orderedAreas += String(response["userLevels"][3]["children"][ix]["id"]);}
         else {orderedAreas += "%2C"+ String(response["userLevels"][3]["children"][ix]["id"]) ;}
 		}
-
-
-    }
-
-    
-	
-	//showPage();
-	initiateRequest(start=null, end=null);
-	datareq(building);
-	
+    }	
 }         
 
 
-function initiateRequest(start=null, end=null,time_idx=0, 
-		granularity="Zone", timeRange="00%3A00-23%3A59&")                                                                                                
-{
-    setTimeout(function()
-    {
-	cmxZoneDataRequest(start,end,timeRange,granularity,time_idx);
-    
-    console.log(zones);
-    
-    //Dashcharts
-    getBuildingCharts();
-    showPage();}, 700)
-    showloader();
+function beginZoneDataRequest(){
+	var connection_state;
+
+   if (document.getElementById('all').checked){connection_state = "all";}
+   else if (document.getElementById('detected').checked){connection_state = "detected";}
+   else{connection_state = "connected";}
+   
+   var start = startDate.value;
+   var end = endDate.value;
+   var mid = "";  
+   
+   if (start == "" || end == ""){ start = "to"; end = "day";}
+   else {mid = "%3B";}
+
+	var cmxurl = "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
+	"areas="+orderedAreas+"&"+
+	"timeRange=00%3A00-23%3A59&"+
+	"period="+start+mid+end+"&"+
+	"granularity=Zone&durationCategories=0-1440&includeStationary=false&"+
+	"connectionState="+connection_state+"&"+
+	"type=deviceCount&_=1520953855762";
+	
+	
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET",cmxurl, false);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send();
+  var response = JSON.parse(xhttp.responseText);
+  globalCurrentZoneDataSetEntireSelection = response;
+	
+  generateZoneSummaryfromEntireDateSelection();
+	
+	
+	
+   if (document.getElementById('all').checked){connection_state = "all";}
+   else if (document.getElementById('detected').checked){connection_state = "detected";}
+   else{connection_state = "connected";}
+   
+   var start = startDate.value;
+   var end = endDate.value;
+   var mid = "";  
+   
+   if (start == "" || end == ""){ start = "to"; end = "day";}
+   else {mid = "%3B";}
+
+	var cmxurl = "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
+	"areas="+orderedAreas+"&"+
+	"timeRange=00%3A00-23%3A59&"+
+	"period="+start+mid+end+"&"+
+	"granularity=Hourly&durationCategories=0-1440&includeStationary=false&"+
+	"connectionState="+connection_state+"&"+
+	"type=deviceCount&_=1520953855762";
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET",cmxurl, false);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send();
+  var response = JSON.parse(xhttp.responseText);
+  
+  globalCurrentZoneDataSet = response; //Hold on to the data from the request for further analysis
+  
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+
+  if(dd<10) {dd = '0'+dd} 
+  if(mm<10) { mm = '0'+mm} 
+  today = yyyy + '-' + mm + '-' + dd;
+
+  if (start == "to"){start = today;}
+  if (end == "day"){var end = today;}
+
+  var a = moment(start, 'YYYY-MM-DD');
+  var b = moment(end, 'YYYY-MM-DD');
+  var days = b.diff(a, 'days');
+  days = days + 1;
+  
+  var overallcount = new Array(days);
+  for (var i = 0; i <overallcount.length; i++){
+    overallcount[i] = new Array(24);
+    for (var j = 0; j < 24; j++){
+		overallcount[i][j] = null;}}
+  var countvalue;
+  var quoindex;
+  var remindex;
+
+  for (var i = 0; i < response["results"][0]["data"].length; i++){
+  	countvalue = 0;
+  	for (var j = 0; j < response["results"].length; j++){
+  		countvalue = countvalue + response["results"][j]["data"][i]["value"];
+  	}
+  	quoindex = Math.floor(i/24);
+  	remindex = i%24;
+  	overallcount[quoindex][remindex] = countvalue;
+  }
+  var overalldict = {};
+  var newday = a;
+  var date;
+  var day;
+  var month; 
+  var year;
+  
+  for (var i = 0; i < overallcount.length; i++){
+  	day = newday.format('DD');
+	month = newday.format('MM');
+	year = newday.format('YYYY');
+	date = month + '.' + day + '.' + year;
+  	overalldict[date] = overallcount[i];
+  	newday = moment(newday, "YYYY-MM-DD").add(1, 'days');
+  }
+
+  generateZoneLineChart(overalldict);
 }
 
 
-function cmxZoneDataRequest(start=null, end=null, timeRange="00%3A00-23%3A59&",
-                                     granularity = "Zone", time_idx = 0)
-{
-    var mid = "";	
-    if (start == null || end == null)
-	 {
-        start = "to";
-        end = "day";	
-    }
-    else {mid = "%3B";}
-    
-    var connection_state;
-    
-    if (document.getElementById('all').checked)
-    {connection_state = "all";}
-    else if (document.getElementById('detected').checked)
-    {connection_state = "detected";}
-    else
-    {connection_state = "connected";}
-    
-    var restURL = getZoneRestURL(timeRange,start,mid,end,granularity,connection_state);
-    var xhttp = new XMLHttpRequest();
+function generateZoneLineChart(overalldict){
+	var keyarray = Object.keys(overalldict);
 
-    xhttp.open("GET",restURL, false);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send();
-    var response = JSON.parse(xhttp.responseText);
-
-    var ix;
-    for (ix = 0; ix < response["results"].length ;ix++)
-    {
-    		zones[response["results"][ix]["area"]][1] =
-    		response["results"][ix]["data"][time_idx]["value"];
-    }
-    
-
+	var seriesarray = [];
+	for (var i = 0; i < keyarray.length; i++){
+		seriesarray.push({});
+		seriesarray[i]["name"] = keyarray[i];
+		seriesarray[i]["data"] = overalldict[keyarray[i]];
 }
 
+ Highcharts.chart('linecontainer', {chart: {type: 'line'},
+  title: {text: 'Hourly Device Count'},
+  subtitle: {text: 'Each line represents the total device count  over the whole campus.'},
+  xAxis: {categories: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM','1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM']},
+  yAxis: {title: {text: 'Device Count'}},
+  plotOptions: {line: {dataLabels: {enabled: true},enableMouseTracking: true},
+  series:{allowPointSelect: true, point: {events:{ click: function() 
+							{
+								generateZoneSummaryFromPoint(this.series.index, this.index);
+							}}}}
+  
+  
+  },series: seriesarray});}
 
 
+function generateZoneSummaryFromPoint(seriesindex, hourindex) {
+	
+	var totalCount = 0;
+	
+	var ix;
+	for (ix = 0; ix  < globalCurrentZoneDataSet["results"].length; ix ++){
+		
+		//Reset the previous Value
+		globalZoneDict[globalCurrentZoneDataSet["results"][ix]["area"]][1] = 0;
+		
+		//Set our New Value
+	    globalZoneDict[globalCurrentZoneDataSet["results"][ix]["area"]][1] =
+		globalCurrentZoneDataSet["results"][ix]["data"][ 24*seriesindex + hourindex]["value"]
+		
+		totalCount += globalCurrentZoneDataSet["results"][ix]["data"][ 24*seriesindex + hourindex]["value"];
 
-function getZoneRestURL(timeRange,start,mid,end,granularity,connection_state)
-{   
-
-    var restURL= "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
-        "areas="+orderedAreas+"&"+
-        "timeRange="+timeRange+
-        "period="+start +mid+ end+"&"+
-        "granularity="+ granularity +"&"+
-        "durationCategories=0-1440&"+
-        "includeStationary=false&"+
-        "connectionState="+connection_state+"&"+
-        "type=deviceCount&"+
-        "_=1540585957657"   ;   
-        return restURL; 
+	}
+	//console.log(zoneDictionaryCount);
+	//document.getElementById("dashtotal").innerHTML = totalCounts; Not implemented Yet
+	generateZoneCharts(globalZoneDict);
+	
 }
 
-
-function getBuildingCharts()
+function generateZoneCharts(dictionaryCount)
 {
 
 	//First we define all unique floors, which will be our initial columns
 	floors = new Set();
-	for (const [key, value] of Object.entries(zones))
+	for (const [key, value] of Object.entries(dictionaryCount))
 	{if( floors.has(value[0])  == false ){floors.add(value[0]); }}
 	
 	
-	//We get totals for each floor from the zones on the floor
+	//We get totals for each floor from the dictionaryCount on the floor
 	var overview = [];
 	var ix;
 	for (ix = 0 ;  ix < Array.from(floors).length ; ix++)
 	{
 		floorTotals = 0;
-		for (const [key, value] of Object.entries(zones))
+		for (const [key, value] of Object.entries(dictionaryCount))
 		{if ( Array.from(floors)[ix] == value[0]){floorTotals+=value[1];}}
 		
 		overview.push({"name":  Array.from(floors)[ix],"y": floorTotals,
@@ -147,15 +238,12 @@ function getBuildingCharts()
 	for (ix = 0 ;  ix < Array.from(floors).length ; ix++)
 	{
 		var data =  [];
-		for (const [key, value] of Object.entries(zones))
+		for (const [key, value] of Object.entries(dictionaryCount))
 		{if ( Array.from(floors)[ix] == value[0]){data.push([key,value[1]])}}
 		
     	zoneDrilldownSeries.push({"name": Array.from(floors)[ix],
             "id": Array.from(floors)[ix],"data": data})
    }
-	
-	console.log(zoneDrilldownSeries);
-	
 	
 	
 	
@@ -173,7 +261,7 @@ Highcharts.chart('barcontainer', {
         pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> Detected Devices<br/>'
             },
 
-    "series": [{ "name": currentBuilding, "colorByPoint": true,"data": overview}],
+    "series": [{ "name": currentPage, "colorByPoint": true,"data": overview}],
     "drilldown": { "series": zoneDrilldownSeries }
 });
 
@@ -185,7 +273,7 @@ var total_detected = 0;
 
 //First we'll get a total count of all devices
 var ix;
-for (const [key, value] of Object.entries(zones))
+for (const [key, value] of Object.entries(dictionaryCount))
 	{
     	total_detected += value[1];
 	}
@@ -199,7 +287,7 @@ for (ix = 0 ;  ix < Array.from(floors).length ; ix++)
 	var dataPercents = [];
 	var floor_total = 0;
 	
-	for (const [key, value] of Object.entries(zones))
+	for (const [key, value] of Object.entries(dictionaryCount))
 	{
 		if (Array.from(floors)[ix] == value[0])
 		{
@@ -208,8 +296,8 @@ for (ix = 0 ;  ix < Array.from(floors).length ; ix++)
 			floor_total += value[1];
 		}
 	}
-	console.log(total_detected);
-	console.log(floor_total);
+	//console.log(total_detected);
+	//console.log(floor_total);
 	
 	pie_data_array.push({
 		"y": Number( ((floor_total/total_detected) *100).toFixed(2)) ,
@@ -255,12 +343,12 @@ for (i = 0; i < dataLen; i += 1) {
 // Create the chart
 Highcharts.chart('piecontainer', {
     chart: {type: 'pie'},
-    title: {text: 'Number of Devices by Zone within ' + currentBuilding},
+    title: {text: 'Number of Devices by Zone within ' + currentPage},
     subtitle: {text: 'Source: <a href="http://statcounter.com" target="_blank">umbc.edu</a>'},
     yAxis: {title: {text: 'Total percent Detected Devices'}},
     plotOptions: { pie: {shadow: true, center: ['50%', '50%']}},
     tooltip: {valueSuffix: '%'},
-    series: [{name: currentBuilding,data: browserData,size: '60%',
+    series: [{name: currentPage,data: browserData,size: '60%',
         dataLabels: 
         {formatter: function () {return this.y > 5 ? this.point.name : null;},
         color: '#ffffff',distance: -30}}, 
@@ -280,179 +368,36 @@ Highcharts.chart('piecontainer', {
 });
 
 }
+
 function getSum(total, num) {return total + num;}
 
 
-function callreq(){
-  if (currentBuilding == "campus"){
-    beginDataRequest();
-  }
-  else{
-    datareq(currentBuilding);
-  }
-}
 
 
-function datareq(building){
-	console.log("enter");
-	var connection_state;
-
-   if (document.getElementById('all').checked)
-   {connection_state = "all";}
-   else if (document.getElementById('detected').checked)
-   {connection_state = "detected";}
-   else
-   {connection_state = "connected";}
+function generateZoneSummaryfromEntireDateSelection() {
+	var totalCounts = 0;
 	
+	var totalCount = 0;
+
 	
-	var start = startDate.value;
-	var end = endDate.value;
-    var mid = "";    
-   if (start == "" || end == "")
-     {
-       start = "to";
-       end = "day";    
-   }
-   else {mid = "%3B";}
-
-   console.log(start+mid+end);
-
-	var cmxurl = "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
-	"areas=118%2C185%2C211%2C239%2C304%2C488%2C587%2C614%2C629%2C657%2C664%2C1025%2C1118%2C1193%2C1206%2C1210%2C1260%2C1357%2C1389%2C1421%2C1875%2C1880%2C1903%2C1564%2C1932%2C1960%2C2354%2C2376%2C2398%2C2438%2C2477%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
-	"timeRange=00%3A00-23%3A59&"+
-	"period="+start+mid+end+"&"+
-	"granularity=Hourly"+"&"+
-	"durationCategories=0-1440"+"&"+
-	"includeStationary=false&"+
-	"connectionState="+connection_state+"&"+
-	"type=deviceCount&_=1520953855762";
-	cmxreq(cmxurl, start, end, building);
-} 
-
-function cmxreq(cmxurl, start, end, building){
-
-	var xhttp = new XMLHttpRequest();
-
-   xhttp.open("GET",cmxurl, false);
-   xhttp.setRequestHeader("Content-type", "application/json");
-   xhttp.send();
-   var response = JSON.parse(xhttp.responseText);
-   console.log("overall time resposnse");
-   console.log(response);
-   console.log(response["results"][0]["data"][0]["value"]);
-   var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth()+1; //January is 0!
-  var yyyy = today.getFullYear();
-
-  if(dd<10) {
-     dd = '0'+dd
-  } 
-
-  if(mm<10) {
-      mm = '0'+mm
-  } 
-
-  today = yyyy + '-' + mm + '-' + dd;
-  //document.write(today);
-
-   if (start == "to"){
-      start = today;
-   }
-   if (end == "day"){
-      var end = today; 
-   }
-
-   console.log(start);
-  var a = moment(start, 'YYYY-MM-DD');
-  var b = moment(end, 'YYYY-MM-DD');
-  var days = b.diff(a, 'days');
-  days = days + 1;
-  
-  console.log(days);
-  var overallcount = new Array(days);
-  for (var i = 0; i <overallcount.length; i++){
-    overallcount[i] = new Array(24);
-    for (var j = 0; j < 24; j++){
-      overallcount[i][j] = null;
-    }
-  }
-  var countvalue;
-  var quoindex;
-  var remindex;
-  console.log(response["results"][0]["data"].length);
-  for (var j = 0; j < response["results"].length; j++){
-  	if (response["results"][j]["area"] == building){
-  		for (var i = 0; i < response["results"][j]["data"].length; i++){
-  			countvalue = response["results"][j]["data"][i]["value"];
-  			quoindex = Math.floor(i/24);
-  			remindex = i%24;
-  			overallcount[quoindex][remindex] = countvalue;
-  		}
-  	}
-  }
-  console.log(overallcount);
-  var overalldict = {};
-  var newday = a;
-  var date;
-  var day;
-  var month; 
-  var year;
-  for (var i = 0; i < overallcount.length; i++){
-  	day = newday.format('DD');
-	month = newday.format('MM');
-	year = newday.format('YYYY');
-	date = month + '.' + day + '.' + year;
-  	overalldict[date] = overallcount[i];
-  	newday = moment(newday, "YYYY-MM-DD").add(1, 'days');
-  }
-  console.log(overalldict);
-  getlinechart(overalldict);
-
-}
-
-function getlinechart(overalldict){
-	var keyarray = Object.keys(overalldict);
-	//var seriesdict = {};
-
-	var seriesarray = [];
-	console.log(keyarray);
-	for (var i = 0; i < keyarray.length; i++){
-		seriesarray.push({});
-		console.log(keyarray[i]);
-		seriesarray[i]["name"] = keyarray[i];
-		console.log(overalldict[keyarray[i]]);
-		seriesarray[i]["data"] = overalldict[keyarray[i]];
+	var ix;
+	for (ix = 0; ix  < globalCurrentZoneDataSetEntireSelection["results"].length; ix ++){
 		
+		//Reset the previous Value
+		globalZoneDict[globalCurrentZoneDataSetEntireSelection["results"][ix]["area"]][1] = 0;
+		
+		//Set our New Value
+	    globalZoneDict[globalCurrentZoneDataSetEntireSelection["results"][ix]["area"]][1] =
+		globalCurrentZoneDataSetEntireSelection["results"][ix]["data"][0]["value"]
+		
+		totalCount += globalCurrentZoneDataSetEntireSelection["results"][ix]["data"][0]["value"];
+
 	}
-	console.log(seriesarray);
-	Highcharts.chart('linecontainer', {
-  chart: {
-    type: 'line'
-  },
-  title: {
-    text: 'Hourly Indivisual Building Count'
-  },
-  subtitle: {
-    text: 'Each line represents the total device count flow over the whole campus.'
-  },
-  xAxis: {
-    categories: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM','1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM']
-  },
-  yAxis: {
-    title: {
-      text: 'Device Count'
-    }
-  },
-  plotOptions: {
-    line: {
-      dataLabels: {
-        enabled: true
-      },
-      enableMouseTracking: false
-    }
-  },
-  series: seriesarray
-});
+	//document.getElementById("dashtotal").innerHTML = totalCounts; Not implemented Yet
+	generateZoneCharts(globalZoneDict);
 }
+
+
+
+
 

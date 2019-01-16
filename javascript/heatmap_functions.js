@@ -1,3 +1,5 @@
+var infoWindow;
+
 function toggleHeatmap() 
 {
     heatmap.setMap(heatmap.getMap() ? null : map);
@@ -593,6 +595,11 @@ function initPolygons()
   google.maps.event.addListener( region_walker_north,"mouseout",function()
       {this.setOptions({fillColor: "#0000FF", strokeColor: "#0000FF"});});     
       
+	  
+	  
+	  
+	  
+//#Change THESE LINKS
       
  google.maps.event.addListener(region_commons,"click", function(){
     document.location.href ='commons.html';
@@ -604,7 +611,7 @@ function initPolygons()
     document.location.href ='dining_hall.html';
 });
  google.maps.event.addListener(region_university_cen,"click", function(){
-    document.location.href ='region_university_center.html';
+    document.location.href ='university_center.html';
 });
  google.maps.event.addListener(region_pub,"click", function(){
     document.location.href ='pub.html';
