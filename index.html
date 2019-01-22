@@ -1,118 +1,55 @@
 <!DOCTYPE html>
 <html>
- <title>Retriever PAW</title>
 <head> 
-<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-<META HTTP-EQUIV="Expires" CONTENT="-1">
 
-<!-- Meta -->
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; img-src * data: 'unsafe-inline'">
-<header class="w3-container" style="padding-top:22px"></header>
-
-
-<!-- Linked Styles -->
-<!-- Favicon must be in root dir-->
-<link rel="icon" href="favicon.ico">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="styles.css" rel="stylesheet" type="text/css"> 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-2018.css">
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-
-
-<!-- Linked Javascript  -->
-
-<!-- Common  -->
-
+<!--  Necessary Base Files to Avoid Errors -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
-<script src="https://code.highcharts.com/modules/drilldown.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 
-<!-- Local :Campus Scope  -->
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyBxevA7di7Avo5vGKAgPPSkJa8ud4gnI&callback=initCampusReportGeneration&libraries=visualization"></script>
-
-<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-<script type="text/javascript" src="javascript/auxiliary_functions.js"></script>
-<script type="text/javascript" src="javascript/campus_page_functions.js"></script>
-<script type="text/javascript" src="javascript/building_page_functions.js"></script>
-<script type="text/javascript" src="javascript/heatmap_functions.js"></script>
-
+<!-- Common HTML Elements -->
 <script language="javascript" type="text/javascript">
-$(function()
-{
+$( document ).ready(function() {
+$("#head").load("templates/head.html");
 $("#navbar").load("templates/navbar.html");
 $("#sidebar").load("templates/sidebar.html");
-$("#building_list").load("templates/building_list.html");
-})
-</script> 
-<body class="w3-white">
+$("#building_list").load("templates/building_list.html");});
+</script>
+
+<div id="head"></div>
+</head>
+
+
+<body onload="initCampusReportGeneration()"  class="w3-white">
 
 <div id="navbar"></div>
-<div id="sidebar"style="z-index:1"></div>
+<div id="sidebar"></div>
+
 <div id="loader"style="display: none" ><img src="Pictures/Loading_icon.gif" style="width:21%"></div>
-<div id="myDiv" class="w3-main" style="z-index:-3;margin-left:300px ;margin-top:20px;">
+<div id="myDiv" class="w3-main" style="z-index:-3;margin-left:300px ;margin-top:20px;display: none">
 
 
-<!--Modilarize Later-->
-
-<div class="w3-container w3-signal-black" :>
-<div class="w3-left "><i class="fa fa-paw w3-xxxlarge w3-signal-black"></i></div>
-<div class="w3-right w3-signal-black"><i class="fa fa-wifi w3-xxxlarge w3-signal-black"></i></div>
-
-<span id="currentrequest"></span><h4>  Total Devices Number</h4>
-<h3 id="dashtotal"></h3>
-</div>
-<!--End Modilarize Later-->
-
-<div id="building_list" ></div>
-<hr>
-<br>
-
-<div class="w3-container w3-white">
-<div id="linecontainer" style="min-width: 300px; min-height: 400px; margin: 0 auto"></div>
-</div>
-
-<hr>
-<br>
+<div id="building_list"></div><hr><br>
+<div id="linecontainer" style="min-width: 300px; min-height: 400px; margin: 0 auto"></div><hr><br>
 
 
 
+<!--Banner-->
+<div class="w3-container w3-signal-black" 
+style=" min-height: 175px;
+ background-position: center center; 
+ background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(Pictures/header/Campus_header.jpg)":><br><br>
+
+<i class="w3-left fa fa-paw w3-xxlarge"></i>  <font size="5.75" aside id="currentRequestText"> </font></aside>  <i class="w3-right fa fa-paw w3-xxlarge "></i><br>
+
+<font size="5.25">Total Device Count:<br> <b> <font size = "5.75" color='#FFCC33' aside id="dashtotal"></aside><b> </font></div><br>
+<!--Banner-->
 
 
 
-
-<br>
-<!--map-->
-<div class= "w3-container w3-white" id="mapPanel">
-<div id="map" class="container" style="min-width:300px;height:750px; margin: 0 auto" alt="Wifi Usage"></div>
-</div>
-
-<hr>
-<br>
-
-
-<!--charts-->
-<div class="w3-container w3-white">
-
-<div id="hiddenbarcontainer" style="min-width: 300px; min-height: 400px; margin: 0 auto"></div>
-<hr>
-<br>
+<div id="map" class="container" style="min-width:300px;height:750px; margin: 0 auto" alt="Wifi Usage"></div><hr><br>
+<div id="hiddenbarcontainer" style="min-width: 300px; min-height: 400px; margin: 0 auto"></div><hr><br>
 <div id="hiddenpiecontainer" style="min-width: 300px; min-height: 400px; margin: 0 auto"></div> 
 
-
-</div>
-
-
-</div>
-</body> 
-</html>
+</div></body></html>

@@ -1,13 +1,17 @@
-var currentrequest = "";
+;
 var globalcurrentDataSet;
 var globalCurrentDataSetEntireSelection;
 
 var hillside_com = ["Sideling","Pocomoke","Manokin", "Patuxent","Elk","Deepcreek","Casselman","Breton","Hillside"];                  
 var patapsco = ["Patapsco", "Patapsco Addition"]
-var residential_buildings = ["Chesapeake","Erickson Hall","Hillside","Susquehanna","Potomac Hall","Walker AVE South",
+
+var residential_buildings = ["Chesapeake","Erickson Hall","Patapsco","Hillside", "Susquehanna","Potomac Hall","Walker AVE South",
 							"Harbor Hall","Walker AVE North","Terrace","Westhills" ];
+							
+							
 var academic_buildings = ["Public Policy","Administration","Biology","Chemistry","Math_Psyc","Academic IV",
                         "PAHB","Engineering","Fine Arts","Sondheim","Physics","ITE"];
+						
 var support_buildings = ["Library","Event Center","Commons","Dining Hall","University Center","RAC"];
 	
 
@@ -18,6 +22,7 @@ function initCampusReportGeneration()
 		
 	currentPage = "campus";
 	
+
 	
     beginDataRequest()
     showPage();}, 100)
@@ -28,7 +33,8 @@ function initCampusReportGeneration()
 
 function beginDataRequest(){
    var connection_state;
-	
+   //document.getElementById("currentRequestText").value = "lo";
+   
    if (document.getElementById('all').checked){connection_state = "all";}
    else if (document.getElementById('detected').checked){connection_state = "detected";}
    else{connection_state = "connected";}
@@ -302,9 +308,12 @@ function generateCharts(dictonaryCounts)
   var ix;
   for (ix = 0 ;  ix < residential_buildings.length ; ix++){
 	total_residential_count += dictonaryCounts[residential_buildings[ix]][0];
-	residential_drilldown.push([residential_buildings[ix], dictonaryCounts[residential_buildings[ix]][0]]);
-	residential_percentage.push( Math.round( dictonaryCounts[residential_buildings[ix]][0]/document.getElementById("dashtotal").innerHTML *10000)/100);
-   }
+  residential_drilldown.push([residential_buildings[ix], dictonaryCounts[residential_buildings[ix]][0]]);
+  	residential_percentage.push( Math.round( dictonaryCounts[residential_buildings[ix]][0]/document.getElementById("dashtotal").innerHTML *10000)/100);
+
+}
+	
+
   
   for (ix = 0 ;  ix < academic_buildings.length ; ix++){
 	total_academic_count += dictonaryCounts[academic_buildings[ix]][0];
@@ -317,6 +326,8 @@ function generateCharts(dictonaryCounts)
 	support_drilldown.push([support_buildings[ix] ,dictonaryCounts[support_buildings[ix]][0]]);
 	support_percentage.push( Math.round( dictonaryCounts[support_buildings[ix]][0]/document.getElementById("dashtotal").innerHTML *10000)/100);
   }
+  
+
   
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //Bar Chart
@@ -438,6 +449,23 @@ Highcharts.chart('hiddenpiecontainer', {chart: {type: 'pie'},title: {text: 'Devi
 }
 
 function generateSummaryfromEntireDateSelection() {
+	document.getElementById("currentRequestText").innerHTML = "";
+	document.getElementById("currentRequestText").innerHTML += "P.A.W. Report For Date(s): ";
+	if  (startDate.value == "" || endDate.value ==""){
+	document.getElementById("currentRequestText").innerHTML += "<b><font color='#FFCC33'> Today</b></font>";}
+	else{
+		document.getElementById("currentRequestText").innerHTML += "<b><font color='#FFCC33'>"+ startDate.value + "</b></font>";
+		document.getElementById("currentRequestText").innerHTML += "<b><font color='#FFCC33'> ~ </b></font> "
+		document.getElementById("currentRequestText").innerHTML += "<b><font color='#FFCC33'>"+endDate.value+ "</b></font>";
+		}
+	document.getElementById("currentRequestText").innerHTML += ".  Client Connection State:" 
+	
+    if (document.getElementById('all').checked){document.getElementById("currentRequestText").innerHTML += "<b><font color='#FFCC33'> Connected and Probing</b></font>. ";}
+    else if (document.getElementById('detected').checked){document.getElementById("currentRequestText").innerHTML +=  "<b><font color='#FFCC33'> Probing</b></font>.";}
+    else{document.getElementById("currentRequestText").innerHTML +=  " <b><font color='#FFCC33'>Connected</b></font>. ";}
+    
+	document.getElementById("currentRequestText").innerHTML += " Time: ";
+	document.getElementById("currentRequestText").innerHTML += "<b><font color='#FFCC33'>All Day</b></font>.";
 	var totalCounts = 0;
 	
 	campusDictionaryCount = {
@@ -479,6 +507,8 @@ function generateSummaryfromEntireDateSelection() {
 	{
 		//The Hillside Communities are listed individiually, check for them by name and add them to the "Hillside" key value pair
         if (hillside_com.includes(globalCurrentDataSetEntireSelection["results"][ix]["area"])){
+			console.log(globalCurrentDataSetEntireSelection["results"][ix]["area"]);
+			console.log(globalCurrentDataSetEntireSelection["results"][ix]["data"][0]["value"]);
             campusDictionaryCount["Hillside"][0]+=
 			globalCurrentDataSetEntireSelection["results"][ix]["data"][0]["value"];
         }
@@ -495,9 +525,11 @@ function generateSummaryfromEntireDateSelection() {
 		globalCurrentDataSetEntireSelection["results"][ix]["data"][0]["value"];
 		}
 		
-		totalCounts += globalCurrentDataSetEntireSelection["results"][0]["data"][0]["value"];
-		
+
+		totalCounts += globalCurrentDataSetEntireSelection["results"][ix]["data"][0]["value"];
+
 	}
+
 	document.getElementById("dashtotal").innerHTML = totalCounts;
 
 	heatmapConfiguration(campusDictionaryCount);
