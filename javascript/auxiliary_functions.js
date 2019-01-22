@@ -1,4 +1,5 @@
 var currentPage;
+var currentrequest = "";
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //Functions for popping the sidebar/hiding sidebar  on smaller
 
