@@ -9,11 +9,12 @@ function initBuildingReportGeneration(building)
 	setTimeout(function()
     {
 	currentPage = building;
+	
+	
 	generateBuildingZones(building);
 	beginZoneDataRequest();
 	
-	//ADD IN ANGEL's FUNCTIONS FOR LINE GRAPH AND FUZE WITH YOUR CAMPUS MAP CONFIG.
-    //getBuildingCharts();
+
 	showPage();}, 250)
     showloader();
 }
@@ -42,7 +43,8 @@ function generateBuildingZones(building)
          if (orderedAreas == ""){orderedAreas += String(response["userLevels"][3]["children"][ix]["id"]);}
         else {orderedAreas += "%2C"+ String(response["userLevels"][3]["children"][ix]["id"]) ;}
 		}
-    }	
+    }
+		console.log(globalZoneDict);
 }         
 
 
