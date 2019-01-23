@@ -22,6 +22,7 @@ function initBuildingReportGeneration(building)
 
 function generateBuildingZones(building)
 {
+	
     var xhttp = new XMLHttpRequest();  
     xhttp.open("GET","https://cmx.noc.umbc.edu/api/config/v1/heterarchy/allUserLevels?filterElements=false&_=1540573524517", false);
     xhttp.setRequestHeader("Content-type", "application/json");
@@ -206,8 +207,11 @@ function generateZoneSummaryFromPoint(seriesindex, hourindex) {
 		totalCount += globalCurrentZoneDataSet["results"][ix]["data"][ 24*seriesindex + hourindex]["value"];
 
 	}
+	
+	updateBannerText("hour", seriesindex, hourindex);
+	document.getElementById("dashtotal").innerHTML = totalCount;
+	
 	//console.log(zoneDictionaryCount);
-	//document.getElementById("dashtotal").innerHTML = totalCounts; Not implemented Yet
 	generateZoneCharts(globalZoneDict);
 	
 }
@@ -377,7 +381,6 @@ function getSum(total, num) {return total + num;}
 
 
 function generateZoneSummaryfromEntireDateSelection() {
-	var totalCounts = 0;
 	
 	var totalCount = 0;
 
@@ -395,7 +398,11 @@ function generateZoneSummaryfromEntireDateSelection() {
 		totalCount += globalCurrentZoneDataSetEntireSelection["results"][ix]["data"][0]["value"];
 
 	}
-	//document.getElementById("dashtotal").innerHTML = totalCounts; Not implemented Yet
+	
+	updateBannerText();
+	document.getElementById("dashtotal").innerHTML = totalCount; 
+	
+	
 	generateZoneCharts(globalZoneDict);
 }
 
