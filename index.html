@@ -7,10 +7,13 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
 
 <!-- Common HTML Elements -->
 <script language="javascript" type="text/javascript">
-$( document ).ready(function() {
+
+$(function(){
 $("#head").load("templates/head.html");
 $("#navbar").load("templates/navbar.html");
 $("#sidebar").load("templates/sidebar.html");
@@ -21,7 +24,7 @@ $("#building_list").load("templates/building_list.html");});
 </head>
 
 
-<body onload="initCampusReportGeneration()"  class="w3-white">
+<body   class="w3-white">
 
 <div id="navbar"></div>
 <div id="sidebar"></div>
@@ -37,13 +40,11 @@ $("#building_list").load("templates/building_list.html");});
 
 <!--Banner-->
 <div class="w3-container w3-signal-black" 
-style=" min-height: 175px;
- background-position: center center; 
- background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(Pictures/header/Campus_header.jpg)":><br><br>
-
-<i class="w3-left fa fa-paw w3-xxlarge"></i>  <font size="5.75" aside id="currentRequestText"> </font></aside>  <i class="w3-right fa fa-paw w3-xxlarge "></i><br>
-
-<font size="5.25">Total Device Count:<br> <b> <font size = "5.75" color='#FFCC33' aside id="dashtotal"></aside><b> </font></div><br>
+style=" background-position: bottom left; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url(Pictures/header/Campus_header.jpg)":><br>
+<i class="w3-left fa fa-paw w3-xxlarge"></i> <i class="w3-right fa fa-paw w3-xxlarge "></i>  <font size="4.75" aside id="currentRequestText"> </font></aside> <br>
+<font size="4.75">Total Device Count: <b> <font size = "4.75" color='#FFCC33' aside id="dashtotal"></aside><br> <b> </font><br><hr>
+<button class="w3-button w3-medium w3-black w3-border w3-round"  id="restore" onclick="processRestoreCumulativeView();">Restore All Day View</button><br>
+<i style="visibility: hidden":> This line intentionally hidden : UMBC DOIT </i></div><br>
 <!--Banner-->
 
 
@@ -52,4 +53,4 @@ style=" min-height: 175px;
 <div id="hiddenbarcontainer" style="min-width: 300px; min-height: 400px; margin: 0 auto"></div><hr><br>
 <div id="hiddenpiecontainer" style="min-width: 300px; min-height: 400px; margin: 0 auto"></div> 
 
-</div></body></html>
+</div></body><script>setTimeout(function(){ initCampusReportGeneration(); }, 1);</script></html>
