@@ -1,83 +1,42 @@
 <!DOCTYPE html>
-<html>
- <title>Retriever PAW</title>
-<head> 
-<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-<META HTTP-EQUIV="Expires" CONTENT="-1">
+<html><head>
 
-<!-- Meta -->
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; img-src * data: 'unsafe-inline'">
-<header class="w3-container" style="padding-top:22px"></header>
-
-
-<!-- Linked Styles -->
-<link rel="icon" href="favicon.ico">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="styles.css" rel="stylesheet" type="text/css"> 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-signal.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-2018.css">
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-
-
-
-<!-- Linked Javascript  -->
-
-<!-- Common  -->
+<!--  Necessary Base Files to Avoid Errors -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
-<script src="https://code.highcharts.com/modules/drilldown.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
-<script type="text/javascript" src="javascript/auxiliary_functions.js"></script>
-<script type="text/javascript" src="javascript/campus_page_functions.js"></script>
-<script type="text/javascript" src="javascript/building_page_functions.js"></script>
-<script type="text/javascript" src="javascript/heatmap_functions.js"></script>
-
+<!-- Common HTML Elements -->
 <script language="javascript" type="text/javascript">
-$(function()
-{
+$( document ).ready(function() {
+$("#head").load("templates/head.html");
 $("#navbar").load("templates/navbar.html");
 $("#sidebar").load("templates/sidebar.html");
-$("#building_list").load("templates/building_list.html");
-})
+$("#building_list").load("templates/building_list.html");});
 </script> 
 
-</head> 
+<div id="head"></div></head> 
+
+<!-- Body -->
 <body onLoad="initBuildingReportGeneration('Math_Psyc')" class="w3-white">
 
 <div id="navbar"></div>
 <div id="sidebar"></div>
 <div id="loader" style="display: none"><img src="Pictures/Loading_icon.gif" style="width:21%"></div>
-<div id="myDiv" class="w3-main" style="margin-left:300px ;margin-top:20px;">
+<div id="myDiv" class="w3-main" style="margin-left:300px ;margin-top:20px; display: none">
+<div id="linecontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div><hr><br>
 
-<div class="container">
-<img src="Pictures/header/Math_Psyc_header.jpg"/> 
-</div>
-<br />
-<br />
+<!--Banner-->
+<div class="w3-container w3-signal-black" 
+style=" background-position: bottom left; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url(Pictures/header/Math_Psyc_header.jpg)":><br>
+<i class="w3-left fa fa-paw w3-xxlarge"></i> <i class="w3-right fa fa-paw w3-xxlarge "></i>  <font size="4.75" aside id="currentRequestText"> </font></aside> <br>
+<font size="4.75">Total Device Count: <b> <font size = "4.75" color='#FFCC33' aside id="dashtotal"></aside><br> <b> </font><br><hr>
+<button class="w3-button w3-medium w3-black w3-border w3-round"  id="restore" onclick="processRestoreCumulativeView();">Restore All Day View</button><br>
+<i style="visibility: hidden":> This line intentionally hidden : UMBC DOIT </i></div><br>
+<!--Banner-->
 
-<script language="javascript" type="text/javascript">
-$(window).load(function() {
-    $('.container').find('img').each(function() {
-        var imgClass = (this.width / this.height > 1) ? 'wide' : 'tall';
-        $(this).addClass(imgClass);
-    })
-})
-</script> 
-<div id="linecontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div> 
-<div id="barcontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
-<div id="piecontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div> 
-<hr>
-<br>
-<div id="building_list"></div>
-</div>
-</html>
+<!-- More Charts -->
+<div id="barcontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div><hr><br>
+<div id="piecontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div><hr><br>
+<div id="building_list"></div></div></body></html>
