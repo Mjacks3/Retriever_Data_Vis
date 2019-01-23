@@ -1,4 +1,7 @@
-;
+var banner_date;
+var banner_time;
+
+
 var globalcurrentDataSet;
 var globalCurrentDataSetEntireSelection;
 
@@ -18,6 +21,59 @@ var support_buildings = ["Library","Event Center","Commons","Dining Hall","Unive
 
 function initCampusReportGeneration()
 {
+
+	if (startDate.value =="")
+	{
+   var start = startDate.value;
+   var end = endDate.value;
+
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+
+  if(dd<10) {dd = '0'+dd} 
+  if(mm<10) { mm = '0'+mm} 
+  today = yyyy + '-' + mm + '-' + dd;
+  
+  
+	var a = moment(today, 'YYYY-MM-DD').add(2, 'days');
+	
+	day = a.format('DD');
+	month = a.format('MM');
+	year = a.format('YYYY');
+	date = month + '-' + day + '-' + year;
+	
+	console.log( date);
+
+	}
+	
+	else
+			
+	{
+   var start = startDate.value;
+  
+  
+  var a = moment(start, 'YYYY-MM-DD').add(2, 'days');
+	
+	console.log( a);
+	}
+	
+	
+		
+
+
+		
+		
+		
+		
+		
+
+
+		
+	
+ 
+	
     setTimeout(function(){
 		
 	currentPage = "campus";
@@ -225,12 +281,13 @@ function generateSummaryfromPoint(seriesindex, hourindex)
 	};
 	
 	//Now, Let's get the counts for the hour that got selected
-
+	
+	console.log(globalcurrentDataSet);
 	var ix;
 	for (ix = 0; ix  < globalcurrentDataSet["results"].length; ix ++)
 	{
 		//We need to find the data corresponding to the 
-		//correct day and the correct horu or the day
+		//correct day and the correct hour or the day
 		//Math: Each line(series index) is one day = 24hours.
 		//Each point in the line is an hour
 		//To find the index of the given point including multiple days,
@@ -259,6 +316,7 @@ function generateSummaryfromPoint(seriesindex, hourindex)
 		
 		totalCounts += globalcurrentDataSet["results"][ix]["data"][ 24*seriesindex + hourindex]["value"];
 	}
+	updateBannerText("hour",seriesindex, hourindex);
 	document.getElementById("dashtotal").innerHTML = totalCounts;
 
 	heatmapConfiguration(campusDictionaryCount);
@@ -448,24 +506,11 @@ Highcharts.chart('hiddenpiecontainer', {chart: {type: 'pie'},title: {text: 'Devi
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 }
 
+
+
 function generateSummaryfromEntireDateSelection() {
-	document.getElementById("currentRequestText").innerHTML = "";
-	document.getElementById("currentRequestText").innerHTML += "P.A.W. Report For Date(s): ";
-	if  (startDate.value == "" || endDate.value ==""){
-	document.getElementById("currentRequestText").innerHTML += "<b><font color='#FFCC33'> Today</b></font>";}
-	else{
-		document.getElementById("currentRequestText").innerHTML += "<b><font color='#FFCC33'>"+ startDate.value + "</b></font>";
-		document.getElementById("currentRequestText").innerHTML += "<b><font color='#FFCC33'> ~ </b></font> "
-		document.getElementById("currentRequestText").innerHTML += "<b><font color='#FFCC33'>"+endDate.value+ "</b></font>";
-		}
-	document.getElementById("currentRequestText").innerHTML += ".  Client Connection State:" 
 	
-    if (document.getElementById('all').checked){document.getElementById("currentRequestText").innerHTML += "<b><font color='#FFCC33'> Connected and Probing</b></font>. ";}
-    else if (document.getElementById('detected').checked){document.getElementById("currentRequestText").innerHTML +=  "<b><font color='#FFCC33'> Probing</b></font>.";}
-    else{document.getElementById("currentRequestText").innerHTML +=  " <b><font color='#FFCC33'>Connected</b></font>. ";}
-    
-	document.getElementById("currentRequestText").innerHTML += " Time: ";
-	document.getElementById("currentRequestText").innerHTML += "<b><font color='#FFCC33'>All Day</b></font>.";
+	
 	var totalCounts = 0;
 	
 	campusDictionaryCount = {
@@ -530,6 +575,7 @@ function generateSummaryfromEntireDateSelection() {
 
 	}
 
+	updateBannerText();
 	document.getElementById("dashtotal").innerHTML = totalCounts;
 
 	heatmapConfiguration(campusDictionaryCount);
