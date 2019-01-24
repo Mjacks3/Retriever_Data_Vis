@@ -230,7 +230,7 @@ function generateSummaryfromPoint(seriesindex, hourindex)
 	
 	//Now, Let's get the counts for the hour that got selected
 	
-	console.log(globalcurrentDataSet);
+	//console.log(globalcurrentDataSet);
 	var ix;
 	for (ix = 0; ix  < globalcurrentDataSet["results"].length; ix ++)
 	{
@@ -500,8 +500,8 @@ function generateSummaryfromEntireDateSelection() {
 	{
 		//The Hillside Communities are listed individiually, check for them by name and add them to the "Hillside" key value pair
         if (hillside_com.includes(globalCurrentDataSetEntireSelection["results"][ix]["area"])){
-			console.log(globalCurrentDataSetEntireSelection["results"][ix]["area"]);
-			console.log(globalCurrentDataSetEntireSelection["results"][ix]["data"][0]["value"]);
+			//console.log(globalCurrentDataSetEntireSelection["results"][ix]["area"]);
+			//console.log(globalCurrentDataSetEntireSelection["results"][ix]["data"][0]["value"]);
             campusDictionaryCount["Hillside"][0]+=
 			globalCurrentDataSetEntireSelection["results"][ix]["data"][0]["value"];
         }

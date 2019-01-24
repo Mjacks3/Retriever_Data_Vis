@@ -19,7 +19,7 @@ $("#building_list").load("templates/building_list.html");});
 <div id="head"></div></head> 
 
 <!-- Body -->
-<body onLoad="initBuildingReportGeneration('Fine Arts')" class="w3-white">
+<body class="w3-white">
 
 <div id="navbar"></div>
 <div id="sidebar"></div>
@@ -39,4 +39,5 @@ style=" background-position: center; background-size: cover; background-image: l
 <!-- More Charts -->
 <div id="barcontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div><hr><br>
 <div id="piecontainer" style="min-width: 300px; height: 400px; margin: 0 auto"></div><hr><br>
-<div id="building_list"></div></div></body></html>
+<div id="building_list"></div></div></body>
+<script>setTimeout(function(){ initBuildingReportGeneration('Fine Arts'); }, 25);</script></html>
