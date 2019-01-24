@@ -21,62 +21,10 @@ var support_buildings = ["Library","Event Center","Commons","Dining Hall","Unive
 
 function initCampusReportGeneration()
 {
-
-	if (startDate.value =="")
-	{
-   var start = startDate.value;
-   var end = endDate.value;
-
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth()+1; //January is 0!
-  var yyyy = today.getFullYear();
-
-  if(dd<10) {dd = '0'+dd} 
-  if(mm<10) { mm = '0'+mm} 
-  today = yyyy + '-' + mm + '-' + dd;
-  
-  
-	var a = moment(today, 'YYYY-MM-DD').add(2, 'days');
-	
-	day = a.format('DD');
-	month = a.format('MM');
-	year = a.format('YYYY');
-	date = month + '-' + day + '-' + year;
-	
-	console.log( date);
-
-	}
-	
-	else
-			
-	{
-   var start = startDate.value;
-  
-  
-  var a = moment(start, 'YYYY-MM-DD').add(2, 'days');
-	
-	console.log( a);
-	}
-	
-	
-		
-
-
-		
-		
-		
-		
-		
-
-
-		
-	
- 
 	
     setTimeout(function(){
 		
-	currentPage = "campus";
+	currentPage = "Campus";
 	
 
 	

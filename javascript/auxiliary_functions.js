@@ -54,7 +54,7 @@ function processGenerateReportButton()
 	console.log("Entereed generateReport");
 	console.log(currentPage);
 	
-	if (currentPage == "campus"){initCampusReportGeneration();}
+	if (currentPage == "Campus"){initCampusReportGeneration();}
 	else{ initBuildingReportGeneration(currentPage);}
 	
 }
@@ -63,7 +63,7 @@ function processGenerateReportButton()
 function processRestoreCumulativeView() 
 {   
 
-	if (currentPage == "campus"){generateSummaryfromEntireDateSelection();}
+	if (currentPage == "Campus"){generateSummaryfromEntireDateSelection();}
 	else{generateZoneSummaryfromEntireDateSelection();}
 	
 }
@@ -75,7 +75,9 @@ function processRestoreCumulativeView()
 function updateBannerText(time="entire",dateindex=0,hourindex=0 )
 {
 	document.getElementById("currentRequestText").innerHTML = "";
-	document.getElementById("currentRequestText").innerHTML += "P.A.W. Report For Date(s): ";
+	document.getElementById("currentRequestText").innerHTML = "P.A.W. Report For Area: <b><font color='#FFCC33'>" + currentPage + "</b></font><br>";
+	
+	document.getElementById("currentRequestText").innerHTML += "Date(s): ";
 	
 	if  (startDate.value == "" || endDate.value =="")  //Today
 	{
