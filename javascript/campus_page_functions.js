@@ -90,7 +90,7 @@ function beginDataRequest(){
 	"areas=118%2C185%2C211%2C239%2C304%2C488%2C587%2C614%2C629%2C657%2C664%2C1025%2C1118%2C1193%2C1206%2C1210%2C1260%2C1357%2C1389%2C1421%2C1875%2C1880%2C1903%2C1564%2C1932%2C1960%2C2354%2C2376%2C2398%2C2438%2C2477%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
 	"timeRange=00%3A00-23%3A59&"+
 	"period="+start+mid+end+"&"+
-	"granularity=Hourly&durationCategories=0-1440&includeStationary=false&"+
+	"granularity=Hourly&durationCategories=0-1440&yAxis=absoluteVisits&includeStationary=false&"+
 	"connectionState="+connection_state+"&"+
 	"type=deviceCount&_=1520953855762";
 	
@@ -100,7 +100,7 @@ function beginDataRequest(){
   xhttp.setRequestHeader("Content-type", "application/json");
   xhttp.send();
   var response = JSON.parse(xhttp.responseText);
-  
+  console.log(response);
   globalcurrentDataSet = response; //Hold on to the data from the request for further analysis
   
   
@@ -171,8 +171,8 @@ function generatelinechart(overalldict){
 }
 
  Highcharts.chart('linecontainer', {chart: {type: 'line'},
-  title: {text: 'Hourly Device Count'},
-  subtitle: {text: 'Each line represents the total device count  over the whole campus.'},
+  title: {text: 'Hourly Device Count for UMBC Campus'},
+  subtitle: {text: 'Click a point to see a breakdown of device counts for that hour.'},
   xAxis: {categories: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM','1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM']},
   yAxis: {title: {text: 'Device Count'}},
   
@@ -339,9 +339,10 @@ function generateCharts(dictonaryCounts)
 //Bar Chart
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  Highcharts.chart('hiddenbarcontainer', {
-  chart: {type: 'column'},title: {text: 'Devices Number by Areas on Campus'},
-  subtitle: {text: 'Click the columns to view versions. School Website: <a href="https://www.umbc.edu/" target="_blank">umbc.edu</a>'},
+  Highcharts.chart('barcontainer', {
+  chart: {type: 'column'},title:
+  {text: 'Device Count by Area for UMBC Campus'},
+  subtitle: {text: 'Click a category for a device count breakdown by building'},
   xAxis: {type: 'category'},
   yAxis: {title: {text: 'Total Number of Devices'}},
   legend: {enabled: false},
@@ -431,8 +432,9 @@ for (i = 0; i < dataLen; i += 1)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //Pie  Chart
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Highcharts.chart('hiddenpiecontainer', {chart: {type: 'pie'},title: {text: 'Devices Count Percentage Pie Chart'},
-  subtitle: {text: 'School Info: <a href="https://www.umbc.edu/" target="_blank">umbc.edu</a>'},
+Highcharts.chart('piecontainer', {chart: {type: 'pie'},title: 
+{text: 'Device Count Percentage Pie Chart for UMBC Campus'},
+  subtitle: {text: ''},
   yAxis: {title: {text: 'Total percent building/area share'}},
   plotOptions: { pie: {shadow: false,center: ['50%', '50%']}},
   tooltip: {valueSuffix: '%'},
