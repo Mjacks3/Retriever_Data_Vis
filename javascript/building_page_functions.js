@@ -1,4 +1,4 @@
-var globalZoneDict;  
+ var globalZoneDict;  
 var orderedAreas;
 var globalCurrentZoneDataSet;
 var globalCurrentZoneDataSetEntireSelection;
@@ -176,8 +176,8 @@ function generateZoneLineChart(overalldict){
 }
 
  Highcharts.chart('linecontainer', {chart: {type: 'line'},
-  title: {text: 'Hourly Device Count'},
-  subtitle: {text: 'Each line represents the total device count  over the whole campus.'},
+  title: {text: 'Hourly Device Count for ' + currentPage},
+  subtitle: {text: 'Click a point to see a breakdown of device counts for that hour.'},
   xAxis: {categories: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM','1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM']},
   yAxis: {title: {text: 'Device Count'}},
   plotOptions: {line: {dataLabels: {enabled: true},enableMouseTracking: true},
@@ -257,7 +257,7 @@ function generateZoneCharts(dictionaryCount)
 Highcharts.chart('barcontainer', {
     chart: { type: 'column'},
     title: {text: 'Number of Devices by Floor'},
-    subtitle: { text: 'Click the columns to see each floor\'s zone\'s breakdown </a>'},
+    subtitle: { text: 'Click the columns to see each floor\'s zone breakdown </a>'},
     xAxis: {type: 'category'},
     yAxis: {title: {text: 'Number of Devices Detected'}},
     legend: { enabled: false },
@@ -349,8 +349,8 @@ for (i = 0; i < dataLen; i += 1) {
 // Create the chart
 Highcharts.chart('piecontainer', {
     chart: {type: 'pie'},
-    title: {text: 'Number of Devices by Zone within ' + currentPage},
-    subtitle: {text: 'Source: <a href="http://statcounter.com" target="_blank">umbc.edu</a>'},
+    title: {text: 'Device Count Percentage Pie Chart for  ' + currentPage},
+    subtitle: {text: '`'},
     yAxis: {title: {text: 'Total percent Detected Devices'}},
     plotOptions: { pie: {shadow: true, center: ['50%', '50%']}},
     tooltip: {valueSuffix: '%'},

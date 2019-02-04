@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-<head> 
+<html><head> 
 
 <!--  Necessary Base Files to Avoid Errors -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
@@ -12,7 +11,6 @@
 
 <!-- Common HTML Elements -->
 <script language="javascript" type="text/javascript">
-
 $(function(){
 $("#head").load("templates/head.html");
 $("#navbar").load("templates/navbar.html");
@@ -20,11 +18,9 @@ $("#sidebar").load("templates/sidebar.html");
 $("#building_list").load("templates/building_list.html");});
 </script>
 
-<div id="head"></div>
-</head>
+<div id="head"></div></head>
 
-
-<body   class="w3-white">
+<body class="w3-white">
 
 <div id="navbar"></div>
 <div id="sidebar"></div>
@@ -37,7 +33,6 @@ $("#building_list").load("templates/building_list.html");});
 <div id="linecontainer" style="min-width: 300px; min-height: 400px; margin: 0 auto"></div><hr><br>
 
 
-
 <!--Banner-->
 <div class="w3-container w3-signal-black" 
 style=" background-position: center; background-size: 100%; background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(Pictures/header/Campus_header.jpg)":><br>
@@ -48,9 +43,9 @@ style=" background-position: center; background-size: 100%; background-image: li
 <!--Banner-->
 
 
-
 <div id="map" class="container" style="min-width:300px;height:750px; margin: 0 auto" alt="Wifi Usage"></div><hr><br>
-<div id="hiddenbarcontainer" style="min-width: 300px; min-height: 400px; margin: 0 auto"></div><hr><br>
-<div id="hiddenpiecontainer" style="min-width: 300px; min-height: 400px; margin: 0 auto"></div> 
+<div id="barcontainer" style="min-width: 300px; min-height: 400px; margin: 0 auto"></div><hr><br>
+<div id="piecontainer" style="min-width: 300px; min-height: 400px; margin: 0 auto"></div> 
 
-</div></body><script>setTimeout(function(){ initCampusReportGeneration(); }, 1);</script></html>
+</div></body>
+<script>setTimeout(function(){ initCampusReportGeneration(); }, 25);</script></html>
