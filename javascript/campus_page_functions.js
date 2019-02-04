@@ -54,7 +54,9 @@ function beginDataRequest(){
 	"areas=118%2C185%2C211%2C239%2C304%2C488%2C587%2C614%2C629%2C657%2C664%2C1025%2C1118%2C1193%2C1206%2C1210%2C1260%2C1357%2C1389%2C1421%2C1875%2C1880%2C1903%2C1564%2C1932%2C1960%2C2354%2C2376%2C2398%2C2438%2C2477%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
 	"timeRange=00%3A00-23%3A59&"+
 	"period="+start+mid+end+"&"+
-	"granularity=Building&durationCategories=0-1440&includeStationary=false&"+
+	"granularity=Building&"+
+	"durationCategories=0-1440&"+
+	"includeStationary=false&"+
 	"connectionState="+connection_state+"&"+
 	"type=deviceCount&_=1520953855762";
 	
@@ -96,7 +98,7 @@ function beginDataRequest(){
 	"connectionState="+connection_state+"&"+
 	"type=deviceCount&_=1520953855762";
 	
-	
+s
   var xhttp = new XMLHttpRequest();
   xhttp.open("GET",cmxurl, false);
   xhttp.setRequestHeader("Content-type", "application/json");
