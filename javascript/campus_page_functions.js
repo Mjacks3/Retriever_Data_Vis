@@ -98,7 +98,7 @@ function beginDataRequest(){
 	"connectionState="+connection_state+"&"+
 	"type=deviceCount&_=1520953855762";
 	
-s
+
   var xhttp = new XMLHttpRequest();
   xhttp.open("GET",cmxurl, false);
   xhttp.setRequestHeader("Content-type", "application/json");
