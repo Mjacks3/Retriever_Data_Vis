@@ -64,8 +64,10 @@ function beginDataRequest(){
   xhttp.setRequestHeader("Content-type", "application/json");
   xhttp.send();
   var response = JSON.parse(xhttp.responseText);
+  console.log (response);
 
   globalCurrentDataSetEntireSelection = response;
+	
 	
   generateSummaryfromEntireDateSelection();
 	
@@ -171,7 +173,7 @@ function generatelinechart(overalldict){
 }
 
  Highcharts.chart('linecontainer', {chart: {type: 'line'},
-  title: {text: 'Hourly Device Count for UMBC Campus'},
+  title: {text: '<b> Hourly Device Count for UMBC Campus</b>'},
   subtitle: {text: 'Click a point to see a breakdown of device counts for that hour.'},
   xAxis: {categories: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM','1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM']},
   yAxis: {title: {text: 'Device Count'}},

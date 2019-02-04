@@ -1,4 +1,4 @@
-var globalZoneDict;  
+ var globalZoneDict;  
 var orderedAreas;
 var globalCurrentZoneDataSet;
 var globalCurrentZoneDataSetEntireSelection;
