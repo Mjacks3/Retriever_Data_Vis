@@ -25,19 +25,20 @@ function initCampusReportGeneration()
     setTimeout(function(){
 		
 	currentPage = "Campus";
+	document.getElementById("corr").disabled = true;
 	
-
+	requestCumulativeDeviceCount();
+	requestHourlyDeviceCount();
+	requestDwellZones();
 	
-    beginDataRequest()
     showPage();}, 100)
 	
     showloader();
 }
-	
 
-function beginDataRequest(){
-   var connection_state;
-   //document.getElementById("currentRequestText").value = "lo";
+
+function requestCumulativeDeviceCount(){
+	var connection_state;
    
    if (document.getElementById('all').checked){connection_state = "all";}
    else if (document.getElementById('detected').checked){connection_state = "detected";}
@@ -51,11 +52,12 @@ function beginDataRequest(){
    else {mid = "%3B";}
 
 	var cmxurl = "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCount?"+
-	"areas=118%2C185%2C211%2C239%2C304%2C488%2C587%2C614%2C629%2C657%2C664%2C1025%2C1118%2C1193%2C1206%2C1210%2C1260%2C1357%2C1389%2C1421%2C1875%2C1880%2C1903%2C1564%2C1932%2C1960%2C2354%2C2376%2C2398%2C2438%2C2477%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
+	"areas=118%2C185%2C211%2C239%2C304%2C488%2C587%2C614%2C629%2C657%2C664%2C1025%2C1118%2C1193%2C1206%2C1210%2C1260%2C1357%2C1389%"+
+	"2C1421%2C1875%2C1880%2C1903%2C1564%2C1932%2C1960%2C2354%2C2376%2C2398%2C2438%2C2477%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
 	"timeRange=00%3A00-23%3A59&"+
 	"period="+start+mid+end+"&"+
 	"granularity=Building&"+
-	"durationCategories=0-1440&"+
+	"durationCategories=5-1440&"+
 	"includeStationary=false&"+
 	"connectionState="+connection_state+"&"+
 	"type=deviceCount&_=1520953855762";
@@ -70,16 +72,14 @@ function beginDataRequest(){
 
   globalCurrentDataSetEntireSelection = response;
 	
-	
   generateSummaryfromEntireDateSelection();
-	
-	
-	
-	
-	
-	
-	
-   if (document.getElementById('all').checked){connection_state = "all";}
+}
+
+
+
+
+function requestHourlyDeviceCount(){
+	   if (document.getElementById('all').checked){connection_state = "all";}
    else if (document.getElementById('detected').checked){connection_state = "detected";}
    else{connection_state = "connected";}
     
@@ -94,7 +94,7 @@ function beginDataRequest(){
 	"areas=118%2C185%2C211%2C239%2C304%2C488%2C587%2C614%2C629%2C657%2C664%2C1025%2C1118%2C1193%2C1206%2C1210%2C1260%2C1357%2C1389%2C1421%2C1875%2C1880%2C1903%2C1564%2C1932%2C1960%2C2354%2C2376%2C2398%2C2438%2C2477%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
 	"timeRange=00%3A00-23%3A59&"+
 	"period="+start+mid+end+"&"+
-	"granularity=Hourly&durationCategories=0-1440&yAxis=absoluteVisits&includeStationary=false&"+
+	"granularity=Hourly&durationCategories=5-1440&yAxis=absoluteVisits&includeStationary=false&"+
 	"connectionState="+connection_state+"&"+
 	"type=deviceCount&_=1520953855762";
 	
@@ -161,9 +161,195 @@ function beginDataRequest(){
   }
 
   generatelinechart(overalldict);
-  
 }
 
+
+function requestDwellZones(){
+	
+	
+	var connection_state;
+   
+   if (document.getElementById('all').checked){connection_state = "all";}
+   else if (document.getElementById('detected').checked){connection_state = "detected";}
+   else{connection_state = "connected";}
+   
+   var start = startDate.value;
+   var end = endDate.value;
+   var mid = "";  
+   
+   if (start == "" || end == ""){ start = "to"; end = "day";}
+   else {mid = "%3B";}
+
+   
+   var cmxurl = "https://cmx.noc.umbc.edu/api/analytics/v1/dwellBreakdown?areas=118%2C185%2C211%2C239%2C304%2C488%2C"+
+   "587%2C614%2C629%2C657%2C664%2C1025%2C1118%2C1193%2C1206%2C1210%2C1260%2C1357%2C1389%2C1421%2C1875%2C1880%2C1903%2C"+
+   "1564%2C1932%2C1960%2C2354%2C2376%2C2398%2C2438%2C2477%2C2690%2C2713%2C2743%2C2814%2C2915%2C2920%2C66&"+
+   "granularity=hourly&"+
+   "yAxis=absoluteVisits&"+
+   "timeRange=00%3A00-23%3A59&"+
+   "period="+start+mid+end+"&"+
+   "durationCategories=5-480&"+
+   "includeStationary=false&"+
+   "connectionState="+connection_state+"&"+
+   "dwellLimits=0-5min%3A5%2C5-20min%3A20%2C20-60min%3A60%2C60-120min%3A120%2C%3E120min%3A-1&_=1549905094173";
+   
+	
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET",cmxurl, false);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send();
+  var response = JSON.parse(xhttp.responseText);
+  console.log("Dwell Time");
+  console.log(response);
+  
+
+	
+}
+/*
+function generateheatchart()
+{
+
+Highcharts.chart('heatmapcontainer', {
+
+    chart: {
+        type: 'heatmap',
+        marginTop: 40,
+        marginBottom: 80,
+        plotBorderWidth: 1
+    },
+
+
+    title: {
+        text: 'Device Count Per Day'
+    },
+
+    xAxis: {
+        categories: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', 
+        '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM' ]
+    },
+
+    yAxis: {
+        reversed: true,
+        categories: ['0-5 Mins', '5-20 Mins', '20-60 Mins', '60-120 Mins', '>120 Mins'],
+        title: null
+    },
+
+    colorAxis: {
+        min: 0,
+        minColor: '#FFFFFF',
+        maxColor: '#FCD602'
+    },
+
+    legend: {
+        align: 'right',
+        layout: 'vertical',
+        margin: 0,
+        verticalAlign: 'bottom',
+        y: 25,
+        symbolHeight: 280
+    },
+
+    tooltip: {
+        formatter: function () {
+            return '<b>' + this.point.value + ' clients reported on ' + this.series.yAxis.categories[this.point.y] +
+            ' at ' + this.series.xAxis.categories[this.point.x] + '</b>';
+        }
+    },
+
+    series: [{
+        name: 'Sales per employee',
+        borderWidth: 1,
+        data: [[0, 0, 10], [0, 1, 19],[0, 2, 8], [0, 3, 24], [0, 4, 67], [1, 0, 92], [1, 1, 58], [1, 2, 78],
+          [1, 3, 117], [1, 4, 48], [2, 0, 35], [2, 1, 15], [2, 2, 123], [2, 3, 64], [2, 4, 52],
+           [3, 0, 72], [3, 1, 132], [3, 2, 114], [3, 3, 19], [3, 4, 16], [4, 0, 38], [4, 1, 5], [4, 2, 8],
+            [4, 3, 117], [4, 4, 115], [5, 0, 88], [5, 1, 32], [5, 2, 12], [5, 3, 6], [5, 4, 120], [6, 0, 13],
+             [6, 1, 44], [6, 2, 88], [6, 3, 98], [6, 4, 96], [7, 0, 31], [7, 1, 1], [7, 2, 82], [7, 3, 32],
+              [7, 4, 30], [8, 0, 85], [8, 1, 97], [8, 2, 123], [8, 3, 64], [8, 4, 84], [9, 0, 47], [9, 1, 114], 
+              [9, 2, 31], [9, 3, 48], [9, 4, 91]],
+        dataLabels: {
+            enabled: true,
+            color: '#000000'
+        }
+    }]
+
+});
+
+}
+
+
+
+
+function generateheatchart2()
+{
+
+Highcharts.chart('heatmapcontainer2', {
+
+    chart: {
+        type: 'heatmap',
+        marginTop: 40,
+        marginBottom: 80,
+        plotBorderWidth: 1
+    },
+
+
+    title: {
+        text: 'Device Count Per Day'
+    },
+
+    xAxis: {
+        categories: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', 
+        '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM' ]
+    },
+
+    yAxis: {
+        reversed: true,
+        categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',"Saturday"," sunday"],
+        title: null
+    },
+
+    colorAxis: {
+        min: 0,
+        minColor: '#FFFFFF',
+        maxColor: '#FCD602'
+    },
+
+    legend: {
+        align: 'right',
+        layout: 'vertical',
+        margin: 0,
+        verticalAlign: 'bottom',
+        y: 25,
+        symbolHeight: 280
+    },
+
+    tooltip: {
+        formatter: function () {
+            return '<b>' + this.point.value + ' clients reported on ' + this.series.yAxis.categories[this.point.y] +
+            ' at ' + this.series.xAxis.categories[this.point.x] + '</b>';
+        }
+    },
+
+    series: [{
+        name: 'Sales per employee',
+        borderWidth: 1,
+        data: [[0, 0, 10], [0, 1, 19],
+         [0, 2, 8], [0, 3, 24], [0, 4, 67], [1, 0, 92], [1, 1, 58], [1, 2, 78],
+          [1, 3, 117], [1, 4, 48], [2, 0, 35], [2, 1, 15], [2, 2, 123], [2, 3, 64], [2, 4, 52],
+           [3, 0, 72], [3, 1, 132], [3, 2, 114], [3, 3, 19], [3, 4, 16], [4, 0, 38], [4, 1, 5], [4, 2, 8],
+            [4, 3, 117], [4, 4, 115], [5, 0, 88], [5, 1, 32], [5, 2, 12], [5, 3, 6], [5, 4, 120], [6, 0, 13],
+             [6, 1, 44], [6, 2, 88], [6, 3, 98], [6, 4, 96], [7, 0, 31], [7, 1, 1], [7, 2, 82], [7, 3, 32],
+              [7, 4, 30], [8, 0, 85], [8, 1, 97], [8, 2, 123], [8, 3, 64], [8, 4, 84], [9, 0, 47], [9, 1, 114], 
+              [9, 2, 31], [9, 3, 48], [9, 4, 91]],
+        dataLabels: {
+            enabled: true,
+            color: '#000000'
+        }
+    }]
+
+});
+
+}
+*/
 function generatelinechart(overalldict){
 	var keyarray = Object.keys(overalldict);
 

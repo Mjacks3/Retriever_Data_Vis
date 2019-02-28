@@ -2,6 +2,23 @@
 <nav class="w3-sidebar w3-collapse w3-amber w3-animate-left" style="z-index:1 ;width:300px;  overflow: visible; " id="mySidebar"><br>
 <div class="w3-container w3-row" >
 
+<!--------------------------- Report Type -->
+	
+<h3> Report Type <div class="tooltip"></h3>
+
+<form>
+<input type="radio" name="reporting" value="1" id="count" checked="checked">Device Count<br>
+<input type="radio" name="reporting" value="2" id="corr">Device Correlation<br>
+<script>
+document.getElementById("corr").addEventListener("change", function()
+{
+
+});
+</script>
+</form>
+<br>
+
+
 <!--------------------------- Date Selector -->
 <div class="w3-bar-block">
 <h3> Date Selector <div class="tooltip"><i class="fa fa-info-circle "></i>
@@ -22,7 +39,6 @@
  <input type="date" id="endDate" ></div>
 </p>
 
-<br>
 <br>
 
 <!---------------------------  Connection State -->
@@ -49,8 +65,7 @@
 <br>
 
 </nav>
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large w3-animate-opacity"  style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
+<!-- Overlay effect when opening sidebar on small screens 
+<div class="w3-overlay w3-hide-large w3-animate-opacity"  style="cursor:pointer" title="close side menu" id="myOverlay"></div>-->
 
 
