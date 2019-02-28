@@ -1,18 +1,47 @@
- var globalZoneDict;  
+var globalZoneDict;  
 var orderedAreas;
-var globalCurrentZoneDataSet;
-var globalCurrentZoneDataSetEntireSelection;
+
+var hourlyZoneDataCounts;
+var cumulativeZoneDataCounts;
 
 
-function initBuildingReportGeneration(building)
+function initBuildingReportGeneration(building,report_type=1)
 {
 	setTimeout(function()
     {
 	currentPage = building;
+	document.getElementById("corr").disabled = false;
+
+
 	
 	
-	generateBuildingZones(building);
-	beginZoneDataRequest();
+	if (document.getElementById('count').checked)
+	{
+		
+		generateBuildingZones(building);
+		requestCumulativeZoneDeviceCount();
+		requestHourlyZoneDeviceCount();
+		
+		document.getElementById("linecontainer").style.display = "initial";
+		document.getElementById("barcontainer").style.display = "initial";
+		document.getElementById("piecontainer").style.display = "initial";
+		document.getElementById("pathcontainer").style.display = "none";
+		document.getElementById("corrcontainer").style.display = "none";
+		
+		
+	}
+	
+	else{
+		requestDevicePaths();
+		document.getElementById("linecontainer").style.display = "none";
+		document.getElementById("barcontainer").style.display  = "none";
+		document.getElementById("piecontainer").style.display  = "none";
+		document.getElementById("pathcontainer").style.display = "block";
+		document.getElementById("corrcontainer").style.display = "block";
+	}
+	
+	
+	
 	
 
 	showPage();}, 250)
@@ -35,6 +64,9 @@ function generateBuildingZones(building)
 	var zone_registers = []
 	 
 	orderedAreas = "";
+	
+	var ix = 0;
+	
     for (ix = 0; ix < response["userLevels"][3]["children"].length ;ix++)
     {      
 		if (response["userLevels"][3]["children"][ix]["ancestors"][1] == building)
@@ -45,11 +77,21 @@ function generateBuildingZones(building)
         else {orderedAreas += "%2C"+ String(response["userLevels"][3]["children"][ix]["id"]) ;}
 		}
     }
-		console.log(globalZoneDict);
+	
+	for (ix = 0; ix < response["userLevels"][1]["children"].length ;ix++)
+    {      
+		if (response["userLevels"][1]["children"][ix]["name"] == building)
+		{		
+			currentBuildingId = response["userLevels"][1]["children"][ix]["id"];
+		}
+    }
+	
+	
 }         
 
-
-function beginZoneDataRequest(){
+function requestCumulativeZoneDeviceCount(){	
+	
+	
 	var connection_state;
 
    if (document.getElementById('all').checked){connection_state = "all";}
@@ -67,7 +109,7 @@ function beginZoneDataRequest(){
 	"areas="+orderedAreas+"&"+
 	"timeRange=00%3A00-23%3A59&"+
 	"period="+start+mid+end+"&"+
-	"granularity=Zone&durationCategories=0-1440&includeStationary=false&"+
+	"granularity=Zone&durationCategories=5-1440&includeStationary=false&"+
 	"connectionState="+connection_state+"&"+
 	"type=deviceCount&_=1520953855762";
 	
@@ -77,13 +119,16 @@ function beginZoneDataRequest(){
   xhttp.setRequestHeader("Content-type", "application/json");
   xhttp.send();
   var response = JSON.parse(xhttp.responseText);
-  globalCurrentZoneDataSetEntireSelection = response;
+  cumulativeZoneDataCounts = response;
 	
   generateZoneSummaryfromEntireDateSelection();
 	
+}
+
+
+function requestHourlyZoneDeviceCount(){
 	
-	
-   if (document.getElementById('all').checked){connection_state = "all";}
+    if (document.getElementById('all').checked){connection_state = "all";}
    else if (document.getElementById('detected').checked){connection_state = "detected";}
    else{connection_state = "connected";}
    
@@ -98,7 +143,8 @@ function beginZoneDataRequest(){
 	"areas="+orderedAreas+"&"+
 	"timeRange=00%3A00-23%3A59&"+
 	"period="+start+mid+end+"&"+
-	"granularity=Hourly&durationCategories=0-1440&includeStationary=false&"+
+	"granularity=Hourly&"+
+	"durationCategories=0-1440&includeStationary=false&"+
 	"connectionState="+connection_state+"&"+
 	"type=deviceCount&_=1520953855762";
 
@@ -108,8 +154,8 @@ function beginZoneDataRequest(){
   xhttp.send();
   var response = JSON.parse(xhttp.responseText);
   
-  globalCurrentZoneDataSet = response; //Hold on to the data from the request for further analysis
-  
+  hourlyZoneDataCounts = response; //Hold on to the data from the request for further analysis
+	
   var today = new Date();
   var dd = today.getDate();
   var mm = today.getMonth()+1; //January is 0!
@@ -165,6 +211,8 @@ function beginZoneDataRequest(){
 }
 
 
+
+
 function generateZoneLineChart(overalldict){
 	var keyarray = Object.keys(overalldict);
 
@@ -195,16 +243,16 @@ function generateZoneSummaryFromPoint(seriesindex, hourindex) {
 	var totalCount = 0;
 	
 	var ix;
-	for (ix = 0; ix  < globalCurrentZoneDataSet["results"].length; ix ++){
+	for (ix = 0; ix  < hourlyZoneDataCounts["results"].length; ix ++){
 		
 		//Reset the previous Value
-		globalZoneDict[globalCurrentZoneDataSet["results"][ix]["area"]][1] = 0;
+		globalZoneDict[hourlyZoneDataCounts["results"][ix]["area"]][1] = 0;
 		
 		//Set our New Value
-	    globalZoneDict[globalCurrentZoneDataSet["results"][ix]["area"]][1] =
-		globalCurrentZoneDataSet["results"][ix]["data"][ 24*seriesindex + hourindex]["value"]
+	    globalZoneDict[hourlyZoneDataCounts["results"][ix]["area"]][1] =
+		hourlyZoneDataCounts["results"][ix]["data"][ 24*seriesindex + hourindex]["value"]
 		
-		totalCount += globalCurrentZoneDataSet["results"][ix]["data"][ 24*seriesindex + hourindex]["value"];
+		totalCount += hourlyZoneDataCounts["results"][ix]["data"][ 24*seriesindex + hourindex]["value"];
 
 	}
 	
@@ -350,7 +398,7 @@ for (i = 0; i < dataLen; i += 1) {
 Highcharts.chart('piecontainer', {
     chart: {type: 'pie'},
     title: {text: 'Device Count Percentage Pie Chart for  ' + currentPage},
-    subtitle: {text: '`'},
+    subtitle: {text: 'Outer ring represents percentages of zones in each floor'},
     yAxis: {title: {text: 'Total percent Detected Devices'}},
     plotOptions: { pie: {shadow: true, center: ['50%', '50%']}},
     tooltip: {valueSuffix: '%'},
@@ -386,16 +434,16 @@ function generateZoneSummaryfromEntireDateSelection() {
 
 	
 	var ix;
-	for (ix = 0; ix  < globalCurrentZoneDataSetEntireSelection["results"].length; ix ++){
+	for (ix = 0; ix  < cumulativeZoneDataCounts["results"].length; ix ++){
 		
 		//Reset the previous Value
-		globalZoneDict[globalCurrentZoneDataSetEntireSelection["results"][ix]["area"]][1] = 0;
+		globalZoneDict[cumulativeZoneDataCounts["results"][ix]["area"]][1] = 0;
 		
 		//Set our New Value
-	    globalZoneDict[globalCurrentZoneDataSetEntireSelection["results"][ix]["area"]][1] =
-		globalCurrentZoneDataSetEntireSelection["results"][ix]["data"][0]["value"]
+	    globalZoneDict[cumulativeZoneDataCounts["results"][ix]["area"]][1] =
+		cumulativeZoneDataCounts["results"][ix]["data"][0]["value"]
 		
-		totalCount += globalCurrentZoneDataSetEntireSelection["results"][ix]["data"][0]["value"];
+		totalCount += cumulativeZoneDataCounts["results"][ix]["data"][0]["value"];
 
 	}
 	
@@ -408,5 +456,182 @@ function generateZoneSummaryfromEntireDateSelection() {
 
 
 
+
+function requestDevicePaths(){
+	//Add optional parameters
+	var connection_state;
+
+   if (document.getElementById('all').checked){connection_state = "all";}
+   else if (document.getElementById('detected').checked){connection_state = "detected";}
+   else{connection_state = "connected";}
+   
+   var start = startDate.value;
+   var end = endDate.value;
+   var mid = "";  
+   
+   if (start == "" || end == ""){ start = "to"; end = "day";}
+   else {mid = "%3B";}
+	console.log("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEHE");
+	var cmxurl = "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCrossover?"+
+	"timeRange=00%3A00-23%3A59&"+
+	"period="+start+mid+end+"&"+
+	"allAreas=118%2C185%2C304%2C587%2C629%2C664%2C1118%2C1193%2C1260%2C1357%2C1421%2C1564%2C1932%2C2376%2C2398%2C2477%2C2743%2C66&"+
+	"granularity=Building&"+
+	"targetAreas="+ currentBuildingId +"&"+
+	"durationCategories=0-1440&"+
+	"entirePeriod=false&"+
+	"yAxis=absoluteVisits&"+  
+	"_=1550786923820";
+	
+	console.log(cmxurl);
+	
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET",cmxurl, false);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send();
+  console.log("response");
+  var response = JSON.parse(xhttp.responseText)
+  console.log(response);
+
+  generateDevicePaths(response);
+}
+
+function generateDevicePaths(devicePathData){
+
+	crossData = [{keys: ['from', 'to', 'weight'],data: [],
+	colors:['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE','#DB843D',
+	'#92A8CD', '#A47D7C', '#B5CA92','#307404','#e5ca9f','#2f26ad','#4d2018',
+	'#cb5776','#a86fa8','#535b9e','#6f3fe4','#3ac6e6'],
+	type: 'sankey',name: 'Sankey demo series'}];
+	
+	corPieData = [{
+    'id': '0.0',
+    'parent': '',
+    'name': 'All Buildings'},
+	{'id': '0.1',
+    'parent': '0.0',
+    'name': 'Academic Buildings'},
+	{'id': '0.2',
+    'parent': '0.0',
+    'name': 'Support Buildings'},
+];
+
+	for (ix = 0; ix  < devicePathData["results"].length; ix ++){
+		
+		crossData[0]['data'].push(
+		[devicePathData["results"][ix]["area"] +" (Starting)" , currentPage, 
+		 devicePathData["results"][ix]["crossoverFromAreaIntoTarget"]]);
+		 
+		crossData[0]['data'].push(
+		[currentPage, devicePathData["results"][ix]["area"] + " (Destination)",
+		 devicePathData["results"][ix]["crossoverFromTargetIntoArea"]]);
+
+
+		if (academic_buildings.includes(devicePathData["results"][ix]["area"]))
+		{
+		corPieData.push({
+		'id': (.3+ (.1*ix)).toString(),
+		'parent': '0.1',
+		'name': devicePathData["results"][ix]["area"],
+		'value':devicePathData["results"][ix]["crossover"] });
+		}
+		
+		else
+		{
+		corPieData.push({
+		'id': (.3+ (.1*ix)).toString(),
+		'parent': '0.2',
+		'name': devicePathData["results"][ix]["area"],
+		'value':devicePathData["results"][ix]["crossover"] });
+		}
+		 
+
+		
+		
+		
+	}
+	console.log(corPieData);
+	
+	Highcharts.chart('pathcontainer', {
+	title: {text: 'Device Path Data for ' + currentPage},
+	subtitle: { text: 'This chart displays the number of devices travelling between paths centered around ' + currentPage},
+    series: crossData,
+    plotOptions: {
+        series: {
+            colorByPoint: true
+        }
+    },
+});
+
+
+// Splice in transparent for the center circle
+Highcharts.getOptions().colors.splice(0, 0, 'transparent');
+
+
+Highcharts.chart('corrcontainer', {
+
+
+    title: {
+        text: 'Device Correlation data for '  + currentPage
+    },
+    subtitle: {
+        text:  'This chart displays the union of device path data between each building and '+ currentPage 
+    },
+    series: [{
+        type: "sunburst",
+        data: corPieData,
+        allowDrillToNode: true,
+        cursor: 'pointer',
+        dataLabels: {
+            format: '{point.name}',
+            filter: {
+                property: 'innerArcLength',
+                operator: '>',
+                value: 16
+            }
+        },
+        levels: [{
+            level: 1,
+            levelIsConstant: false,
+            dataLabels: {
+                filter: {
+                    property: 'outerArcLength',
+                    operator: '>',
+                    value: 64
+                }
+            }
+        }, {
+            level: 2,
+            colorByPoint: true
+        },
+        {
+            level: 3,
+            colorVariation: {
+                key: 'brightness',
+                to: -0.5
+            }
+        }, {
+            level: 4,
+            colorVariation: {
+                key: 'brightness',
+                to: 0.5
+            }
+        }]
+
+    }],
+	
+    tooltip: {
+		
+        headerFormat: "<b>{point.name}</b>",
+        pointFormat: '<b>{point.value}</b> device paths bewtween <b>{point.name}</b> and ' +currentPage + ' (& vice vera)'
+    }
+});
+
+
+	
+	console.log("FInished");
+}
+  
+  
 
 

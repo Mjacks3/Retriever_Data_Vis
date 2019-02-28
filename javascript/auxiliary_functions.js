@@ -1,4 +1,5 @@
- var currentPage;
+var currentPage;
+var currentBuildingId;
 var currentrequest = "";
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //Functions for popping the sidebar/hiding sidebar  on smaller
@@ -10,12 +11,12 @@ function w3_open()
     if (document.getElementById("mySidebar").style.display === 'block')
     {
         document.getElementById("mySidebar").style.display = 'none';
-        document.getElementById("myOverlay").style.display = "none";
+        //document.getElementById("myOverlay").style.display = "none";
     } 
     else
     {
        document.getElementById("mySidebar").style.display = 'block';
-       document.getElementById("myOverlay").style.display = "block";
+      // document.getElementById("myOverlay").style.display = "block";
     }
 }
 
@@ -23,10 +24,10 @@ function w3_open()
 function w3_close()
 {
     document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("myOverlay").style.display = "none";
+    //document.getElementById("myOverlay").style.display = "none";
 }
 
-
+ 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //Functions for displaying loading bar/ hiding content and vise versa
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -55,7 +56,9 @@ function processGenerateReportButton()
 	console.log(currentPage);
 	
 	if (currentPage == "Campus"){initCampusReportGeneration();}
-	else{ initBuildingReportGeneration(currentPage);}
+	else{ 
+	initBuildingReportGeneration(currentPage)
+	;}
 	
 }
 
