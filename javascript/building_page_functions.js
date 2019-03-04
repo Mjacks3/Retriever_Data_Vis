@@ -22,9 +22,9 @@ function initBuildingReportGeneration(building,report_type=1)
 		requestCumulativeZoneDeviceCount();
 		requestHourlyZoneDeviceCount();
 		
-		document.getElementById("linecontainer").style.display = "initial";
-		document.getElementById("barcontainer").style.display = "initial";
-		document.getElementById("piecontainer").style.display = "initial";
+		document.getElementById("linecontainer").style.display = "block";
+		document.getElementById("barcontainer").style.display = "block";
+		document.getElementById("piecontainer").style.display = "block";
 		document.getElementById("pathcontainer").style.display = "none";
 		document.getElementById("corrcontainer").style.display = "none";
 		
@@ -235,7 +235,11 @@ function generateZoneLineChart(overalldict){
 							}}}}
   
   
-  },series: seriesarray});}
+  },
+  	colors:['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE','#DB843D',
+	'#92A8CD', '#A47D7C', '#B5CA92','#307404','#e5ca9f','#2f26ad','#4d2018',
+	'#cb5776','#a86fa8','#535b9e','#6f3fe4','#3ac6e6'],
+  series: seriesarray});}
 
 
 function generateZoneSummaryFromPoint(seriesindex, hourindex) {
@@ -309,12 +313,14 @@ Highcharts.chart('barcontainer', {
     xAxis: {type: 'category'},
     yAxis: {title: {text: 'Number of Devices Detected'}},
     legend: { enabled: false },
-    plotOptions: { series: { borderWidth: 0,dataLabels: { enabled: true, format: '{point.y:.1f}'}}},
+    plotOptions: { 	 series: { borderWidth: 0,dataLabels: { enabled: true, format: '{point.y:.1f}'}}},
     tooltip: {
         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
         pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> Detected Devices<br/>'
             },
-
+		colors:['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE','#DB843D',
+	'#92A8CD', '#A47D7C', '#B5CA92','#307404','#e5ca9f','#2f26ad','#4d2018',
+	'#cb5776','#a86fa8','#535b9e','#6f3fe4','#3ac6e6'],
     "series": [{ "name": currentPage, "colorByPoint": true,"data": overview}],
     "drilldown": { "series": zoneDrilldownSeries }
 });
@@ -360,9 +366,12 @@ for (ix = 0 ;  ix < Array.from(floors).length ; ix++)
 	})
 }
 	
-var colors = Highcharts.getOptions().colors,
+var colors = ['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE','#DB843D',
+	'#92A8CD', '#A47D7C', '#B5CA92','#307404','#e5ca9f','#2f26ad','#4d2018',
+	'#cb5776','#a86fa8','#535b9e','#6f3fe4','#3ac6e6'],
+
     categories = Array.from(floors),
-    data = pie_data_array ,
+    data = pie_data_array,
     browserData = [],
     versionsData = [],
     i,
@@ -373,13 +382,14 @@ var colors = Highcharts.getOptions().colors,
 
 
 // Build the data arrays
-for (i = 0; i < dataLen; i += 1) {
+
+	for (i = 0; i < dataLen; i += 1) {
 
     // add browser data
     browserData.push({
         name: categories[i],
         y: data[i].y,
-        color: data[i].color
+        color: colors[i]
     });
 
     // add version data
@@ -389,27 +399,38 @@ for (i = 0; i < dataLen; i += 1) {
         versionsData.push({
             name: data[i].drilldown.categories[j],
             y: data[i].drilldown.data[j],
-            color: Highcharts.Color(data[i].color).brighten(brightness).get()
+            color: colors[i]
         });
     }
 }
 
+
 // Create the chart
 Highcharts.chart('piecontainer', {
+	
     chart: {type: 'pie'},
     title: {text: 'Device Count Percentage Pie Chart for  ' + currentPage},
     subtitle: {text: 'Outer ring represents percentages of zones in each floor'},
     yAxis: {title: {text: 'Total percent Detected Devices'}},
-    plotOptions: { pie: {shadow: true, center: ['50%', '50%']}},
+    plotOptions: { 
+	pie:
+	{
+
+		shadow: true,
+	center: ['50%', '50%']
+	
+	}},
+	
     tooltip: {valueSuffix: '%'},
-    series: [{name: currentPage,data: browserData,size: '60%',
+    series: [{name: currentPage,data: browserData, size: '60%',
         dataLabels: 
         {formatter: function () {return this.y > 5 ? this.point.name : null;},
         color: '#ffffff',distance: -30}}, 
             {
         name: 'Zones',
         data: versionsData,
-        size: '80%',
+
+        size: '100%',
         innerSize: '60%',
         dataLabels: {
          formatter: function () {
@@ -417,7 +438,7 @@ Highcharts.chart('piecontainer', {
                 return this.y > 1 ? '<b>' + this.point.name + ':</b> ' +
                     this.y + '%' : null; }},
         id: 'versions'}],
-    responsive: {rules: [{condition: {maxWidth: 400},chartOptions: {series: [{
+    responsive: {rules: [{condition: {},chartOptions: {series: [{
                     id: 'versions',dataLabels: { enabled: true} }]}}]}
 });
 
@@ -471,7 +492,7 @@ function requestDevicePaths(){
    
    if (start == "" || end == ""){ start = "to"; end = "day";}
    else {mid = "%3B";}
-	console.log("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEHE");
+
 	var cmxurl = "https://cmx.noc.umbc.edu/api/analytics/v1/deviceCrossover?"+
 	"timeRange=00%3A00-23%3A59&"+
 	"period="+start+mid+end+"&"+
@@ -577,6 +598,9 @@ Highcharts.chart('corrcontainer', {
     subtitle: {
         text:  'This chart displays the union of device path data between each building and '+ currentPage 
     },
+	colors:['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE','#DB843D',
+	'#92A8CD', '#A47D7C', '#B5CA92','#307404','#e5ca9f','#2f26ad','#4d2018',
+	'#cb5776','#a86fa8','#535b9e','#6f3fe4','#3ac6e6'],
     series: [{
         type: "sunburst",
         data: corPieData,
@@ -592,12 +616,12 @@ Highcharts.chart('corrcontainer', {
         },
         levels: [{
             level: 1,
-            levelIsConstant: false,
+            levelIsConstant: true,
             dataLabels: {
                 filter: {
                     property: 'outerArcLength',
                     operator: '>',
-                    value: 64
+                    value: 100
                 }
             }
         }, {
@@ -627,9 +651,6 @@ Highcharts.chart('corrcontainer', {
     }
 });
 
-
-	
-	console.log("FInished");
 }
   
   
