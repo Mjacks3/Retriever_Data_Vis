@@ -205,6 +205,8 @@ function requestDwellZones(){
 
 	
 }
+
+
 /*
 function generateheatchart()
 {
@@ -350,6 +352,7 @@ Highcharts.chart('heatmapcontainer2', {
 
 }
 */
+
 function generatelinechart(overalldict){
 	var keyarray = Object.keys(overalldict);
 
@@ -365,7 +368,9 @@ function generatelinechart(overalldict){
   subtitle: {text: 'Click a point to see a breakdown of device counts for that hour.'},
   xAxis: {categories: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM','1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM']},
   yAxis: {title: {text: 'Device Count'}},
-  
+  	colors:['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE','#DB843D',
+	'#92A8CD', '#A47D7C', '#B5CA92','#307404','#e5ca9f','#2f26ad','#4d2018',
+	'#cb5776','#a86fa8','#535b9e','#6f3fe4','#3ac6e6'],
   plotOptions:
   {line: {dataLabels:
   {enabled: true},
@@ -375,8 +380,7 @@ function generatelinechart(overalldict){
 							{
 								generateSummaryfromPoint(this.series.index, this.index);
 							}}}}
-  
-  
+ 
   },series: seriesarray});
 
   }    
@@ -537,7 +541,9 @@ function generateCharts(dictonaryCounts)
   yAxis: {title: {text: 'Total Number of Devices'}},
   legend: {enabled: false},
   plotOptions: {series: {borderWidth: 0, dataLabels: {enabled: true, format: '{point.y:.1f}'}}},
-
+	colors:['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE','#DB843D',
+	'#92A8CD', '#A47D7C', '#B5CA92','#307404','#e5ca9f','#2f26ad','#4d2018',
+	'#cb5776','#a86fa8','#535b9e','#6f3fe4','#3ac6e6'],
   tooltip: {headerFormat: '<span style="font-size:11px">{series.name}</span><br>', 
   pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> Devices<br/>'},
 
@@ -567,7 +573,10 @@ var resareaper = Math.round(total_residential_count/document.getElementById("das
 var acdareaper = Math.round(total_academic_count/document.getElementById("dashtotal").innerHTML *10000)/100;          
 var supareaper = Math.round(total_support_count/document.getElementById("dashtotal").innerHTML *10000)/100;
 
-var colors = Highcharts.getOptions().colors,
+var colors = ['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE','#DB843D',
+	'#92A8CD', '#A47D7C', '#B5CA92','#307404','#e5ca9f','#2f26ad','#4d2018',
+	'#cb5776','#a86fa8','#535b9e','#6f3fe4','#3ac6e6'],
+	
   categories = ["Residential <br /> Buildings","Academic <br /> Buildings","Support <br /> Facilities"],
   data = [{
       "y": resareaper,"color": colors[0],"drilldown": {"name": "Residential Buildings",
@@ -601,7 +610,7 @@ var colors = Highcharts.getOptions().colors,
 for (i = 0; i < dataLen; i += 1) 
 {
   // add browser data
-  browserData.push({name: categories[i],y: data[i].y,color: data[i].color});
+  browserData.push({name: categories[i],y: data[i].y,color: colors[i]});
 
   // add version data
   drillDataLen = data[i].drilldown.data.length;
@@ -611,7 +620,7 @@ for (i = 0; i < dataLen; i += 1)
     versionsData.push({
 	name: data[i].drilldown.categories[j],
 	y: data[i].drilldown.data[j],
-	color: Highcharts.Color(data[i].color).brighten(brightness).get()
+	color: colors[i]
     });
   }
 }
