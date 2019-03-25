@@ -11,13 +11,14 @@ function initBuildingReportGeneration(building,report_type=1)
     {
 	currentPage = building;
 	document.getElementById("corr").disabled = false;
+	//document.getElementById("corr").style.display = "inline";
 
 
 	
 	
 	if (document.getElementById('count').checked)
 	{
-		
+		 
 		generateBuildingZones(building);
 		requestCumulativeZoneDeviceCount();
 		requestHourlyZoneDeviceCount();
@@ -228,6 +229,8 @@ function generateZoneLineChart(overalldict){
   subtitle: {text: 'Click a point to see a breakdown of device counts for that hour.'},
   xAxis: {categories: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM','1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM']},
   yAxis: {title: {text: 'Device Count'}},
+  drilldown: {activeAxisLabelStyle: { textDecoration: 'none', fontStyle: 'italic'},
+              activeDataLabelStyle: { textDecoration: 'none',fontStyle: 'italic'}},
   plotOptions: {line: {dataLabels: {enabled: true},enableMouseTracking: true},
   series:{allowPointSelect: true, point: {events:{ click: function() 
 							{
@@ -313,6 +316,8 @@ Highcharts.chart('barcontainer', {
     xAxis: {type: 'category'},
     yAxis: {title: {text: 'Number of Devices Detected'}},
     legend: { enabled: false },
+	drilldown: {activeAxisLabelStyle: { textDecoration: 'none', fontStyle: 'italic'},
+              activeDataLabelStyle: { textDecoration: 'none',fontStyle: 'italic'}},
     plotOptions: { 	 series: { borderWidth: 0,dataLabels: { enabled: true, format: '{point.y:.1f}'}}},
     tooltip: {
         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
@@ -412,6 +417,8 @@ Highcharts.chart('piecontainer', {
     title: {text: 'Device Count Percentage Pie Chart for  ' + currentPage},
     subtitle: {text: 'Outer ring represents percentages of zones in each floor'},
     yAxis: {title: {text: 'Total percent Detected Devices'}},
+	drilldown: {activeAxisLabelStyle: { textDecoration: 'none', fontStyle: 'italic'},
+              activeDataLabelStyle: { textDecoration: 'none',fontStyle: 'italic'}},
     plotOptions: { 
 	pie:
 	{
@@ -575,6 +582,8 @@ function generateDevicePaths(devicePathData){
 	
 	Highcharts.chart('pathcontainer', {
 	title: {text: 'Device Path Data for ' + currentPage},
+	drilldown: {activeAxisLabelStyle: { textDecoration: 'none', fontStyle: 'italic'},
+              activeDataLabelStyle: { textDecoration: 'none',fontStyle: 'italic'}},
 	subtitle: { text: 'This chart displays the number of devices travelling between paths centered around ' + currentPage},
     series: crossData,
     plotOptions: {
@@ -601,6 +610,8 @@ Highcharts.chart('corrcontainer', {
 	colors:['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE','#DB843D',
 	'#92A8CD', '#A47D7C', '#B5CA92','#307404','#e5ca9f','#2f26ad','#4d2018',
 	'#cb5776','#a86fa8','#535b9e','#6f3fe4','#3ac6e6'],
+	 drilldown: {activeAxisLabelStyle: { textDecoration: 'none', fontStyle: 'italic'},
+              activeDataLabelStyle: { textDecoration: 'none',fontStyle: 'italic'}},
     series: [{
         type: "sunburst",
         data: corPieData,
