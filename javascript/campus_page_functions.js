@@ -26,6 +26,7 @@ function initCampusReportGeneration()
 		
 	currentPage = "Campus";
 	document.getElementById("corr").disabled = true;
+	//document.getElementById("corr").style.display = "none";
 	
 	requestCumulativeDeviceCount();
 	requestHourlyDeviceCount();
@@ -371,17 +372,22 @@ function generatelinechart(overalldict){
   	colors:['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE','#DB843D',
 	'#92A8CD', '#A47D7C', '#B5CA92','#307404','#e5ca9f','#2f26ad','#4d2018',
 	'#cb5776','#a86fa8','#535b9e','#6f3fe4','#3ac6e6'],
+
+  drilldown: {activeAxisLabelStyle: { textDecoration: 'none', fontStyle: 'italic'},
+              activeDataLabelStyle: { textDecoration: 'none',fontStyle: 'italic'}},
   plotOptions:
-  {line: {dataLabels:
-  {enabled: true},
+  {line: {dataLabels:{enabled: true,defer:false},
   enableMouseTracking: true},
-  series:{allowPointSelect: true, 
+  series:{allowPointSelect: true,
   point: {events:{ click: function() 
 							{
 								generateSummaryfromPoint(this.series.index, this.index);
 							}}}}
  
-  },series: seriesarray});
+  },
+  series:seriesarray
+  
+  });
 
   }    
   
@@ -540,24 +546,25 @@ function generateCharts(dictonaryCounts)
   xAxis: {type: 'category'},
   yAxis: {title: {text: 'Total Number of Devices'}},
   legend: {enabled: false},
-  plotOptions: {series: {borderWidth: 0, dataLabels: {enabled: true, format: '{point.y:.1f}'}}},
+  drilldown: {activeAxisLabelStyle: { textDecoration: 'none', fontStyle: 'italic'},
+              activeDataLabelStyle: { textDecoration: 'none',fontStyle: 'italic'}},
+  plotOptions: {series: {borderWidth: 0, dataLabels: {enabled: false, format: '{point.y:.1f}'}}},
 	colors:['#4572A7', '#AA4643', '#89A54E', '#80699B', '#3D96AE','#DB843D',
 	'#92A8CD', '#A47D7C', '#B5CA92','#307404','#e5ca9f','#2f26ad','#4d2018',
 	'#cb5776','#a86fa8','#535b9e','#6f3fe4','#3ac6e6'],
   tooltip: {headerFormat: '<span style="font-size:11px">{series.name}</span><br>', 
   pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> Devices<br/>'},
-
-  "series": [{
-      "name": "UMBC Campus", "colorByPoint": true, "data":
-	  [ {"name": "Residential Buildings","y": total_residential_count,"drilldown": "Residential Buildings"},
-        {"name": "Academic Buildings", "y": total_academic_count,"drilldown": "Academic Buildings"},
-        {"name": "Support Facilities", "y": total_support_count, "drilldown": "Support Facilities"}]
+  series: [{
+      name: "UMBC Campus", colorByPoint: true, data:
+	  [ {name: "Residential Buildings",y: total_residential_count,drilldown: "Residential Buildings"},
+        {name: "Academic Buildings", y: total_academic_count,drilldown: "Academic Buildings"},
+        {name: "Support Facilities", y: total_support_count, drilldown: "Support Facilities"}]
     }],
-  "drilldown": {
-    "series": [
-      {"name": "Residential Buildings","id": "Residential Buildings","data": residential_drilldown},
-      {"name": "Academic Buildings","id": "Academic Buildings","data": academic_drilldown},
-      {"name": "Support Facilities","id": "Support Facilities","data": support_drilldown}]
+  drilldown: {
+    series: [
+      {name: "Residential Buildings",id: "Residential Buildings",data: residential_drilldown},
+      {name: "Academic Buildings",id: "Academic Buildings",data: academic_drilldown},
+      {name: "Support Facilities",id: "Support Facilities",data: support_drilldown}]
   }});
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -637,17 +644,19 @@ Highcharts.chart('piecontainer', {chart: {type: 'pie'},title:
   yAxis: {title: {text: 'Total percent building/area share'}},
   plotOptions: { pie: {shadow: false,center: ['50%', '50%']}},
   tooltip: {valueSuffix: '%'},
+    drilldown: {activeAxisLabelStyle: { textDecoration: 'none', fontStyle: 'italic'},
+              activeDataLabelStyle: { textDecoration: 'none',fontStyle: 'italic'}},
   series: [
   {name: 'Areas',
   data: browserData,
   size: '60%', 
-  dataLabels: {formatter: function () {return this.y > 5 ? this.point.name : null;},color: '#ffffff',distance: -30}}, 
+  dataLabels: {formatter: function () {return this.y > 5 ? this.point.name : null;},color: '#ffffff',defer:true,distance: -30}}, 
   {
     name: 'Buildings',data: versionsData,size: '80%',innerSize: '60%',
     dataLabels: {formatter: function () {return this.y > 1 ? '<b>' + this.point.name + ':</b> ' +this.y + '%' : null; }},
 	id: 'versions'}],
 		  
-  responsive: {rules: [{condition: {maxWidth: 400},chartOptions: {series: [{id: 'versions',dataLabels: {enabled: false}}]}}]}
+  responsive: {rules: [{condition: {maxWidth: 40},chartOptions: {series: [{id: 'versions',dataLabels: {enabled: true}}]}}]}
   });
   
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
