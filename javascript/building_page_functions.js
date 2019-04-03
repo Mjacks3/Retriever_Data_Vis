@@ -77,6 +77,13 @@ function generateBuildingZones(building)
          if (orderedAreas == ""){orderedAreas += String(response["userLevels"][3]["children"][ix]["id"]);}
         else {orderedAreas += "%2C"+ String(response["userLevels"][3]["children"][ix]["id"]) ;}
 		}
+		
+			//Implemplemented these
+			
+     zone_registers.push(response["userLevels"][3]["children"][ix]["ancestors"][0]+"/"+
+            response["userLevels"][3]["children"][ix]["ancestors"][1]+"/"+
+            response["userLevels"][3]["children"][ix]["ancestors"][2]+"/"+
+            response["userLevels"][3]["children"][ix]["name"]); 
     }
 	
 	for (ix = 0; ix < response["userLevels"][1]["children"].length ;ix++)
@@ -86,7 +93,7 @@ function generateBuildingZones(building)
 			currentBuildingId = response["userLevels"][1]["children"][ix]["id"];
 		}
     }
-	
+	console.log(zone_registers);
 	
 }         
 
