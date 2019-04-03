@@ -12,12 +12,12 @@
 <script src="https://code.highcharts.com/highcharts-more.js"></script>
 <script src="https://code.highcharts.com/modules/sunburst.js"></script>
 
+
 <!-- Common HTML Elements -->
 <script language="javascript" type="text/javascript">
 $(function(){
 $("#head").load("templates/head.html");
 $("#navbar").load("templates/navbar.html");
-$("#sidebar").load("templates/sidebar.html");
 $("#building_list").load("templates/building_list.html");
 });
 </script>
@@ -27,27 +27,18 @@ $("#building_list").load("templates/building_list.html");
 <body class="w3-white">
    
 <div id="navbar"></div>
-<div id="sidebar"></div>
+
+<!--------------------------- Sidebar/menu  ---------------------------------->
+<nav class="w3-sidebar w3-collapse w3-amber w3-animate-left" style="z-index:1 ;width:300px;  overflow: visible; " id="mySidebar"><br>
+<div class="w3-container w3-row" >
+
+<br><h4><b> This sidebar intentionally left blank </b></h4>
+</nav>
 
 <div id="loader"style="display: none" ><img src="Pictures/Loading_icon.gif" style="width:21%"></div>
-<div id="myDiv" class="w3-main" style="z-index:-3;margin-left:300px ;margin-top:20px;display: none">
-
-
-
-<!--Instead of device count per day, use device dwell per hour , with legend as buttons for phasing out zones
-possibly double legen with sub buttons for each building.
-Finally use a button for avergage mode vs total mode -->
-<!--Banner--
-<div class="w3-container w3-signal-black" 
-style=" background-position: center; background-size: 100%; background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(Pictures/header/Campus_header.jpg)":><br>
-<i class="w3-left fa fa-paw w3-xxlarge"></i> <i class="w3-right fa fa-paw w3-xxlarge "></i>  <font size="4.75" aside id="currentRequestText"> </font></aside> <br>
-<font size="4.75">Total Device Count: <b> <font size = "4.75" color='#FFCC33' aside id="dashtotal"></aside><br> <b> </font><br><hr>
-<button class="w3-button w3-medium w3-black w3-border w3-round"  id="restore" onclick="processRestoreCumulativeView();">Restore All Day View</button><br>
-<i style="visibility: hidden":> This line intentionally hidden : UMBC DOIT </i></div><br>
-<!--Banner-->
+<div id="myDiv" class="w3-main" style="z-index:-3;margin-left:300px ;margin-top:50px;display: none">
 
 <div id="SungraphContainer" style=" margin: 0 auto"></div><hr><br>
-
 
 
 </div></body>
