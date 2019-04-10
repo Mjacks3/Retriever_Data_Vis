@@ -28,19 +28,33 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     </div>
     <hr class="w3-opacity">
 
-<form method="post" action="send_mail.php">
+<form >
       <div class="w3-section">
         <label>Name</label>
-        <input class="w3-input w3-border" type="text" name="Name" required>
+        <input class="w3-input w3-border" type="text" name="Name" id="formName" required>
       </div>
       <div class="w3-section">
-        <label>Email</label>
-        <input class="w3-input w3-border" type="email" name="Email" required>
+        <label>Topic Area</label>
+        <input class="w3-input w3-border" type="text" name="Topic" id="formTopic" required>
       </div>
       <div class="w3-section">
         <label>Message</label>
-        <input class="w3-input w3-border" type="text" name="Message" required>
+        <input class="w3-input w3-border" type="text" name="Message" id="formMessage" required>
       </div>
-      <button type="submit" class="w3-button w3-black w3-margin-bottom"><i class="fa fa-paper-plane w3-margin-right"></i>Send Message</button>
+      <button id="email-submit" type="submit" class="w3-button w3-black w3-margin-bottom"><i class="fa fa-paper-plane w3-margin-right"></i>Send Message</button>
     </form>
   </div>
+  
+ <script>
+ document.getElementById("email-submit").addEventListener("click", function () { submitEmail();});
+ 
+ 
+ function submitEmail()
+ {
+
+ window.open('mailto:mjacks3@umbc.edu?subject=' + document.getElementById("formTopic").value + '&body='+ document.getElementById("formMessage").value);
+ }
+ </script>
+
+  
+  
