@@ -2,6 +2,7 @@
 <html><head> 
 
 <!--  Necessary Base Files to Avoid Errors -->
+<meta http-equiv="refresh" content="120" >
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -22,21 +23,21 @@ $("#building_list").load("templates/building_list.html");
 });
 </script>
 
-<div id="head"></div></head>
+<div id="head"></div></head> 
 
 <body class="w3-white">
    
 <div id="navbar"></div>
-
+ 
 <!--------------------------- Sidebar/menu  ---------------------------------->
 <nav class="w3-sidebar w3-collapse w3-amber w3-animate-left" style="z-index:1 ;width:300px;  overflow: visible; " id="mySidebar"><br>
 <div class="w3-container w3-row" >
 
-<br><h4><b> This sidebar intentionally left blank </b></h4>
+<br><h4><b> This page reloads every 120 seconds to provide the most up to date measurments</b></h4>
 </nav>
 
 <div id="loader"style="display: none" ><img src="Pictures/Loading_icon.gif" style="width:21%"></div>
-<div id="myDiv" class="w3-main" style="z-index:-3;margin-left:300px ;margin-top:50px;display: none">
+<div id="myDiv" class="w3-main" style="z-index:-3;margin-left:300px; margin-right:25px ;margin-top:50px;display: none">
 
 <div id="SungraphContainer" style=" margin: 0 auto"></div><hr><br>
 
