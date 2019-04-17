@@ -22,6 +22,7 @@ function initBuildingReportGeneration(building,report_type=1)
 		generateBuildingZones(building);
 		requestCumulativeZoneDeviceCount();
 		requestHourlyZoneDeviceCount();
+		requestDwellBreakdownBuilding();
 		
 		document.getElementById("linecontainer").style.display = "block";
 		document.getElementById("barcontainer").style.display = "block";
@@ -220,6 +221,144 @@ function requestHourlyZoneDeviceCount(){
 
 
 
+function requestDwellBreakdownBuilding(){
+	
+	
+	var connection_state;
+   
+   if (document.getElementById('all').checked){connection_state = "all";}
+   else if (document.getElementById('detected').checked){connection_state = "detected";}
+   else{connection_state = "connected";}
+   
+   var start = startDate.value;
+   var end = endDate.value;
+   var mid = "";  
+   
+   if (start == "" || end == ""){ start = "to"; end = "day";}
+   else {mid = "%3B";}
+
+   
+   var cmxurl = "https://cmx.noc.umbc.edu/api/analytics/v1/dwellBreakdown?areas="+
+   currentBuildingId + "&"+
+   "granularity=hourly&"+
+   "yAxis=absoluteVisits&"+
+   "timeRange=00%3A00-23%3A59&"+
+   "period="+start+mid+end+"&"+
+   "durationCategories=5-480&"+
+   "includeStationary=false&"+
+   "connectionState="+connection_state+"&"+
+   "dwellLimits=0-5min%3A5%2C5-20min%3A20%2C20-60min%3A60%2C60-120min%3A120%2C%3E120min%3A-1&_=1549905094173";
+   
+	
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET",cmxurl, false);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send();
+  var response = JSON.parse(xhttp.responseText);
+  console.log("Dwell Time");
+  console.log(response);
+  generateDwellBreakdownBuilding(response);
+ 
+}
+
+function generateDwellBreakdownBuilding(data)
+{
+	
+	var matrix = [];
+	for (var hourix=0; hourix<24; hourix++) 
+	{
+			for (var catix=0; catix<5; catix++){
+				matrix.push([hourix,catix,0]);
+			}	
+	}
+
+	for (var buildix=0; buildix < data['results'].length; buildix++) {	
+		for (var hourix=0; hourix <data['results'][buildix]['data'].length; hourix++){
+			
+			if (hourix >= 24)
+			 {
+			   matrix[hourix %  24][2] +=  data['results'][buildix]['data'][hourix]['values']['0-5min'];
+			   matrix[hourix + 1 %  24][2] += data['results'][buildix]['data'][hourix]['values']['5-20min'];
+			   matrix[hourix + 2 %  24][2] += data['results'][buildix]['data'][hourix]['values']['20-60min'];
+			   matrix[hourix + 3 %  24][2] += data['results'][buildix]['data'][hourix]['values']['60-120min']; 
+			   matrix[hourix + 4 %  24][2] += data['results'][buildix]['data'][hourix]['values']['>120min'];
+			 }
+			else
+			   {
+			   matrix[hourix*5][2] +=  data['results'][buildix]['data'][hourix]['values']['0-5min'];
+			   matrix[hourix*5+1][2] += data['results'][buildix]['data'][hourix]['values']['5-20min'];
+			   matrix[hourix*5+2][2] += data['results'][buildix]['data'][hourix]['values']['20-60min'] ;
+			   matrix[hourix*5+3][2] += data['results'][buildix]['data'][hourix]['values']['60-120min']; 
+			   matrix[hourix*5+4][2] += data['results'][buildix]['data'][hourix]['values']['>120min'];
+			   }
+			   
+				
+		}	
+	}
+
+	
+
+Highcharts.chart('heatmapcontainer', {
+
+    chart: {
+        type: 'heatmap',
+        marginTop: 40,
+        marginBottom: 80,
+        plotBorderWidth: 1
+    },
+
+
+    title: {
+        text: '<b> Hourly Dwell Time Breakdown  </b>' 
+    },
+
+    xAxis: {
+        categories: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', 
+        '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM' ]
+    },
+
+    yAxis: {
+        reversed: true,
+        categories: ['0-5 Minutes', '5-20 Minutes', '20-60 Minutes', '60-120 Minutes', '>120 Minutes'],
+        title: null
+    },
+
+    colorAxis: {
+        min: 0,
+        minColor: '#FFFFFF',
+        maxColor: '#FCD602'
+    },
+
+    legend: {
+        align: 'right',
+        layout: 'vertical',
+        margin: 0,
+        verticalAlign: 'bottom',
+        y: 25,
+        symbolHeight: 280
+    },
+
+    tooltip: {
+        formatter: function () {
+            return '<b>' + this.point.value + ' clients dwell ' + this.series.yAxis.categories[this.point.y] +
+            ' during ' + this.series.xAxis.categories[this.point.x] + '</b>';
+        }
+    },
+
+    series: [{
+        name: 'Hourly DwellTime Breakdown',
+        borderWidth: 1,
+        data: matrix,
+        dataLabels: {
+            enabled: true,
+            color: '#000000'
+        }
+    }]
+
+});
+
+}
+
 
 function generateZoneLineChart(overalldict){
 	var keyarray = Object.keys(overalldict);
@@ -232,7 +371,7 @@ function generateZoneLineChart(overalldict){
 }
 
  Highcharts.chart('linecontainer', {chart: {type: 'line'},
-  title: {text: 'Hourly Device Count for ' + currentPage},
+  title: {text: '<b> Hourly Device Count for ' + currentPage + '</b>'},
   subtitle: {text: 'Click a point to see a breakdown of device counts for that hour.'},
   xAxis: {categories: ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM','1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM']},
   yAxis: {title: {text: 'Device Count'}},
