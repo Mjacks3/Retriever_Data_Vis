@@ -369,19 +369,31 @@ liveSunchart = Highcharts.chart('SungraphContainer', {
             }
         }, {
             level: 2,
-            colorByPoint: true
+            colorByPoint: true,
+			rotation:2,
+			borderWidth:100,
+            colorVariation: {
+                key: 'brightness',
+                to: -.5
+            }
         },
         {
             level: 3,
             colorVariation: {
                 key: 'brightness',
-                to: -0.5
+                to: -.5
             }
         }, {
             level: 4,
             colorVariation: {
                 key: 'brightness',
-                to: 0.5
+                to: -.5
+		}},
+	   {
+            level: 5,
+            colorVariation: {
+                key: 'brightness',
+                to: -.5
             }
         }]
 

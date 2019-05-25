@@ -248,6 +248,7 @@ Highcharts.chart('heatmapcontainer', {
         type: 'heatmap',
         marginTop: 40,
         marginBottom: 80,
+		marginRight:25,
         plotBorderWidth: 1
     },
 
@@ -273,14 +274,6 @@ Highcharts.chart('heatmapcontainer', {
         maxColor: '#FCD602'
     },
 
-    legend: {
-        align: 'right',
-        layout: 'vertical',
-        margin: 0,
-        verticalAlign: 'bottom',
-        y: 25,
-        symbolHeight: 280
-    },
 
     tooltip: {
         formatter: function () {
