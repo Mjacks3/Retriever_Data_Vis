@@ -1,20 +1,21 @@
-var globalZoneDict;  
-var orderedAreas;
+//Functions and variables in this file control any site page for a sepecific building EX. Commons, Engineering Library
 
-var hourlyZoneDataCounts;
-var cumulativeZoneDataCounts;
+var globalZoneDict;  //Holds mapping of Buildings to CMX created zones within those buildings
+var orderedAreas; //numeric area id for all zones within the current building 
+
+var hourlyZoneDataCounts; //JSON API response containtaing device counts, split each hour in the requested timeframe.
+var cumulativeZoneDataCounts; //JSON API response containtaing total device counts for the requested timeframe. 
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Start requesting data based on user configurations. set timeout to show loading screen. 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function initBuildingReportGeneration(building,report_type=1)
 {
 	setTimeout(function()
     {
 	currentPage = building;
 	document.getElementById("corr").disabled = false;
-	//document.getElementById("corr").style.display = "inline";
-
-
-	
 	
 	if (document.getElementById('count').checked)
 	{
@@ -51,6 +52,9 @@ function initBuildingReportGeneration(building,report_type=1)
 }
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Call CMX to retrieve  and store all zones and zone ids stored of current building
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function generateBuildingZones(building)
 {
 	
@@ -79,7 +83,7 @@ function generateBuildingZones(building)
         else {orderedAreas += "%2C"+ String(response["userLevels"][3]["children"][ix]["id"]) ;}
 		}
 		
-			//Implemplemented these
+	
 			
      zone_registers.push(response["userLevels"][3]["children"][ix]["ancestors"][0]+"/"+
             response["userLevels"][3]["children"][ix]["ancestors"][1]+"/"+
@@ -94,10 +98,13 @@ function generateBuildingZones(building)
 			currentBuildingId = response["userLevels"][1]["children"][ix]["id"];
 		}
     }
-	console.log(zone_registers);
+	console.log(zone_registers); //Just debug to list all the zones
 	
 }         
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Call CMX to retrieve  and store all device counts for requested timeframe, then visualize the data
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function requestCumulativeZoneDeviceCount(){	
 	
 	
@@ -135,6 +142,9 @@ function requestCumulativeZoneDeviceCount(){
 }
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Call CMX to retrieve  and store all device counts for requested timeframe by hour, then visualize the data
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function requestHourlyZoneDeviceCount(){
 	
     if (document.getElementById('all').checked){connection_state = "all";}
@@ -221,6 +231,9 @@ function requestHourlyZoneDeviceCount(){
 
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Call CMX to retrieve  and store all device breakdown information for requested timeframe, then visualize the data
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function requestDwellBreakdownBuilding(){
 	
 	
@@ -261,6 +274,10 @@ function requestDwellBreakdownBuilding(){
  
 }
 
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Visualize the dwell breakdown data, using hughchart's heatchart
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function generateDwellBreakdownBuilding(data)
 {
 	
@@ -353,6 +370,9 @@ Highcharts.chart('heatmapcontainer', {
 }
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Visualize hourly device count data, with highchart's line charts
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function generateZoneLineChart(overalldict){
 	var keyarray = Object.keys(overalldict);
 
@@ -383,7 +403,11 @@ function generateZoneLineChart(overalldict){
 	'#cb5776','#a86fa8','#535b9e','#6f3fe4','#3ac6e6'],
   series: seriesarray});}
 
-
+  
+  
+ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//When clicking on a point (an hour) on the linechart, reanimate all graphs places below this one with visualizations for that one
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function generateZoneSummaryFromPoint(seriesindex, hourindex) {
 	
 	var totalCount = 0;
@@ -410,6 +434,9 @@ function generateZoneSummaryFromPoint(seriesindex, hourindex) {
 	
 }
 
+ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Displays device count breakdown by floor and zone, as highchart bar and pie charts
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function generateZoneCharts(dictionaryCount)
 {
 
@@ -594,7 +621,9 @@ function getSum(total, num) {return total + num;}
 
 
 
-
+ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Recompiles visualizations for entire selected date, after clicking on an singl point on line graph
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function generateZoneSummaryfromEntireDateSelection() {
 	
 	var totalCount = 0;
@@ -623,7 +652,9 @@ function generateZoneSummaryfromEntireDateSelection() {
 
 
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Request student path data between buildings from CMX
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function requestDevicePaths(){
 	//Add optional parameters
 	var connection_state;
@@ -663,6 +694,10 @@ function requestDevicePaths(){
   generateDevicePaths(response);
 }
 
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Generate Path data received from CMX
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function generateDevicePaths(devicePathData){
 
 	crossData = [{keys: ['from', 'to', 'weight'],data: [],

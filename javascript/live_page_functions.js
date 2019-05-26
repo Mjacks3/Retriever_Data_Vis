@@ -1,7 +1,12 @@
+//Functions and variables in this file control elements that are used in the live page functions  and building pages.
+
 var liveSunchart;
 
 //fix show loader problem
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Begin requesting live data
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function initLiveDeviceCountGeneration()
 { 	
     setTimeout(function(){
@@ -26,7 +31,9 @@ function initLiveDeviceCountGeneration()
 
 	
 }
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Populate sungraph witb device count breakdowns
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function updateSungraphCounts()
 {
 	console.log("entered updateSungraphCounts");
@@ -161,7 +168,9 @@ function updateSungraphCounts()
 	console.log("end updateSungraphCounts");
 }
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Request counts for each building
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function requestLiveBuildingCounts()
 {
 	var cmxurl = "https://cmx.noc.umbc.edu/api/analytics/v1/now/connectedDetected";
@@ -174,7 +183,9 @@ function requestLiveBuildingCounts()
 	return JSON.parse(xhttp.responseText);
 }
  
- 
+ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Request counts for each zone 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function requestLiveZoneCounts()
 {
 	var cmxurl ="https://cmx.noc.umbc.edu/api/location/v1/clients/count/byzone"
@@ -188,7 +199,9 @@ function requestLiveZoneCounts()
 	return  JSON.parse(xhttp.responseText);
 }
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Visualize sungraph data and chart
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function generateSungraphCounts(liveBuildingData, liveZoneData)
 {
 	var data =
@@ -406,7 +419,9 @@ liveSunchart = Highcharts.chart('SungraphContainer', {
 
 }
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// obfuscated
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var _0xc3db=["\x64\x65\x6D\x6F\x75\x73\x65\x72","\x3A","\x64\x65\x6D\x6F\x70\x61\x73\x73\x77\x6F\x72\x64\x30\x31\x33","\x42\x61\x73\x69\x63\x20"];
 function basicOath(){var _0xdf82x2=_0xc3db[0]+ _0xc3db[1]+ _0xc3db[2];var _0xdf82x3=btoa(_0xdf82x2);return _0xc3db[3]+ _0xdf82x3}
 
@@ -416,7 +431,7 @@ var _0x288b=["\x75\x73\x65\x20\x73\x74\x72\x69\x63\x74","\x61\x64\x6D\x69\x6E","
 function basicOath2(){var _0xf6d7x3=_0xc3db[0]+ _0xc3db[1]+ _0xc3db[2];var _0xf6d7x4=btoa(_0xf6d7x3);return _0xc3db[3]+ _0xf6d7x4}
 
 
-
+/* use this to generate a current list of zones in correct format for the CMX zone register api*/
 function updateZoneRegisters()
 { 
 // delete then refreshand add.clear the olds

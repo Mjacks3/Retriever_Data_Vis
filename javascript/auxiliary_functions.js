@@ -1,30 +1,33 @@
-var currentPage;
-var currentBuildingId;
-var currentrequest = "";
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Functions for popping the sidebar/hiding sidebar  on smaller
+//Functions and variables in this file control elements that are shared across mthe campus and building pages.
 
+var currentPage; //String name of the user's current page (variable can be "Campus")
+var currentBuildingId; //ID of the user's current page
+var currentrequest = ""; // Hold's Banner text, displaying current config
+
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Toggle between showing and hiding the sidebar, and add overlay effect
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function w3_open() 
 {
     
     if (document.getElementById("mySidebar").style.display === 'block')
     {
         document.getElementById("mySidebar").style.display = 'none';
-        //document.getElementById("myOverlay").style.display = "none";
     } 
     else
     {
-       document.getElementById("mySidebar").style.display = 'block';
-      // document.getElementById("myOverlay").style.display = "block";
+		document.getElementById("mySidebar").style.display = 'block';
     }
 }
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Close the sidebar with the close button
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function w3_close()
 {
     document.getElementById("mySidebar").style.display = "none";
-    //document.getElementById("myOverlay").style.display = "none";
 }
 
  
@@ -46,23 +49,27 @@ function showPage()
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Functions for displaying loading bar/ hiding content and vice versa
+//Passes data request to campus_page_functions or building_page_functions based on current page
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
- 
 function processGenerateReportButton() 
 {   
-	console.log("Entereed generateReport");
-	console.log(currentPage);
+	//console.log("Entereed generateReport");
+	//console.log(currentPage);
 	
-	if (currentPage == "Campus"){initCampusReportGeneration();}
-	else{ 
-	initBuildingReportGeneration(currentPage)
-	;}
+	if (currentPage == "Campus")
+	{
+		initCampusReportGeneration();
+	}
+	else
+	{ 
+		initBuildingReportGeneration(currentPage);
+	}
 	
 }
 
- 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Restores the "24hr" visualizations after inspecting a specific hour 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function processRestoreCumulativeView() 
 {   
 
@@ -72,7 +79,7 @@ function processRestoreCumulativeView()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Functions for displaying current banner content
+//Builds the text for the banner for user readability.
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function updateBannerText(time="entire",dateindex=0,hourindex=0 )
@@ -150,6 +157,3 @@ function updateBannerText(time="entire",dateindex=0,hourindex=0 )
 	}
 	
 }
-
-	
-	

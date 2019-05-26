@@ -1,5 +1,11 @@
+//Functions and variables in this file control the Google Maps API settings on the Index Page
+
+
 var infoWindow;
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Toggle the heatmap on and off
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function toggleHeatmap() 
 {
     heatmap.setMap(heatmap.getMap() ? null : map);
@@ -28,7 +34,9 @@ function changeGradient()
 }
 
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Take data and convert lat long locations
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function getPoints(block) 
 {
     pts = [];
@@ -41,12 +49,10 @@ function getPoints(block)
     return pts;
 }
 	
-function toggleHeatmap() 
-{
-    heatmap.setMap(heatmap.getMap() ? null : map);
-}
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// May want to add new options for gradient
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function changeGradient() 
 {
     var gradient = [
@@ -68,18 +74,25 @@ function changeGradient()
     heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
 }
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// May want to add new options for radius
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function changeRadius()
 {
     heatmap.set('radius', heatmap.get('radius') ? null : 57);
 }
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// May want to add new options for opacity
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function changeOpacity() 
 {
     heatmap.set('opacity', heatmap.get('opacity') ? null : 0.8);
 }
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Manually define coords of all notable buildings
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function initPolygons()
 {
   // Define the LatLng coordinates for each building

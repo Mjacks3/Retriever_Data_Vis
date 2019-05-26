@@ -1,4 +1,6 @@
- var banner_date;
+//Functions and variables in this file control the site page for the index page (the campus page)
+
+var banner_date;
 var banner_time;
 
 
@@ -18,7 +20,9 @@ var academic_buildings = ["Public Policy","Administration","Biology","Chemistry"
 var support_buildings = ["Library","Event Center","Commons","Dining Hall","University Center","RAC"];
 	
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Start requesting data based on user configurations. set timeout to show loading screen. 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function initCampusReportGeneration()
 {
 	
@@ -26,7 +30,6 @@ function initCampusReportGeneration()
 		
 	currentPage = "Campus";
 	document.getElementById("corr").disabled = true;
-	//document.getElementById("corr").style.display = "none";
 	
 	requestCumulativeDeviceCount();
 	requestHourlyDeviceCount();
@@ -38,6 +41,9 @@ function initCampusReportGeneration()
 }
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Call CMX to retrieve  and store all device counts for requested timeframe, then visualize the data
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function requestCumulativeDeviceCount(){
 	var connection_state;
    
@@ -78,7 +84,9 @@ function requestCumulativeDeviceCount(){
 
 
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Call CMX to retrieve  and store all device counts for requested timeframe by hour, then visualize the data
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function requestHourlyDeviceCount(){
 	   if (document.getElementById('all').checked){connection_state = "all";}
    else if (document.getElementById('detected').checked){connection_state = "detected";}
@@ -165,6 +173,9 @@ function requestHourlyDeviceCount(){
 }
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Call CMX to retrieve  and store all device breakdown information for requested timeframe, then visualize the data
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function requestDwellBreakdown(){
 	
 	
@@ -205,6 +216,10 @@ function requestDwellBreakdown(){
  
 }
 
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Visualize the dwell breakdown data, using hughchart's heatchart
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function generateDwellBreakdown(data)
 {
 	
@@ -296,6 +311,10 @@ Highcharts.chart('heatmapcontainer', {
 
 }
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Visualize hourly device count data, with highchart's line charts
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 function generatelinechart(overalldict){
 	var keyarray = Object.keys(overalldict);
 
@@ -333,6 +352,10 @@ function generatelinechart(overalldict){
 
   }    
   
+  
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//When clicking on a point (an hour) on the linechart, reanimate all graphs places below this one with visualizations for that one
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function generateSummaryfromPoint(seriesindex, hourindex) 
 {
 	var totalCounts = 0;
@@ -414,6 +437,9 @@ function generateSummaryfromPoint(seriesindex, hourindex)
 	generateCharts(campusDictionaryCount);
 }
 
+ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Initialize Google Heatmap Scripts in heatmap_functions.js
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function heatmapConfiguration(building_dictionary) 
 {
 	 lat_longs_block = [];
@@ -438,6 +464,9 @@ function heatmapConfiguration(building_dictionary)
 }
 
 
+ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Displays device count breakdown by floor and zone, as highchart bar and pie charts
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function generateCharts(dictonaryCounts)
 {
   var total_residential_count = 0;
@@ -607,6 +636,9 @@ Highcharts.chart('piecontainer', {chart: {type: 'pie'},title:
 }
 
 
+ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//Recompiles visualizations for entire selected date, after clicking on an singl point on line graph
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function generateSummaryfromEntireDateSelection() {
 	
